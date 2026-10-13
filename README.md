@@ -1,4 +1,4 @@
-# Team Jack - Lang — He likes em Young
+# [Team name] — [your agent in five words]
 
 **Course:** Data & AI Product: From Diagnosis to Delivery (MSA-DAT07-04) · Albert School · shared project with Agentic Workflows
 **Cohort:** M2-INTER-1 / M2-INTER-2 (keep one)
