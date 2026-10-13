@@ -1,0 +1,20 @@
+# Course material (slides, assignments, sign-up sheet): kept locally, not pushed
+course/
+
+# Office lock files, created while 02_sizing.xlsx is open in Excel
+~$*
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Prototype and evals
+__pycache__/
+*.py[oc]
+.venv/
+.ipynb_checkpoints/
+node_modules/
+
+# Secrets (API keys for the prototype)
+.env
