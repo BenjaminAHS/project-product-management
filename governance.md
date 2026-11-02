@@ -25,8 +25,56 @@
   - **Operational & Scheme Liability:** The **Head of Payment Operations** owns the QA protocol, agent training, and dispute submission timelines.  
   - **Technical Guardrail Enforcement:** The **VP of Engineering** and **AI Product Lead** own the dual-LLM Grounding Evaluator, tenant-isolation query firewalls, and automated circuit breakers that suppress unverified drafts.
 
-## Session 3 — data (to come)
-*Data inventory, retrieval schemas, tenant isolation, and preprocessing pipelines.*
+## Session 3 — data and trust levels · 2 November 2026
+
+### Evidence boundary and corrections to S1/S2
+P2 supplies the educational scenario (800 merchants, 12,000 monthly tickets, 40% investigation time). The repository contains no PayFlow ticket exports, ledger, time study, signed contract or provider deployment evidence. Earlier “measured” internal-data statements are scenario assumptions, not verified research. S3 uses **only synthetic data**. The Paylio starter is a separate class example and is not FlowAssist evidence.
+
+The following updates supersede earlier design proposals for this MVP: a model score never authorizes a tenant/transaction match; retrieval is read-only and tenant-scoped with human match confirmation; customer sending is **person only**, not L1; dispute/KYC advice is out of scope. A second LLM is an unproven checker, not an isolation guarantee. ZDR, EU hosting and a lawful basis are requirements to verify before live use, not properties demonstrated here.
+
+### Six-question data audit
+| # | Question | Answer for S3 and proposed live system | Source type | To check with |
+|---|---|---|---|---|
+| 1 | Provenance | 20 AI-generated synthetic inputs, explicit fictional ledger snapshots and policy fixtures, created 2 Nov 2026. No actual customer data. Future ticket/ledger/clearing records need system owner, collection timestamp and lineage per record. | Repository inspection; future access is a guess | Data Engineering + Ops |
+| 2 | Volume & labels | 20 seed rows, expected actions proposed by AI and **not yet human-labelled**. Two team members must independently check labels and references before freeze. The 144k historical tickets in S1/S2 are unavailable. | Counted seed rows; scenario volume | Ops QA + independent team reviewers |
+| 3 | Coverage | Seed covers EN/FR/DE plus unsupported PT; EUR SEPA, USD SWIFT; SMB/Enterprise; routine, ambiguous and critical cases. Plans/regions are explicit row metadata; population shares are unknown. No claim of representative segment performance. | Synthetic design choices | Ops + language reviewers |
+| 4 | Rights | Synthetic coursework has no customer-data rights grant. Future processing needs purpose, controller/processor mapping, DPA, provider no-training/retention terms and approved transfers. Art. 6(1)(b) applies only where necessary for a contract with the data subject; a B2B corporate contract alone does not establish this for every contact/counterparty. Assess Art. 6(1)(f) necessity/balancing where appropriate; no assumed approval. | Proposed legal interpretation, validation pending | DPO / Legal |
+| 5 | Leakage | No ticket reuse across tenants. Backend session supplies merchant ID; access check and row-level filter occur **before retrieval**. Cache keys include tenant and scope; prompts, citations and logs retain this boundary. Negative tests include foreign reference and forged tenant instruction. Split evaluation from prompt development by scenario family and near-duplicate check. | Design; not implemented security evidence | CISO + Engineering |
+| 6 | Freshness | Each snapshot carries event/fetch time and version; provisional maximum age 5 min. Missing/stale/conflicting data suppresses draft. Version policy fixtures and rerun after changes. Production freshness/SLA must be agreed with clearing owners. | Guess to test; fixture timestamps explicit | Clearing owner + Ops |
+
+### Purpose, minimisation and retention
+Purpose: answer an assigned merchant's payment-tracing ticket with evidence and human approval. No training, marketing, employee scoring or unrelated profiling. GDPR Article 5 requires purpose limitation, data minimisation and storage limitation; proposed durations below are design choices, not statutory periods. [GDPR Articles 5–6](https://eur-lex.europa.eu/legal-content/ENG/ALL/?uri=celex%3A32016R0679).
+
+| Artifact | Proposed retention / control | Owner |
+|---|---|---|
+| Synthetic fixtures and code | Course repository lifecycle; no personal payment data | Team |
+| Interview notes | Anonymised, only with permission; delete within 30 days after final assessment; no raw audio by default | Research lead |
+| Live retrieval context | Request memory only, clear at completion; no shared raw-result cache in MVP | Engineering |
+| Raw prompts / model replies | Do not persist by default; redact secrets and personal identifiers before API use | Engineering + DPO |
+| Minimized live audit metadata | Proposed 90 days; ticket ID, actor, policy/model/source versions, gate reasons, approval event; restricted append-only store | Ops + CISO, DPO approval |
+| Original support / financial records | Existing separately approved source-system schedule; no new full ledger copy | System owner + Legal |
+
+No real-data call until provider terms, retention controls, sub-processors, hosting/transfers, and access paths have been checked. Full PAN, credentials and unmasked banking identifiers are excluded. Anonymisation claims require re-identification assessment; masking alone is not anonymisation.
+
+### Customer isolation and known gaps
+Server-side assigned-agent authorization → tenant-constrained parameterized query → authorized source set → redaction → model prompt. Recheck tenant and transaction identity on citations and draft insertion. Index namespace and any cache key include `merchant_id`; no global historical-ticket search. Failed auth returns empty context and an access-denied state. A model “ignore tenant” instruction can never change scope. Test unauthorized references, mixed-tenant results, stale cached responses and log access before enabling live use.
+
+Gaps: tiny synthetic sample; no real distributions, accented German/colloquial French review, non-EU rails, unsupported languages, unusual currency precision, complex multi-party payments or live permission tests. PT goes to a person; dispute/fraud/KYC goes to specialists in every language. Report failures and fallbacks by language, plan, rail, region and severity; do not claim fairness or accuracy from one or two cases.
+
+### Trust level per step
+| Step | Level / authority | Reason |
+|---|---|---|
+| Intent and entity suggestions | L1 | Unstructured or hostile text may mislead; session establishes identity |
+| Tenant-scoped read-only candidate retrieval | L3 within assigned ticket; sampled Ops review, person confirms selected match | Financial matching errors are costly; deterministic authorization is mandatory |
+| Timeline / reply drafting | L2 | Every claim cites approved evidence, human checks |
+| Policy / grounding | Rules automatically block; L2 specialist validates passing content | Model score is not a safety proof; disagreement fails closed |
+| Review, edit, send | Person only | Customer communication and liability remain with the organization and human approver |
+| Audit metadata | L4 bounded append-only write | No financial/customer action, limited data scope |
+| Escalation | Person action, safe context packet | Agent can always return to manual tools |
+
+Ops Lead can disable drafts immediately; Engineering revokes generation while manual support continues. Any tenant exposure, wrong-transaction disclosure or attempted outbound/fund write is a stop event. DPO/CCO assesses notification duties from the facts; S1/S2's blanket automatic-notification wording must not replace incident assessment. No production compliance certification is claimed.
+
+**AI Act status:** internal decision support for tracing, with no creditworthiness or eligibility decision; final classification and applicable transparency obligations require Legal review of actual intended use. An “AI-assisted draft” label is included for operators. The earlier blanket “limited risk under Article 50” conclusion is provisional, not a legal determination. [European Commission, Article 50 transparency guidance](https://digital-strategy.ec.europa.eu/en/faqs/transparency-obligations-under-article-50-ai-act).
 
 ## Session 4 — human-in-the-loop points and the override switch (to come)
 *L2 approval interfaces, diff tracking, grounding threshold circuit breaker, and one-click agent override switches.*
