@@ -76,3 +76,6 @@ CRM tag automation; autonomous merchant replies; dispute deadlines; KYC/AML expl
 
 ## eval_set
 `evals/eval_set_v0.csv`: 20 synthetic proposed cases; human labelling and independent grading pending. Reference policies and fixtures: `evals/reference_policy.md`. Separate S3 surface examples from evaluation; never tune against the frozen benchmark. Grow to 50 cases for A4 and 200 tracing cases before the final timing gate. Exact grading and eligibility denominator: `evals/README_eval_set.md`.
+
+## s3_demo_delivery
+The S3 surface is buildless HTML/JavaScript. For Vercel, the repository-root configuration copies `prototype/index.html` and `prototype/app.js` into `dist/`, served at `/`, without API credentials or a backend. The shared source belongs to BenjaminAHS; public visibility is being arranged by the owner. Deployment and anonymous production access remain unconfirmed. Hosting does not implement the pipeline above. Release steps and evidence: [deployment handover](prototype/DEPLOYMENT.md).

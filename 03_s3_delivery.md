@@ -13,7 +13,7 @@
 | One-sentence criterion: metric, flip threshold, guardrail, dataset, date | Brief §7, same sentence in design §7 | Complete target; not a measured result |
 | Brief v1 → v2 and one-page Lean Canvas | Archived v1; current brief; AI Lean Canvas | Complete desk-based revision |
 | Three 20-minute conversations with past-behavior evidence | User needs / design record | Not fulfilled: no conversations conducted |
-| Clickable surface with link and prompt | Prototype instructions and local HTML/JS v0.2 | Complete local surface; actual one-hour build duration unmeasured |
+| Clickable surface with link and prompt | Prototype instructions and local HTML/JS v0.2 | Complete local surface; Vercel configured, public URL pending; actual one-hour build duration unmeasured |
 | Two users try one task thinking aloud | T01/T02 acceptance scenarios; state checks | Not fulfilled: technical checks do not replace participants |
 | What users changed / could not decide | Brief §§9–10; D01–D05 design register | Responsibilities complete; changes are designer-led, not user evidence |
 | Spec skeleton | spec.md v1 | Complete S4 contract |
@@ -22,6 +22,10 @@
 
 ## Scope and evaluation discipline
 The S3 surface supports tracing, ambiguous candidates, a compliance route and access denial. No live LLM, bank connector, customer message or financial action exists. D01–D05 refine safety and clarity inside the three MUST features. The 20 development seeds are not an unbiased held-out benchmark. Active-work savings include review and fallback time and require independent paired timing on pre-labelled eligible cases. The 41.2% hurdle is not replaced by a draft acceptance rate.
+
+## Public demo handover
+
+The shared repository belongs to BenjaminAHS; its owner is arranging public visibility. Vercel configuration is tracked, but no successful deployment, project owner, production URL or anonymous browser check is confirmed. See [deployment handover](prototype/DEPLOYMENT.md). Publication will expose the existing static S3 interface; it does not establish the S4 pipeline or the performance criterion. Update the README and prototype record together once the production URL is verified.
 
 ## Working ownership and schedule
 The following is a proposed division of work, not a record of completed work or signed approvals.

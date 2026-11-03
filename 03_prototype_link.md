@@ -1,10 +1,10 @@
 # 03 — Prototype link · FlowAssist
 
-**Version:** v0.2 · 3 November 2026 · local S3 surface, synthetic data only.
+**Version:** v0.2 · 3 November 2026 · S3 surface; Vercel deployment prepared, publication pending; synthetic data only.
 
 - **Link:** [Open the prototype source](prototype/index.html). Download/clone the repository and open `prototype/index.html` in a browser; GitHub's file view shows source rather than executing HTML. No installation, account, API key or server is required.
 - **Optional HTTP preview:** from repository root, run `python -m http.server 8000 --bind 127.0.0.1`, then open `http://127.0.0.1:8000/prototype/`. Stop with Ctrl-C.
-- **Public hosting:** [Vercel configuration](vercel.json) publishes the prototype at `/`. Import/deployment instructions are in [README](README.md#public-hosting-on-vercel). Deployment is prepared; no production URL is confirmed yet.
+- **Public hosting:** [Vercel configuration](vercel.json) is ready to serve the prototype at `/`. The repository belongs to BenjaminAHS; its owner is arranging public visibility. Vercel publication and anonymous access are not yet confirmed. Follow the [deployment handover](prototype/DEPLOYMENT.md); add the verified production URL here after deployment.
 - **Tool:** Codex-assisted HTML/CSS/JavaScript; Sites local-only workflow. Local artifact follows the assignment's repository deliverable; Vercel publication is prepared separately; no production integration is claimed.
 - **Time box:** designed as an under-one-hour surface exercise; actual elapsed build time was not instrumented and is not presented as a measurement.
 - **Versions:** v0.1 has ready/ambiguous/compliance/access-denied cases, source inspection, review, editor insertion and context handover. v0.2 implements design decisions D01–D05: inspect all sources, plain-language ambiguity, timestamped handover, compliance routing and safe manual mode. This is a desk-based revision; no participant iteration is claimed.

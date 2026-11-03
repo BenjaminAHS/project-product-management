@@ -9,3 +9,5 @@ Four scripted tickets demonstrate safe workflow states, source inspection, revie
 Version v0.2 implements D01–D05 in the decision register: all displayed sources must be inspected, review must be explicit, edits invalidate review, manual mode disables insertion, and handover preserves snapshot times and names the appropriate specialist. Checks and limitations: [verification.md](verification.md).
 
 Vercel hosting is configured at the repository root in [vercel.json](../vercel.json). Deploy from the repository root; the build copies `index.html` and `app.js` into `dist/`, serving the app at `/`. No dependency installation or environment variables are needed.
+
+Publication is pending while the owner of the shared repository, BenjaminAHS, arranges public visibility. Repository visibility does not publish the app. See [deployment ownership, settings and release checks](DEPLOYMENT.md); no public URL is confirmed yet.
