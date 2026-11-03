@@ -31,7 +31,7 @@ These profiles are product scenarios derived from S1/S2 and the existing fixture
 ## 4. Two reproducible task scenarios
 These are acceptance scenarios, not completed participant tests. No task time, success percentage, hesitation, satisfaction or urgent demand is claimed.
 
-**T01 — Grounded tracing reply.** Open DEMO-01. Inspect LED-100 only: insertion remains disabled. Inspect CLE-100, read that beneficiary credit is not confirmed, and explicitly review. Insert the draft; the editor contains the cited reply and no message is sent. Edit the draft: review resets. Switch tickets: editor and inspected-source state clear.
+**T01 — Grounded tracing reply.** Open DEMO-01. Inspect LED-100 only: insertion remains disabled. Inspect CLE-100, read that beneficiary credit is not confirmed, and explicitly review. Insert the draft; the editor contains the cited reply and no message is sent. Edit the draft: review resets. Switch tickets: inspection and approval reset; an unvisited ticket has an empty editor, while revisiting restores only its own text. An existing different reply requires explicit replacement confirmation.
 
 **T02 — Ambiguity and specialist handover.** Open DEMO-02. Confirm that a unique reference is needed and no draft is available. Choose “Ambiguous transaction”, add safe context and escalate. The preview names Tier-2 payments, the merchant, reason, both authorized sources and their snapshot times. Open DEMO-03 and use the sensitive-request reason: destination is Tier-2 compliance. DEMO-04 has no transaction sources or foreign owner details.
 

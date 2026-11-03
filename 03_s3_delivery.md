@@ -13,7 +13,7 @@
 | One-sentence criterion: metric, flip threshold, guardrail, dataset, date | Brief §7, same sentence in design §7 | Complete target; not a measured result |
 | Brief v1 → v2 and one-page Lean Canvas | Archived v1; current brief; AI Lean Canvas | Complete desk-based revision |
 | Three 20-minute conversations with past-behavior evidence | User needs / design record | Not fulfilled: no conversations conducted |
-| Clickable surface with link and prompt | Prototype instructions and local HTML/JS v0.2 | Complete local surface; Vercel configured, public URL pending; actual one-hour build duration unmeasured |
+| Clickable surface with link and prompt | Prototype instructions and local HTML/CSS/JS v0.3 | Complete local surface; Vercel configured, public URL pending; actual one-hour build duration unmeasured |
 | Two users try one task thinking aloud | T01/T02 acceptance scenarios; state checks | Not fulfilled: technical checks do not replace participants |
 | What users changed / could not decide | Brief §§9–10; D01–D05 design register | Responsibilities complete; changes are designer-led, not user evidence |
 | Spec skeleton | spec.md v1 | Complete S4 contract |
@@ -42,4 +42,4 @@ The following is a proposed division of work, not a record of completed work or 
 The assignment DOCX states 8 November 2026; the earlier template states Friday 6 November. Use 6 November as the packaging target. Future S4–S8 documents remain outside this S3 revision.
 
 ## Reproducible checks
-`python scripts/verify_s3.py` on macOS checks 20 unique complete cases, seven proposed eligible cases, policy IDs, document links, HTML IDs, the identical brief/annex criterion and 23 prototype state assertions. See [verification report](prototype/verification.md). Browser rendering, screenshots, keyboard navigation, live authorization and model metrics have not been verified.
+`python scripts/verify_s3.py` on macOS checks 20 unique complete cases, seven proposed eligible cases, policy IDs, document links, HTML IDs, the identical brief/annex criterion and 44 prototype state assertions. See [verification report](prototype/verification.md). Browser rendering, screenshots, keyboard navigation, live authorization and model metrics have not been verified.
