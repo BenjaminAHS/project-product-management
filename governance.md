@@ -76,6 +76,9 @@ Ops Lead can disable drafts immediately; Engineering revokes generation while ma
 
 **AI Act status:** internal decision support for tracing, with no creditworthiness or eligibility decision; final classification and applicable transparency obligations require Legal review of actual intended use. An “AI-assisted draft” label is included for operators. The earlier blanket “limited risk under Article 50” conclusion is provisional, not a legal determination. [European Commission, Article 50 transparency guidance](https://digital-strategy.ec.europa.eu/en/faqs/transparency-obligations-under-article-50-ai-act).
 
+### S3 v2 design decisions — 3 November 2026
+Decisions D01–D05 are team desk analysis, not participant evidence; see `03_user_research.md`. The local surface requires inspection of every displayed source and explicit review, invalidates review after edits, disables insertion after manual fallback, and includes snapshot retrieval timestamps in authorized handovers. Compliance handovers identify Tier-2 compliance; tracing handovers identify Tier-2 payments. These are scripted surface controls, not proof of server-side authorization or live freshness enforcement. The original S1/S2 governance proposals are superseded by this S3 section where they conflict, including raw model-log retention and model-confidence-based matching.
+
 ## Session 4 — human-in-the-loop points and the override switch (to come)
 *L2 approval interfaces, diff tracking, grounding threshold circuit breaker, and one-click agent override switches.*
 

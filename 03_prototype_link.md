@@ -1,12 +1,12 @@
 # 03 — Prototype link · FlowAssist
 
-**Version:** v0.1 · 2 November 2026 · local S3 surface, synthetic data only.
+**Version:** v0.2 · 3 November 2026 · local S3 surface, synthetic data only.
 
 - **Link:** [Open the prototype source](prototype/index.html). Download/clone the repository and open `prototype/index.html` in a browser; GitHub's file view shows source rather than executing HTML. No installation, account, API key or server is required.
 - **Optional HTTP preview:** from repository root, run `python -m http.server 8000 --bind 127.0.0.1`, then open `http://127.0.0.1:8000/prototype/`. Stop with Ctrl-C.
 - **Tool:** Codex-assisted HTML/CSS/JavaScript; Sites local-only workflow. Local artifact follows the assignment's repository deliverable; no hosted URL or production integration is claimed.
 - **Time box:** designed as an under-one-hour surface exercise; actual elapsed build time was not instrumented and is not presented as a measurement.
-- **Versions:** v0.1 has ready/ambiguous/compliance/access-denied cases, source inspection, review, editor insertion and context handover. v0.2/v0.3 await observed user feedback; no fabricated iteration history.
+- **Versions:** v0.1 has ready/ambiguous/compliance/access-denied cases, source inspection, review, editor insertion and context handover. v0.2 implements design decisions D01–D05: inspect all sources, plain-language ambiguity, timestamped handover, compliance routing and safe manual mode. This is a desk-based revision; no participant iteration is claimed.
 
 ## The prompt used — the brief in three paragraphs
 
@@ -22,12 +22,12 @@ Include one grounded tracing example, an ambiguous two-candidate payment, a comp
 ```
 
 ## Test walkthrough (facilitator only)
-1. Start at DEMO-01: inspect CLE-100, distinguish sent-to-bank from beneficiary credit, review, insert into editor. Try editing a draft and observe that review resets.
+1. Start at DEMO-01: inspect LED-100 and CLE-100, distinguish sent-to-bank from beneficiary credit, review, insert into editor. Try editing a draft and observe that review resets.
 2. Open DEMO-02: two authorized candidates, no draft. Choose “Ambiguous transaction”, optionally add safe notes, escalate and inspect preserved source IDs.
 3. DEMO-03 routes compliance to a person. DEMO-04 exposes no transaction evidence. Switching tickets clears review/editor; reset restores DEMO-01.
-4. Use the **unassisted task** in `03_user_research.md` with two participants; this walkthrough is not a completed test or an instruction to coach them.
+4. Reproduce T01/T02 from `03_user_research.md` as acceptance scenarios. These do not count as participant usability tests.
 
-## Verification and screenshot
-The JavaScript parsed and passed 12 state/interaction assertions using the system JavaScript engine and a minimal DOM harness: approval needs source inspection; edits invalidate review; ambiguous/sensitive/denied tickets suppress draft; ticket selection clears editor; escalation requires a reason and preserves only authorized source IDs; reset restores safe state. This is not a rendering or accessibility browser test. CSV/HTML/link checks are separate structural checks.
+## Verification and limits
+See [verification report](prototype/verification.md) for reproducible structural and JavaScript interaction checks. The v0.2 source is a scripted interface, without a live model, payment system or Zendesk connection.
 
-**Screenshot: pending browser capture.** Browser automation is unavailable in this environment; no rendered screenshot is claimed. Open the local page, capture the initial workspace without personal information, save as `prototype/screenshot_v0_1.png`, and link it here after capture. Complete a visual/keyboard check on desktop and mobile before user tests. No model accuracy or 41.2% time saving has been measured.
+No rendered screenshot is attached: the browser execution tool is not exposed in this session. Rendering, responsive layout and keyboard navigation have not been verified in a browser. No model accuracy, participant task time or 41.2% saving has been measured.

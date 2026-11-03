@@ -1,6 +1,6 @@
-# Executable spec · FlowAssist · S3 skeleton v0
+# Executable spec · FlowAssist · S3 skeleton v1
 
-**2 November 2026 · Source:** `03_product_brief.md` v1. User-validated v2 pending. S3's HTML is a scripted surface; the pipeline below is the S4 build contract.
+**3 November 2026 · Source:** `03_product_brief.md` v2, desk-based design decisions D01–D05. S3's HTML is a scripted surface; the pipeline below is the S4 build contract.
 
 ## problem
 A Tier-1 specialist investigates fragmented payment records before replying. Provide a tenant-verified tracing timeline and cited editable draft in Zendesk, retain human sending, and test ≥41.2% active time saving on eligible tracing cases. Dispute/compliance tickets get a handover, not advice.
@@ -38,7 +38,7 @@ type Result = {
   draft: null|{text: string; citations: {source_id: string; claim: string}[]};
   policy: 'pass'|'block'; reasons: string[];
   context: Source[]; // authorized and masked only
-  handover: {queue: 'tier2_payments'; ticket_id: string; reason: string}|null;
+  handover: {queue: 'tier2_payments'|'tier2_compliance'; ticket_id: string; reason: string}|null;
 };
 ```
 Input validation: authenticated account and assigned-agent access required before retrieval; parameterized read-only queries; fixed schema/tools. Parse decimal monetary strings into integer minor units without floats; explicit currency and date/timezone. Extracted values are untrusted query hints. No model-generated SQL. No PAN, credentials, full IBAN or counterparty personal data to model APIs.
@@ -48,7 +48,7 @@ Matching: tenant equality, transaction ID, currency, amount basis and time-windo
 Claim checks: every amount, currency, transaction ID, status and timestamp must be traceable to cited sources of that same transaction/tenant; stale or contradictory evidence blocks. “Sent to bank” must never become “beneficiary credited”. No invented ETA, refund promise, dispute deadline, AML diagnosis or hold-release advice. Ticket/source instructions are data, not executable policy. Model critique may block but cannot override hard checks.
 
 ## state_machine
-`loading → draft_ready | context_only | human_only`; “Use draft” requires `draft_ready`, `policy=pass`, inspected sources and explicit human review. Editing after review invalidates that review and requires rechecking before transfer. New ticket selection clears editor, review and source-selection state. Escalation is available throughout with a required reason and a packet containing only authorized evidence. A failed authorization returns empty context. No outbound send/fund/ledger-write tool exists.
+`loading → draft_ready | context_only | human_only`; “Use draft” requires `draft_ready`, `policy=pass`, inspection of every displayed source and explicit human review. Editing after review invalidates that review and requires rechecking before transfer. New ticket selection clears editor, review and source-selection state. Escalation is available throughout with a required reason and a packet containing only authorized evidence. Manual fallback disables draft insertion until ticket reset/reselection. Every displayed source and handover evidence item carries its snapshot retrieval timestamp; compliance routes to `tier2_compliance`, tracing to `tier2_payments`. A failed authorization returns empty context. No outbound send/fund/ledger-write tool exists.
 
 ## edge_cases
 | Condition | Required outcome |

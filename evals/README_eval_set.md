@@ -25,3 +25,6 @@ Paired test: comparable agents, randomized/counterbalanced order and different e
 Seven proposed eligible cases (F01–F04, F13, F14, F20), thirteen negative/fallback cases; catastrophic identity/status cases deliberately oversampled. EN/FR/DE and unsupported PT; SMB/Enterprise; EUR/SEPA and USD/SWIFT; all EU-region synthetic accounts. Segment results must show denominators; no population weighting inferred. Live timeouts, row-level security and backend permissions require S4 integration tests in addition to these input fixtures.
 
 No pass rate, timing result, independent grader judgement or human label approval is claimed in S3. `label_review.csv` is a blank review log keyed to the 20 case IDs.
+
+## v2 label design review — 3 November 2026
+`label_design_review.csv` records the policy references, proposed eligibility/handover and rationale for every case. This is an AI-assisted desk review against FLOW-POL-1, not independent human labelling or a measured model evaluation. No labels were changed to fit model outputs. `label_review.csv` remains reserved for genuine human review; no names, approvals or commits are invented. Structural checks are reproducible with `python scripts/verify_s3.py` on macOS.

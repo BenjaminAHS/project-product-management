@@ -29,12 +29,12 @@ One numbered file per session. Every member authors commits in at least four of 
 | `governance.md` | created for S1, updated S2 | done | EU AI Act tier, GDPR basis, accountability, guardrails, cost-of-error owners |
 | `02_sizing.xlsx` | S2 — Assignment 2 | done | Bottom-up financial model (3 scenarios, 7 cost lines, sensitivity, build vs buy) |
 | `02_investment_memo.md` | S2 — Assignment 2 | done | One-page CFO investment memo (CONDITIONAL GO, €159.8k EV, 41.2% flip point) |
-| `03_product_brief.md`, `03_design_details.md` | S3 | v1 ready; v2 pending interviews | Concise brief plus process, sorted RICE and model tables |
-| `03_ai_lean_canvas.md` | S3 | drafted | All 14 blocks aligned with S1/S2 |
-| `03_user_research.md` | S3 | protocol ready; not conducted | Three interviews and two unassisted tests to record |
-| `03_prototype_link.md`, `/prototype` | S3 | local clickable v0.1 | Synthetic inbox, safe draft review and handover; browser screenshot pending |
-| `spec.md` | S3 | skeleton v0 ready | Contracts, trust levels, edge cases and fallbacks |
-| `/evals/eval_set_v0.csv` | S3 | 20 proposed cases | Synthetic inputs and AI-proposed labels; human approval pending |
+| `03_product_brief.md`, `03_design_details.md` | S3 | v2 design complete | Concise brief, process, sorted RICE, model tables; v1 archived |
+| `03_ai_lean_canvas.md` | S3 | v2 aligned | All 14 blocks aligned with S1/S2 and the v2 brief |
+| `03_user_research.md` | S3 | design synthesis complete | Three work situations, five decisions and two acceptance scenarios; no participant research |
+| `03_prototype_link.md`, `/prototype` | S3 | local clickable v0.2 | All-source review, safe manual fallback and timestamped specialist handover |
+| `spec.md` | S3 | skeleton v1 ready | Contracts, trust levels, edge cases and v2 acceptance behavior |
+| `/evals/eval_set_v0.csv` | S3 | 20 cases with design review | Synthetic inputs and proposed labels; independent human approval absent |
 | `04_architecture.md` | S4 | upcoming | Technical architecture, RAG pipelines, grounding evaluator, tool schemas |
 | `05_metrics.md` | S5 | upcoming | Business & technical metrics, counter-metrics, eval-set definitions |
 | `06_ab_protocol.md` | S6 | upcoming | Agent-level RCT experiment design, sample size calculation, MDE |
@@ -43,15 +43,18 @@ One numbered file per session. Every member authors commits in at least four of 
 | `product_brief.md` | final | upcoming | Consolidated deliverable for final oral defence |
 | `/prototype`, `/evals` | S3 → S4 | S3 surface/seed ready; pipeline pending | Local HTML now; executable agent and evaluation runner in S4 |
 
-## Assignment 3 — status and evidence
+## Assignment 3 — delivery v2 · 3 November 2026
 
-Start with [the brief](03_product_brief.md), [design details](03_design_details.md), [Lean Canvas](03_ai_lean_canvas.md), [specification](spec.md) and [prototype instructions](03_prototype_link.md). The original `S3_templates/` are preserved; deliverables live at root as requested. Governance S3 is integrated into `governance.md`; no duplicate root governance snippet is needed.
+Start with [the brief v2](03_product_brief.md), [design details](03_design_details.md), [Lean Canvas](03_ai_lean_canvas.md), [specification](spec.md) and [prototype instructions](03_prototype_link.md). [The delivery matrix](03_s3_delivery.md) maps the assignment to every artifact and states the remaining limits. The original templates are preserved in `S3_templates/`; [brief v1](research/brief_v1.md) is archived for comparison.
 
-- Completed design artifacts: six-step process with source types/error assumptions/trust/metrics; eight ranked features, three MUST and five WON'T; component model choices; data audit; 20 self-contained synthetic proposed cases.
-- Still needs human evidence: three 20-minute interviews, two unassisted usability tests, observed brief v2 changes, independent human label approval and each member's own authored commit. No interview, label sign-off or measured product performance has been invented.
-- Prototype is local HTML, not an S4 agent. Browser rendering/keyboard checks and a screenshot remain to be done; see the prototype file for exact instructions.
-- The assignment DOCX says **8 November 2026**; the template says **Friday 6 November, start of S5**. Aim for 6 November and confirm the official deadline with the lecturer. The criterion retains the DOCX's 8 November date; no prior 30 October test is backdated.
-- S3 treats unsupported historical-data claims as scenario assumptions. Tracing-only validation does not establish the full S2 business case, which also includes dispute/compliance value.
+- **Design:** six-step process, source types/error assumptions/trust/metrics; eight sorted RICE features, three MUST and five WON’T; component model choices; six-question data audit and updated governance.
+- **v2 decisions:** inspect every source before insertion, explain the missing reference directly, preserve snapshot times in handover, route compliance to its specialist and disable insertion during manual fallback. [D01–D05](03_user_research.md) trace these decisions to acceptance scenarios.
+- **Prototype:** open [prototype/index.html](prototype/index.html) locally, or run `python -m http.server 8000 --bind 127.0.0.1` and visit `http://127.0.0.1:8000/prototype/`. No install, account or API key. Nothing is sent to a real customer, bank or queue.
+- **Verification:** `python scripts/verify_s3.py` on macOS checks document links, CSV structure/policy references, HTML IDs, shared success criterion and **23 prototype state assertions**. [Verification limits](prototype/verification.md): no browser rendering/screenshot, live pipeline or measured product performance.
+- **Evaluation:** 20 self-contained synthetic cases and an [AI design review](evals/label_design_review.csv). Labels remain proposed; the [human review register](evals/label_review.csv) is reserved for actual independent approvals. Seven eligible cases test tracing; thirteen cover blocking/handover. No benchmark pass or time saving is claimed.
+- **Research:** the team excludes participant interviews/tests. The research document therefore provides work situations, design rationale and reproducible acceptance scenarios. It does not claim interviews, user validation or compliance with that part of Assignment 3. Member-authored commits and human label approvals must also reflect actual actions.
+- **Threshold:** ≥41.2% paired active-time saving on eligible tracing, with QA ≥92%, grounding precision ≥98% and zero critical exposures. This remains a target for a frozen 200-case benchmark; tracing alone does not establish the complete S2 business case.
+- **Deadline:** the assignment DOCX states **8 November 2026**; the template states **Friday 6 November, start of S5**. Packaging target: 6 November, retaining 8 November in the stated evaluation criterion. No tests are backdated.
 
 ## Rules
 - Commit with your own Git account: the individual question at the oral is about a commit you signed.

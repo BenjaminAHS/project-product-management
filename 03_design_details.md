@@ -1,7 +1,7 @@
-# 03 — Design details · FlowAssist · v1
+# 03 — Design details · FlowAssist · v2
 
-**Team:** Lenny Santus, Anthony Rascle, Antoine Rabeau, Benjamin Caujolle, Colin Sibieude · **P2** · **2 November 2026**  
-**Status:** buildable design; user-validated v2 pending the research in `03_user_research.md`. No interviews or measured prototype results are claimed.
+**Team:** Lenny Santus, Anthony Rascle, Antoine Rabeau, Benjamin Caujolle, Colin Sibieude · **P2** · **3 November 2026**
+**Status:** v2 design complete; decisions D01–D05 in `03_user_research.md` derive from desk analysis. No participant validation is claimed.
 
 ## 1. Problem, user, do-nothing
 Karim, a Tier-1 payment operations specialist, loses 7.2 of an 18-minute ticket to investigation across disconnected tools. FlowAssist reconstructs a payment timeline and drafts a cited reply inside Zendesk; Karim checks and sends it. The P2 case provides 800 merchants, 12,000 tickets/month and 40% investigation time; the 18-minute baseline, staffing and detailed economics are inherited S1/S2 scenario assumptions, not newly observed company data. Without it: manual search and macros, 4% annual efficiency improvement (€57,600/year), against a €125,000/year alternative project.
@@ -64,16 +64,8 @@ S3 delivers **20 seed cases**, not the 200-case benchmark or measured success. T
 ## 8. Risks and rollback
 Wrong match, fabricated settlement certainty, stale clearing feeds, prompt injection, tenant leakage and review fatigue. One unsafe exposure or attempted send/fund write → disable drafting immediately, preserve minimized evidence and route manually; Ops Lead owns the stop, Engineering enforces it, DPO/CCO assesses any data incident. A failed timing/quality gate means conditional NO-GO and redesign, not a lowered threshold.
 
-## 9. What the users changed — v2 evidence register
-**No completed user research is available. This remains v1.**
-
-| Proposed design change to test | Required evidence before v2 | Status |
-|---|---|---|
-| Sources and timestamps beside each claim | Observed ability to find correct transaction during U1/U2 | Pending |
-| Explain “context only” in plain language | U1/U2 explain why the ambiguous ticket has no draft | Pending |
-| Preserve evidence and reason on escalation | Past handover behaviour from I1–I3 and observed test outcome | Pending |
-
-These are designer hypotheses, not attributed user feedback. Save observed changes with interview/test IDs and the before/after wording; retain this v1 in Git history.
+## 9. What the users changed — v2 design register
+No user-driven changes are established. The v2 implements D01 all-source inspection, D02 direct missing-reference wording, D03 timestamped evidence/handover, D04 a compliance destination, and D05 disabling insertion after manual fallback. Each decision has an acceptance scenario in [the needs and decision record](03_user_research.md). Scope and the 41.2% economic threshold stay fixed. [Original brief v1](research/brief_v1.md) records the prior design.
 
 ## 10. What users could not decide
 Users can change placement, wording and handover ergonomics. CFO/Product owns the 41.2% economic hurdle; paired timing and independent graders judge performance; Engineering chooses model after ablation; DPO/Legal confirms lawful processing, contracts and retention; CCO/Ops approves allowed scope. None is established by favourable interview opinions.

@@ -1,7 +1,7 @@
-# 03 — Product brief · FlowAssist · v1
+# 03 — Product brief · FlowAssist · v2
 
-**P2 · PayFlow AI Product Team · 2 November 2026**  
-**Status:** design ready; user-validated v2 pending. [Process, scoring and model tables](03_design_details.md) form the supporting annex.
+**P2 · PayFlow AI Product Team · 3 November 2026**
+**Status:** v2 design complete; desk-based revision, without participant validation. [Original v1](research/brief_v1.md). [Process, scoring and model tables](03_design_details.md) form the supporting annex.
 
 ## 1. Problem, user, do-nothing
 Karim, Tier-1 payment Ops specialist, investigates disconnected records before replying. P2 provides 800 merchants, 12,000 tickets/month and 40% investigation time; S1 assumes 18-minute handling time, including 7.2 minutes investigation. Do nothing: manual tools/macros and 4% annual efficiency gain (€57,600), versus a €125,000 alternative project. No actual internal logs or time study are available here.
@@ -23,7 +23,7 @@ Drafting plus timing tests the flip assumption, so both are MUST despite lower R
 Rules for permissions, money, freshness and audit; pretrained structured extraction because no labelled training corpus exists; hybrid retrieval/drafting because a standalone pretrained model has no current ledger facts; exact checks plus model critique because an LLM judge cannot enforce identity. [Component choices and lower-rung alternatives](03_design_details.md#5-model--smallest-rung-per-component); test rule templates first in S4.
 
 ## 6. Where it lives
-Zendesk sidebar: verified merchant, source timestamps, editable cited draft, review and handover. Targets: retrieval p95 ≤2s, complete draft ≤10s; timeout suppresses drafting. Logs restricted to assigned agent and authorized Ops/security reviewers. [Local clickable prototype](prototype/index.html), no live connections.
+Zendesk sidebar: verified merchant, source timestamps, editable cited draft, all-source inspection, explicit review and timestamped specialist handover. Manual mode disables draft insertion; compliance routes to its specialist. Targets: retrieval p95 ≤2s, complete draft ≤10s; timeout suppresses drafting. Logs restricted to assigned agent and authorized Ops/security reviewers. [Local clickable prototype](prototype/index.html), no live connections.
 
 ## 7. Success criterion
 > By 8 November 2026, on a frozen 200-case synthetic tracing benchmark with eligibility labelled before execution and paired human timing, FlowAssist saves at least 41.2% of total active handling time on eligible cases versus manual handling, including review and fallback time, with QA ≥92%, grounding-check precision ≥98%, and zero wrong-transaction disclosures, cross-tenant exposures, unauthorized sends or monetary actions.
@@ -34,7 +34,7 @@ S3 supplies 20 seeds, not measured success. [Denominator and grading](evals/READ
 Wrong match, stale facts, fabricated certainty, injection and review fatigue. Any critical exposure or attempted send/fund write immediately disables drafting; Ops owns the stop, Engineering enforces it, DPO/CCO assesses the incident. Failed performance means redesign, not a lowered threshold.
 
 ## 9. What the users changed
-**No interviews/tests supplied; no changes attributed to users.** Proposed tests: source visibility, understandable context-only wording, usable escalation packet. [Evidence register and three-interview/two-test protocol](03_user_research.md). Record observed before/after changes with I/U evidence IDs before issuing v2.
+No user-driven change is claimed. The v2 strengthens source inspection (D01), explains the missing reference directly (D02), preserves snapshot timestamps (D03), names the specialist destination (D04), and disables draft insertion in manual mode (D05). These are design decisions derived from the fixtures and safety contract, documented in the [decision register](03_user_research.md), without interviews or participant tests.
 
 ## 10. What users could not decide
 CFO/Product owns the 41.2% hurdle; timing and independent graders establish performance; Engineering selects the model after evaluation; DPO/Legal confirms lawful use and retention; CCO/Ops approves scope. Users inform workflow and wording.
