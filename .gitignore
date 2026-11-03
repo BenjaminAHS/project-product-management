@@ -15,3 +15,7 @@ node_modules/
 
 # Secrets (API keys for the prototype)
 .env
+
+# Vercel deployment output and local project metadata
+dist/
+.vercel/

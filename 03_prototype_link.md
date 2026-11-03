@@ -4,7 +4,8 @@
 
 - **Link:** [Open the prototype source](prototype/index.html). Download/clone the repository and open `prototype/index.html` in a browser; GitHub's file view shows source rather than executing HTML. No installation, account, API key or server is required.
 - **Optional HTTP preview:** from repository root, run `python -m http.server 8000 --bind 127.0.0.1`, then open `http://127.0.0.1:8000/prototype/`. Stop with Ctrl-C.
-- **Tool:** Codex-assisted HTML/CSS/JavaScript; Sites local-only workflow. Local artifact follows the assignment's repository deliverable; no hosted URL or production integration is claimed.
+- **Public hosting:** [Vercel configuration](vercel.json) publishes the prototype at `/`. Import/deployment instructions are in [README](README.md#public-hosting-on-vercel). Deployment is prepared; no production URL is confirmed yet.
+- **Tool:** Codex-assisted HTML/CSS/JavaScript; Sites local-only workflow. Local artifact follows the assignment's repository deliverable; Vercel publication is prepared separately; no production integration is claimed.
 - **Time box:** designed as an under-one-hour surface exercise; actual elapsed build time was not instrumented and is not presented as a measurement.
 - **Versions:** v0.1 has ready/ambiguous/compliance/access-denied cases, source inspection, review, editor insertion and context handover. v0.2 implements design decisions D01–D05: inspect all sources, plain-language ambiguity, timestamped handover, compliance routing and safe manual mode. This is a desk-based revision; no participant iteration is claimed.
 

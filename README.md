@@ -56,6 +56,14 @@ Start with [the brief v2](03_product_brief.md), [design details](03_design_detai
 - **Threshold:** ≥41.2% paired active-time saving on eligible tracing, with QA ≥92%, grounding precision ≥98% and zero critical exposures. This remains a target for a frozen 200-case benchmark; tracing alone does not establish the complete S2 business case.
 - **Deadline:** the assignment DOCX states **8 November 2026**; the template states **Friday 6 November, start of S5**. Packaging target: 6 November, retaining 8 November in the stated evaluation criterion. No tests are backdated.
 
+## Public hosting on Vercel
+
+The repository contains [vercel.json](vercel.json) for a dependency-free static deployment. Import `BenjaminAHS/project-product-management` in Vercel with the repository root as Root Directory. The configuration selects Other, skips dependency installation and copies only the prototype HTML and JavaScript into `dist/`; the application opens directly at `/`.
+
+[Import this repository into Vercel](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FBenjaminAHS%2Fproject-product-management)
+
+Use the production domain for sharing. For access without a Vercel account, check the project's Deployment Protection settings and ensure production access is public. No environment variables are required. Publishing requires an authenticated Vercel account; no live URL is claimed until deployment succeeds. Configuration reference: [Vercel project configuration](https://vercel.com/docs/project-configuration/vercel-json).
+
 ## Rules
 - Commit with your own Git account: the individual question at the oral is about a commit you signed.
 - Tag the final version `v1.0` before the first oral of your cohort. No commits after the first oral starts.
