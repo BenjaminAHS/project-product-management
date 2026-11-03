@@ -1,0 +1,43 @@
+name: Sync Vercel deployment repository
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sync-vercel-main
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    if: github.repository == 'BenjaminAHS/project-product-management'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check destination credential
+        env:
+          DEPLOY_REPO_TOKEN: ${{ secrets.DEPLOY_REPO_TOKEN }}
+        run: |
+          if [ -z "$DEPLOY_REPO_TOKEN" ]; then
+            echo "::error::Add the DEPLOY_REPO_TOKEN Actions secret to the primary repository. See prototype/DEPLOYMENT.md."
+            exit 1
+          fi
+      - name: Read latest primary main
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: main
+          path: source
+          persist-credentials: false
+      - name: Check out deployment main
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          repository: lsantus-mines/deploy-project-product-management
+          ref: main
+          path: deployment
+          token: ${{ secrets.DEPLOY_REPO_TOKEN }}
+      - name: Synchronize committed files and push safely
+        run: python3 source/scripts/sync_deploy.py --source source --checkout deployment
