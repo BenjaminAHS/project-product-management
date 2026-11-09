@@ -43,7 +43,7 @@ A workflow: every step and branch is written in advance, and no model chooses a 
 - API down: no API is called. Integration and its timeouts are untested; local manual mode stays available. Browser storage failure: in-memory only.
 
 ## 6. The override switch ⏻
-- Operational owner of the button: the specialist using the tab. Owner of a future global stop: Ops, a named person to be appointed before any pilot.
+- Operational owner of the button: the specialist using the tab. **Accountable owner of the switch: Antoine Rabeau (@antorabo75)**, named on 9 November 2026: owns its scope, its test schedule and the decision to stop assisted drafting for all tickets; in a pilot this role passes to PayFlow Ops.
 - Action: switch the ticket to manual mode; assisted insertion is disabled. Resuming is explicit and resets inspection/approval.
 - Scope: one ticket in one tab. No global server stop.
 - Tested on 9 November 2026 by the automated run `python3 scripts/verify_s3.py`, scenario "manual fallback and resume require a fresh inspection". Not a user test or a visual browser check.
