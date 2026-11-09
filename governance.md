@@ -98,7 +98,7 @@ The engine filters public fixtures by assigned merchant, requires a unique refer
 | Insertion and editing | Approval | Any edit invalidates the approval; factual check and final approval required |
 | Reply / resolution | Approval | The specialist records a local action only; no customer sending |
 | Handover | Approval | Reason required, refreshed preview, explicit recording; no real queue contacted |
-| Evaluation before a pilot | Exhaustive review | Two independent people; reviewer and grader 1: Antoine Rabeau (9 Nov), second person pending; all 50 labels and outputs reviewed; not mere sampling |
+| Evaluation before a pilot | Exhaustive review | Two independent people; label reviewer and grader 1: Antoine Rabeau (9 Nov); grader 2 pending; a second label reviewer is optional (A3 requires labels by hand, not two reviewers); all 50 labels and outputs reviewed; not mere sampling |
 
 **⏻ Owner and scope:** each specialist can switch their ticket to manual mode in their tab. Assisted insertion is then disabled; resuming resets inspection and approval. The automated scenario "manual fallback and resume require a fresh inspection" passed on 9 November 2026; this is not a test attested by Ops. No global stop exists yet. **Accountable owner of the switch: Antoine Rabeau (@antorabo75)**, named on 9 November 2026; he owns the scope, reruns the switch test after every engine change, and must build and test a global server-side stop before any pilot, when ownership passes to PayFlow Ops.
 
