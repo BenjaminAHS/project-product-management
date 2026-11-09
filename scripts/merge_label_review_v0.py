@@ -44,7 +44,7 @@ for row in rows:
         if r["decision"] == "corrected":
             corrections.append((row["case_id"], r["reviewer"], decision, r["comment"]))
 with path.open("w", newline="", encoding="utf-8") as stream:
-    writer = csv.DictWriter(stream, columns)
+    writer = csv.DictWriter(stream, columns, lineterminator="\n")
     writer.writeheader()
     writer.writerows(rows)
 

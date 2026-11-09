@@ -53,7 +53,7 @@ for row in rows:
         row["final_decision"] = "pending adjudication"
         pending += 1
 with path.open("w", newline="", encoding="utf-8") as stream:
-    writer = csv.DictWriter(stream, columns)
+    writer = csv.DictWriter(stream, columns, lineterminator="\n")
     writer.writeheader()
     writer.writerows(rows)
 
