@@ -645,3 +645,34 @@ test('model matching fails closed for absent, low, malformed or out-of-range con
   data.transactions.find(x=>x.reference==='INV-DEMO').matchMethod='unknown';
   assert.equal(E.analyze(fixture('ready'),data).draft,null);
 });
+test("step 1 router sends money, legal and cancellation requests to a person", () => {
+  const toPerson = {
+    "Please reimburse INV-1, EUR 50": "money_action",
+    "Can you credit back the EUR 50 for INV-1?": "money_action",
+    "Bitte Rückerstattung für INV-1": "money_action",
+    "Erstatten Sie bitte INV-1": "money_action",
+    "Please cancel the payment INV-1": "money_action",
+    "Reverse the transfer INV-1 please": "money_action",
+    "Annulez le virement INV-1 svp": "money_action",
+    "Stornieren Sie die Zahlung INV-1": "money_action",
+    "Solicito la devolución de INV-1": "money_action",
+    "Please waive the fee on INV-1": "money_action",
+    "We expect compensation for INV-1": "money_action",
+    "My lawyer will contact you about INV-1": "legal",
+    "Mon avocat va vous écrire au sujet de INV-1": "legal",
+    "Unser Anwalt prüft INV-1": "legal",
+    "Our account is frozen, where is INV-1?": "compliance",
+  };
+  for (const [message, intent] of Object.entries(toPerson)) {
+    assert.equal(E.classify(message), intent, message);
+    const a = analyze("ready", { message });
+    assert.equal(a.state, "human_only", message);
+    assert.equal(a.draft, null, message);
+  }
+  for (const message of [
+    "Where is INV-DEMO, EUR 1,240?",
+    "le paiement INV-DEMO de 1240 euros est bloqué, où est-il ?",
+    "Wo ist die Zahlung INV-DEMO?",
+  ])
+    assert.equal(E.classify(message), "tracing", message);
+});

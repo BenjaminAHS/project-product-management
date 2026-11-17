@@ -1,5 +1,11 @@
 # FlowAssist interface changelog
 
+## Step 1 router · 17 November 2026
+
+- Router (`classify`): money-action requests now cover reimburse, credit back, recredit, Rückerstattung/erstatten, Rückbuchung, devolución, cancel/reverse/annuler/stornieren a payment, fee waivers and compensation; a new `legal` route catches lawyer/avocat/Anwalt/court/lawsuit threats. All go to a person. "bloqué" (stuck) deliberately stays tracing.
+- Inbox status labels show "Legal" and "Money action".
+- One router regression test added (33 total). Development set unchanged: 50/50 expected states, 15 drafts, 0 drafts on human-only; `results_v0.json` regenerated for the new engine hash.
+
 ## S4 engine corrections and documentation · 9 November 2026
 
 - Corrected reference extraction (FAC/RE/REF) and monetary token boundaries; reference digits and hyphens no longer become monetary amounts or negative signs.

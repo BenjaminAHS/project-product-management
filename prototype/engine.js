@@ -63,21 +63,27 @@
       flagged: flagged || safe.includes("[REDACTED_SECRET]"),
     };
   }
+  // Step 1 · router (rung 1, rules). Only plain payment tracing may continue to
+  // drafting; every other intent is routed to a person. Order matters: the most
+  // sensitive route wins. Lists cover EN/FR/DE (+ common ES) on accent-free text.
+  const ROUTES = [
+    [
+      "compliance",
+      /\b(kyc|aml|compliance|fraud|fraude|betrug|sanction|sanktion)\b|freigeben|geben sie sie frei|frozen|hold.{0,20}release|release.{0,20}hold/,
+    ],
+    ["dispute", /chargeback|disput|contestation|litige|reklamation|widerspruch/],
+    [
+      "legal",
+      /\b(lawyer|attorney|solicitor|lawsuit|sue|suing|legal action|court|avocat|tribunal|mise en demeure|poursuite|anwalt|rechtsanwalt|klage|gericht|abogado|demanda)\b/,
+    ],
+    [
+      "money_action",
+      /refund|rembours|reimburs|reembols|devolu|erstatt|ruckbuch|credit.{0,12}back|recredit|release.{0,15}fund|transfer.{0,10}now|execute.{0,10}payment|\b(cancel|annul|storn|revers|recall|stop)\w*.{0,25}(payment|transfer|virement|paiement|zahlung|uberweisung|it|le|la|sie)\b|\b(waive|waiver|compensat|indemni|entschadig|geste commercial|kulanz|goodwill)\w*/,
+    ],
+  ];
   function classify(text) {
     const n = normalize(text);
-    if (
-      /\b(kyc|aml|compliance|fraud|fraude|betrug)\b|freigeben|geben sie sie frei|frozen|hold.{0,20}release|release.{0,20}hold/.test(
-        n,
-      )
-    )
-      return "compliance";
-    if (/chargeback|disput|contestation|litige/.test(n)) return "dispute";
-    if (
-      /refund|rembours|release.{0,15}fund|transfer.{0,10}now|execute.{0,10}payment/.test(
-        n,
-      )
-    )
-      return "money_action";
+    for (const [intent, pattern] of ROUTES) if (pattern.test(n)) return intent;
     return "tracing";
   }
   function sourceRecords(tx) {
@@ -207,7 +213,9 @@
           ? "Dispute specialist required"
           : intent === "compliance"
             ? "Compliance specialist required"
-            : "Financial action requires a specialist",
+            : intent === "legal"
+              ? "Legal threat requires a specialist"
+              : "Financial action requires a specialist",
         "Account context is available. No deadline, regulatory diagnosis, hold release, refund or execution advice is generated.",
         "human_only",
         intent === "dispute"

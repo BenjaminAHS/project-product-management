@@ -214,7 +214,11 @@ function labelFor(a, r) {
           ? "Dispute"
           : a.intent === "compliance"
             ? "Compliance"
-            : a.gate.includes("unavailable")
+            : a.intent === "legal"
+              ? "Legal"
+              : a.intent === "money_action"
+                ? "Money action"
+                : a.gate.includes("unavailable")
               ? "Restricted"
               : "Needs review",
     className: a.state === "draft_ready" ? "ready-label" : "amber-label",
