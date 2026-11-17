@@ -403,8 +403,9 @@ function updateEditor() {
   updateFinal();
 }
 // Step 1 → step 2: once both records are opened, the cited draft goes into the
-// reply editor through the same server-checked insertion as before. The human
-// approval stays in step 3.
+// reply editor through the same server-checked insertion. Pre-filling is not an
+// approval: the only human checkpoint for a reply is step 3 ("I checked the
+// facts and the wording" + Approve & close), ticked by the specialist.
 function maybePrefill() {
   if (
     analysis.state === "draft_ready" &&
@@ -415,7 +416,6 @@ function maybePrefill() {
     assistMode === "on" &&
     !serverDown
   ) {
-    $("review").checked = true;
     insertDraft();
   }
 }
@@ -449,7 +449,7 @@ function nextStepText() {
       : "Step 2 · Preparing the cited reply…";
   if (!$("final-review").checked)
     return "Step 2 · Read the reply against the verified facts, then tick “I checked the facts and the wording”.";
-  return "Step 3 · Click “Approve & close”. You send the reply from your support inbox.";
+  return "Step 3 · Click “Approve & close · demo”. You send the reply from your support inbox; nothing is sent here.";
 }
 function updateNextStep() {
   $("next-step-text").textContent = nextStepText();
@@ -510,7 +510,6 @@ function updateApproval() {
     assistMode === "on" &&
     !serverDown &&
     all &&
-    $("review").checked &&
     qa.passed
   );
   $("draft-check-result").textContent = qa.passed
@@ -525,12 +524,10 @@ function updateApproval() {
       ? "Assisted insertion disabled by the assistant switch. Reply manually."
     : !all
       ? `${inspectedSources.size}/${analysis.sources.length} source records inspected.`
-      : !$("review").checked
-        ? "Check the reply and confirm review."
-        : "Ready to place in your editor. Nothing is sent.";
+      : "Ready to place in your editor. Nothing is sent.";
   const phase = !all
     ? "step-evidence"
-    : !$("review").checked
+    : !$("editor").value.trim()
       ? "step-review"
       : "step-reply";
   $("draft-panel").classList.toggle("locked", analysis.state === "draft_ready" && !all);
@@ -742,7 +739,6 @@ function render(key) {
   $("editor").value = b.editor;
   $("manual-note").value = b.note;
   $("reason").value = b.reason;
-  $("review").checked = false;
   $("final-review").checked = false;
   $("manual-state").hidden = !manualMode;
   $("manual").hidden = manualMode || r.outcome !== "open";
@@ -1011,19 +1007,13 @@ tickets.forEach((t) => {
   }),
 );
 $("search").addEventListener("input", filterTickets);
-$("review").addEventListener("change", () => {
-  hideReplacement();
-  updateApproval();
-});
 $("draft").addEventListener("input", () => {
-  $("review").checked = false;
   hideReplacement();
   updateApproval();
   saveTicket();
 });
 $("restore-draft").addEventListener("click", () => {
   $("draft").value = analysis.draft || "";
-  $("review").checked = false;
   updateApproval();
   saveTicket();
   announce("Original source-backed wording restored. Review again.");
@@ -1057,7 +1047,6 @@ $("copy-reply").addEventListener("click", async () => {
 });
 $("manual").addEventListener("click", () => {
   manualMode = true;
-  $("review").checked = false;
   event("Manual handling selected");
   track("manual_mode_toggled", { ...segment(), to: "manual" });
   refresh(
@@ -1476,8 +1465,10 @@ else {
   $("assist-mode").textContent = "Local preview · server guardrails not active";
   $("assist-mode").className = "assist-mode demo-end mode-local";
 }
+// Auto-open once per browser, except in demo mode (…/?demo), e.g. at the oral.
 try {
-  if (typeof localStorage !== "undefined" && !localStorage.getItem("flowassist.tour.v1"))
+  const demoMode = typeof location !== "undefined" && /[?&]demo\b/.test(location.search);
+  if (!demoMode && typeof localStorage !== "undefined" && !localStorage.getItem("flowassist.tour.v1"))
     setTimeout(() => showTour(0), 600);
 } catch (_) {}
 // Close the More menu once an item is chosen (delegated: items keep their own handlers).
