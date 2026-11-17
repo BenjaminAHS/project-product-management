@@ -21,7 +21,7 @@ jobs:
       github.repository == 'BenjaminAHS/project-product-management' &&
       (github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success')
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20  # the smoke loop alone can wait 20 × 30 s
     steps:
       - name: Check destination credential
         env:

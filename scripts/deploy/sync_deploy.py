@@ -22,9 +22,13 @@ def git(directory, *args, capture=True):
     return result.stdout if capture else b''
 
 
+# Not needed to build or run the site: keep the deployment copy light.
+NOT_DEPLOYED = {'pitch', 'reference', 'assignments'}
+
+
 def excluded(name):
     parts = PurePosixPath(name).parts
-    return '.git' in parts or parts[:2] == ('.github', 'workflows')
+    return '.git' in parts or parts[:2] == ('.github', 'workflows') or (len(parts) > 1 and parts[0] in NOT_DEPLOYED)
 
 
 def normalized(repository):

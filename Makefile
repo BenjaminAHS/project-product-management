@@ -5,7 +5,7 @@ PY ?= .venv/bin/python
 PORT ?= 8000
 URL ?= http://127.0.0.1:$(PORT)
 
-.PHONY: help install dev test test-py test-js eval adversarial judge metrics lint fmt export-data check-data ci smoke
+.PHONY: help install dev test test-py test-js test-deploy eval adversarial judge metrics lint fmt export-data check-data ci smoke
 
 help: ## List the targets
 	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk -F ':.*## ' '{printf "  %-12s %s\n", $$1, $$2}'
@@ -26,11 +26,15 @@ test-js: ## Node: interface workflow and labelling page
 	node scripts/verify/test_app.cjs
 	node scripts/verify/test_labeller.cjs
 
-eval: ## Development regression: 50/50 states, artefact and hash checks
+eval: ## Development regression: 50/50 states, artefact and hash checks, eval-set v1 alignment
 	node scripts/eval/eval_s4.cjs
-	git diff --exit-code -- evals/v0/results_v0.json || (echo "evals/v0/results_v0.json changed: rerun and commit it"; exit 1)
 	$(PY) scripts/verify/verify_s3.py
 	$(PY) scripts/verify/verify_s4.py
+	$(PY) scripts/verify/verify_eval_v1.py
+	@git diff --exit-code -- evals/ || (echo "evals/ changed when regenerated (results_v0 or results_baseline_v0): rerun make eval and commit"; exit 1)
+
+test-deploy: ## Vercel copy synchronisation, on local temporary repositories
+	$(PY) scripts/deploy/test_sync_deploy.py
 
 adversarial: ## Attack set (OWASP LLM rows): any miss fails
 	$(PY) scripts/eval/run_adversarial.py
@@ -55,7 +59,7 @@ export-data: ## Regenerate flowassist/fixtures.json from prototype/data.js
 check-data:
 	node scripts/eval/export_data.cjs --check
 
-ci: lint check-data test eval adversarial ## Everything CI runs
+ci: lint check-data test eval adversarial test-deploy ## Everything CI runs
 
 smoke: ## Check a running or deployed instance: make smoke URL=https://...
 	$(PY) scripts/verify/smoke.py $(URL)
