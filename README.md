@@ -61,7 +61,7 @@ project-product-management/
 | `02_investment_memo.md` | S2 — Assignment 2 | Updated: conditional GO, named alternative and 41.2% flip threshold |
 | `03_product_brief.md` | S3 | Brief v2 present; supporting process/design record and archived v1 |
 | `04_architecture.md` | S4 | Implemented workflow, components, checkpoints, fallbacks; §8b server authority, switch and release path (v0.6) |
-| `05_metrics.md` | S5 | To write (Assignment 5, 22 Nov). Inputs ready: [tracking plan](docs/TRACKING_PLAN.md), attack set, [judge report](evals/judge/judge_report.md), `make metrics` |
+| [`05_metrics.md`](05_metrics.md) | S5 | Draft (Assignment 5, due 22 Nov): stack, stop criterion, hierarchy by segment, 3 business metrics, eval plan. To do by people: 100 labels in `eval_set_v1.csv`, grader 2 and the human–human rate |
 | `06_07_experiments_operations.md` | S6–S7 | To write (Assignment 6+7, 23 Nov). Inputs ready: switch, rollback, incident classes, monitoring thresholds in [spec.md](spec.md) §7 |
 | `08_launch_memo.md` | S8 | Future session deliverable; not yet present |
 | `spec.md`, `product_brief.md` | final | **`spec.md` v3: whole project S1–S7** (product, architecture, contracts, guardrails, operation, metrics, delivery, decision log); consolidated `product_brief.md` for the final push |

@@ -108,8 +108,10 @@ The engine filters public fixtures by assigned merchant, requires a unique refer
 
 **Evaluation integrity:** labels for F21–F50 were AI-proposed before the run; the F01–F20 seed was already exposed. After review and fixes, all 50 became development cases. Do not reuse this set for an independent claim. Human graders must fill in `label_review.csv` and `grader_reviews.csv` themselves; no identity, approval or timing is invented. F19 is fixed: a model score of 0.94 forces abstention; source notes play no part in generation. No real model is evaluated. Code and fixture hashes are in the results. See `evals/report_v0.md`.
 
-## Session 5 — counter-metrics and the segments we report (to come)
-*Primary metric (AHT), counter-metrics (QA score, 7-day reopen rate, agent override rate), and protected reporting segments.*
+## Session 5 — counter-metrics, segments reported, harm threshold (draft, 17 November 2026)
+- **Primary:** active handling time per eligible tracing ticket. **Guardrails:** QA ≥ 92 % (weekly sample), zero critical exposures (floor: blocks the release), match precision ≥ 98 %. **Counter-metrics:** 7-day reopen rate and edit rate (automation-bias watch). Details in `05_metrics.md` §3.
+- **Segments reported:** merchant language (EN · FR · DE · other), plan, region, rail, severity. **Fairness metric:** equal error rates across languages (QA pass rate and 7-day reopen, FR and DE vs EN).
+- **Harm threshold that stops the rollout:** if the FR or DE 7-day reopen rate is above 1.5 × the EN rate for two weekly reads in a row, or QA falls below 92 % in any language segment, FlowAssist goes to suggestions-only (`ASSIST_MODE=suggest_only`) for that segment. **Owner: Head of Payment Operations.**
 
 ## Session 6 — protected segments and the harm threshold that stops an experiment (to come)
 *A/B trial experiment guardrails, enterprise merchant protection, and safety thresholds for experiment termination.*
