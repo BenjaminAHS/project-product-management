@@ -772,3 +772,38 @@ test("without a server the page says it is a local preview", () => {
   const w = workspace();
   assert(w.get("assist-mode").textContent.includes("Local preview"));
 });
+test("the next-step bar always names the next action", () => {
+  const w = workspace();
+  const next = () => w.get("next-step-text").textContent;
+  assert.match(next(), /Open the ledger record, then the clearing record/);
+  w.get("sources").children[0].click();
+  assert.match(next(), /open the clearing record/);
+  w.get("sources").children[1].click();
+  assert.match(next(), /tick “I checked…”/);
+  w.get("review").checked = true;
+  w.get("review").fire("change");
+  assert.match(next(), /Use draft in editor/);
+  w.get("use-draft").click();
+  assert.match(next(), /final check/);
+  w.get("final-review").checked = true;
+  w.get("final-review").fire("change");
+  assert.match(next(), /Record reply & close/);
+  w.get("record-reply").click();
+  assert.match(next(), /Done/);
+  w.run('render("dispute")');
+  assert.match(next(), /needs a specialist/);
+});
+test("the tour walks five steps and can be skipped", () => {
+  const w = workspace();
+  assert(w.get("tour").hidden);
+  w.get("tour-start").click();
+  assert(!w.get("tour").hidden);
+  assert.equal(w.get("tour-progress").textContent, "Step 1 of 5");
+  for (let i = 0; i < 4; i++) w.get("tour-next").click();
+  assert.equal(w.get("tour-next").textContent, "Start working");
+  w.get("tour-next").click();
+  assert(w.get("tour").hidden);
+  w.get("tour-start").click();
+  w.get("tour-skip").click();
+  assert(w.get("tour").hidden);
+});

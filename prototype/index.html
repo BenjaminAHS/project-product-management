@@ -164,6 +164,7 @@
               <svg class="icon" aria-hidden="true">
                 <use href="#i-key" />
               </svg></button
+            ><button id="tour-start" class="quiet-button">Take the tour</button
             ><button id="reset" class="quiet-button">Reset demo</button
             ><span class="operator"
               ><span class="avatar small-avatar">KA</span> Karim</span
@@ -277,6 +278,10 @@
                 ><span>Owner<strong>Karim · Tier 1</strong></span></span
               >
             </div>
+          </div>
+          <div id="next-step" class="next-step" role="status" aria-live="polite">
+            <span class="next-label">Next step</span>
+            <p id="next-step-text">Open a ticket to start.</p>
           </div>
           <div class="work-grid">
             <article class="message-card">
@@ -542,7 +547,7 @@
             </section>
             <section class="reply-card" aria-labelledby="reply-heading">
               <div class="section-top">
-                <h3 id="reply-heading">Your reply</h3>
+                <h3 id="reply-heading">Your reply to the merchant</h3>
                 <span id="editor-state" class="subtle-tag">Not prepared</span>
               </div>
               <p class="section-description">
@@ -577,7 +582,7 @@
                 >
                 <p id="final-check-result" class="section-description"></p>
                 <button id="record-reply" class="primary-button" disabled>
-                  Record human reply &amp; close · demo
+                  Record reply &amp; close
                   <svg class="icon" aria-hidden="true">
                     <use href="#i-check" />
                   </svg></button
@@ -685,5 +690,15 @@
         </section>
       </main>
     </div>
-  </body>
+      <div id="tour" class="tour" role="dialog" aria-labelledby="tour-title" hidden>
+      <p id="tour-progress" class="tour-progress"></p>
+      <h3 id="tour-title"></h3>
+      <p id="tour-body"></p>
+      <div class="tour-actions">
+        <button id="tour-skip" class="quiet-button">Skip tour</button
+        ><button id="tour-back" class="secondary-button">Back</button
+        ><button id="tour-next" class="primary-button">Next</button>
+      </div>
+    </div>
+</body>
 </html>

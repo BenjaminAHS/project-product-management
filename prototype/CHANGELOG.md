@@ -1,5 +1,12 @@
 # FlowAssist interface changelog
 
+## v0.7 · guided use · 17 November 2026
+
+- A "Next step" bar under the ticket title always says what to do now (open the ledger, then the clearing record; compare with the verified facts; use the draft; final check; record) and what to do when no draft is possible (ask for a reference, hand over).
+- A five-step guided tour on first visit (inbox, merchant question, evidence, suggested reply, you decide), restartable from "Take the tour" in the top bar; Escape or "Skip tour" closes it.
+- Progressive disclosure: the suggested reply stays dimmed until both sources are opened; the reply box now sits right under the payment summary.
+- Clearer labels: "Your reply to the merchant", "Record reply & close". 41 interface tests (2 new).
+
 ## v0.6 · server authority, global switch, CI · 17 November 2026
 
 - FastAPI server (`api/index.py`, `flowassist/engine.py`) enforces the rules on insertion, final reply and handover; the browser engine stays as the instant preview. Parity test: identical results on 123 cases and 468 draft checks.

@@ -408,6 +408,36 @@ function allSourcesChecked() {
     analysis.sources.every((s) => inspectedSources.has(s.id))
   );
 }
+// One sentence that always says what to do now: the main onboarding aid.
+function nextStepText() {
+  const r = record(),
+    editor = $("editor").value.trim();
+  if (r.outcome === "resolved") return "Done. This case is closed — pick the next ticket in your inbox.";
+  if (r.outcome === "escalated") return "Handed over to a specialist. Pick the next ticket in your inbox.";
+  if (r.outcome === "waiting") return "Waiting for the merchant’s reference. Enter it in the assistant when it arrives.";
+  if (serverDown) return "The assistant is unavailable: write your reply manually, then record it.";
+  if (analysis.state === "human_only")
+    return "This request needs a specialist. Open “Hand over to a specialist”, give a reason and record the handover.";
+  if (analysis.state === "context_only")
+    return analysis.candidates.length > 1 || /reference/i.test(analysis.gate)
+      ? "Ask the merchant for a unique payment reference, or hand the case over with the evidence."
+      : "No draft is possible here. Read the reason in the assistant, then hand the case over.";
+  if (!allSourcesChecked())
+    return inspectedSources.size === 0
+      ? "Open the ledger record, then the clearing record, in the assistant on the right."
+      : "Now open the clearing record to finish checking the evidence.";
+  if (!$("review").checked && !editor)
+    return "Compare the suggested reply with the verified facts, then tick “I checked…”.";
+  if (!editor)
+    return assistMode === "on"
+      ? "Click “Use draft in editor” to copy the reviewed reply into your reply box."
+      : "Drafts can’t be inserted right now: write your reply in the box below.";
+  if (!$("final-review").checked) return "Read your final reply once more, then tick the final check below it.";
+  return "Click “Record reply & close”. Nothing is sent to the merchant from this demo.";
+}
+function updateNextStep() {
+  $("next-step-text").textContent = nextStepText();
+}
 function updateFinal() {
   const qa = E.evaluateDraft(analysis, $("editor").value);
   const available =
@@ -429,6 +459,7 @@ function updateFinal() {
         : qa.critical
           ? qa.issues.join(" ")
           : "Your edits require a manual factual review. Confirm the final review only after checking every claim.";
+  updateNextStep();
 }
 function renderFacts() {
   const box = $("verified-facts");
@@ -486,6 +517,7 @@ function updateApproval() {
     : !$("review").checked
       ? "step-review"
       : "step-reply";
+  $("draft-panel").classList.toggle("locked", analysis.state === "draft_ready" && !all);
   const order = ["step-evidence", "step-review", "step-reply"];
   order.forEach((id, i) => {
     $(id).setAttribute("aria-current", id === phase ? "step" : "false");
@@ -1295,6 +1327,44 @@ $("reset").addEventListener("click", () => {
   persist();
   announce("Demo reset. All local work, custom cases and receipts cleared.");
 });
+// Guided tour: five steps, shown once per browser, restartable from the top bar.
+const TOUR = [
+  ["ticket-list", "Your inbox", "Tickets assigned to you. Green “Reply ready” means FlowAssist found the payment; amber means a specialist or more information is needed."],
+  ["message", "The merchant’s question", "Start by reading what the merchant asks. The merchant’s account comes from your session, never from the message."],
+  ["sources", "Check the evidence", "Open the ledger record, then the clearing record. The status tells you what the merchant can rely on: “sent to bank” is not “received”."],
+  ["draft-panel", "Review the suggested reply", "Every fact in the draft is cited and listed under Verified facts. Tick the review box, then use the draft — or write your own."],
+  ["record-reply", "You decide", "Read your final reply, tick the final check and record it. Nothing is ever sent by FlowAssist. Unsure? Use “Hand over to a specialist”."],
+];
+let tourStep = -1;
+function showTour(i) {
+  (document.querySelectorAll ? Array.from(document.querySelectorAll(".tour-target")) : []).forEach((el) =>
+    el.classList.remove("tour-target"),
+  );
+  tourStep = i;
+  if (i < 0 || i >= TOUR.length) {
+    $("tour").hidden = true;
+    try {
+      localStorage.setItem("flowassist.tour.v1", "done");
+    } catch (_) {}
+    return;
+  }
+  const [target, title, body] = TOUR[i];
+  setView("inbox");
+  $("tour").hidden = false;
+  $("tour-progress").textContent = `Step ${i + 1} of ${TOUR.length}`;
+  $("tour-title").textContent = title;
+  $("tour-body").textContent = body;
+  $("tour-back").disabled = i === 0;
+  $("tour-next").textContent = i === TOUR.length - 1 ? "Start working" : "Next";
+  const el = $(target);
+  const card = el && el.closest ? el.closest(".message-card, .copilot section, .reply-card, .ticket-list, aside") || el : el;
+  if (card && card.classList) card.classList.add("tour-target");
+  if (card && card.scrollIntoView) card.scrollIntoView({ block: "center", behavior: "smooth" });
+}
+$("tour-start").addEventListener("click", () => showTour(0));
+$("tour-next").addEventListener("click", () => showTour(tourStep + 1));
+$("tour-back").addEventListener("click", () => showTour(Math.max(0, tourStep - 1)));
+$("tour-skip").addEventListener("click", () => showTour(-1));
 function toggleShortcuts(open) {
   $("shortcut-panel").hidden = !open;
   $("shortcuts").setAttribute("aria-expanded", String(open));
@@ -1307,6 +1377,7 @@ document.addEventListener("keydown", (e) => {
     ["INPUT", "TEXTAREA", "SELECT"].includes(e.target && e.target.tagName) ||
     (e.target && e.target.isContentEditable);
   if (e.key === "Escape") {
+    if (!$("tour").hidden) showTour(-1);
     toggleShortcuts(false);
     hideReplacement();
     $("new-ticket-panel").hidden = true;
@@ -1378,3 +1449,7 @@ else {
   $("assist-mode").textContent = "Local preview · server guardrails not active";
   $("assist-mode").className = "assist-mode demo-end mode-local";
 }
+try {
+  if (typeof localStorage !== "undefined" && !localStorage.getItem("flowassist.tour.v1"))
+    setTimeout(() => showTour(0), 600);
+} catch (_) {}

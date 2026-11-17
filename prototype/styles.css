@@ -2213,3 +2213,123 @@ td {
   color: var(--stop);
   background: var(--stop-bg);
 }
+
+/* ── v0.7 · guided use: next-step bar, tour, progressive disclosure ───────── */
+.next-step {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: 1436px;
+  margin: 0 auto 20px;
+  width: calc(100% - 64px);
+  box-sizing: border-box;
+  padding: 14px 18px;
+  background: var(--mint);
+  border: 1px solid #c4d5b5;
+  border-left: 5px solid var(--green);
+  border-radius: 12px;
+}
+.next-step p {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.next-label {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--green);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+.draft-card.locked {
+  opacity: 0.45;
+  filter: grayscale(0.4);
+}
+.draft-card.locked textarea {
+  pointer-events: none;
+}
+.tour {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 50;
+  width: min(380px, calc(100vw - 32px));
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 20px 22px;
+  box-shadow: 0 18px 50px rgba(20, 50, 40, 0.22);
+}
+.tour[hidden] {
+  display: none;
+}
+.tour-progress {
+  margin: 0 0 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--green);
+}
+.tour h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+  color: var(--ink);
+}
+.tour p#tour-body {
+  margin: 0 0 16px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #3e4f46;
+}
+.tour-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  align-items: center;
+}
+.tour-actions button {
+  width: auto;
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+.tour-actions .quiet-button {
+  margin-right: auto;
+}
+.tour-target {
+  outline: 3px solid var(--green);
+  outline-offset: 4px;
+  border-radius: 14px;
+  transition: outline-color 0.2s;
+}
+/* Reply box right under the payment summary; context below it */
+.work-grid > .reply-card {
+  grid-row: 3;
+}
+.work-grid > .account-card {
+  grid-row: 4;
+}
+@media (max-width: 1220px) {
+  .work-grid > .reply-card,
+  .work-grid > .account-card {
+    grid-row: auto;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tour-target {
+    transition: none;
+  }
+}
+@media (max-width: 720px) {
+  .next-step {
+    width: calc(100% - 32px);
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .tour {
+    right: 16px;
+    bottom: 16px;
+  }
+}
