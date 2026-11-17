@@ -32,12 +32,12 @@ class Page(HTMLParser):
 page=Page();page.feed((ROOT/'prototype/index.html').read_text())
 assert len(page.ids)==len(set(page.ids))
 assert not page.stack
-assert page.scripts == ['data.js','engine.js','app.js']
+assert page.scripts == ['data.js','engine.js','server.js','app.js']
 html=(ROOT/'prototype/index.html').read_text()
 assert 'href="styles.css"' in html and 'src="app.js" defer' in html
 config=json.loads((ROOT/'vercel.json').read_text())
 assert config['outputDirectory']=='dist'
-for asset in ['styles.css','data.js','engine.js','app.js']:
+for asset in ['styles.css','data.js','engine.js','server.js','app.js']:
     assert f'prototype/{asset}' in config['buildCommand'] and (ROOT/'prototype'/asset).is_file()
 assert (ROOT/'prototype/styles.css').is_file()
 js=(ROOT/'prototype/app.js').read_text()

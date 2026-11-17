@@ -171,7 +171,7 @@ test("handover requires reason and contains only authorized sources", () => {
   );
 });
 
-function workspace(initialStorage) {
+function workspace(initialStorage, server) {
   const elements = new Map(),
     storage = new Map(
       initialStorage ? [["flowassist.workspace.v4", initialStorage]] : [],
@@ -285,6 +285,7 @@ function workspace(initialStorage) {
     setTimeout: (fn) => fn(),
     URL: { createObjectURL: () => "blob:test", revokeObjectURL() {} },
     Blob: globalThis.Blob,
+    ...(server ? { FlowServer: server } : {}),
   });
   for (const file of ["data.js", "engine.js", "app.js"])
     vm.runInContext(files(file), context, { filename: file });
@@ -701,4 +702,73 @@ test("step 4 policy blocks added money, arrival and legal commitments in EN/FR/D
     const b = analyze(key);
     assert.equal(E.evaluateDraft(b, b.draft).passed, true, key);
   }
+});
+
+// ── server authority (api/index.py) seen from the browser ──────────────────
+const settle = () => new Promise((resolve) => setImmediate(resolve));
+function fakeServer({ mode = "on", check = { status: 200, data: { allowed: true, passed: true } }, down = false } = {}) {
+  const calls = [];
+  const reply = (result) => (down ? Promise.reject(new Error("offline")) : Promise.resolve(result));
+  return {
+    calls,
+    enabled: true,
+    config: () => (down ? Promise.reject(new Error("offline")) : Promise.resolve({ assist_mode: mode })),
+    check: (body) => (calls.push(["check", body]), reply(check)),
+    handover: (body) => (calls.push(["handover", body]), reply({ status: 200, data: { allowed: true } })),
+    track: (name) => calls.push(["track", name]),
+  };
+}
+function reviewAndInsert(w) {
+  w.get("sources").children.forEach((b) => b.click());
+  w.get("review").checked = true;
+  w.get("review").fire("change");
+  w.get("use-draft").click();
+}
+test("server refusal keeps the case open and records why", async () => {
+  const server = fakeServer({ check: { status: 422, data: { allowed: false, issues: ["Unsupported promise, money action or legal claim."] } } });
+  const w = workspace(undefined, server);
+  await settle();
+  reviewAndInsert(w);
+  await settle();
+  assert.equal(w.get("editor").value, "", "a refused insertion must not reach the editor");
+  assert(server.calls.some(([kind, body]) => kind === "check" && body.action === "insert" && body.ticket.merchant === "M-ALPHA"));
+  assert.equal(w.run("record().outcome"), "open");
+  assert(w.run("record().events.some((e) => e.type === 'Server guardrail refused')"));
+});
+test("server approval lets the reviewed draft and the reply through", async () => {
+  const server = fakeServer();
+  const w = workspace(undefined, server);
+  await settle();
+  reviewAndInsert(w);
+  await settle();
+  assert.notEqual(w.get("editor").value, "");
+  w.get("final-review").checked = true;
+  w.get("final-review").fire("change");
+  w.get("record-reply").click();
+  await settle();
+  assert.equal(w.run("record().outcome"), "resolved");
+  assert(server.calls.some(([kind, body]) => kind === "check" && body.action === "reply"));
+  assert(server.calls.some(([kind, name]) => kind === "track" && name === "reply_recorded"));
+});
+test("suggest-only mode from the global switch disables insertion", async () => {
+  const w = workspace(undefined, fakeServer({ mode: "suggest_only" }));
+  await settle();
+  w.get("sources").children.forEach((b) => b.click());
+  w.get("review").checked = true;
+  w.get("review").fire("change");
+  assert(w.get("use-draft").disabled);
+  assert(w.get("assist-mode").textContent.includes("suggest-only"));
+});
+test("server outage fails closed to manual handling", async () => {
+  const w = workspace(undefined, fakeServer({ down: true }));
+  await settle();
+  assert(w.get("assist-mode").textContent.includes("unavailable"));
+  w.get("sources").children.forEach((b) => b.click());
+  w.get("review").checked = true;
+  w.get("review").fire("change");
+  assert(w.get("use-draft").disabled);
+});
+test("without a server the page says it is a local preview", () => {
+  const w = workspace();
+  assert(w.get("assist-mode").textContent.includes("Local preview"));
 });

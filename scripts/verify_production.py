@@ -9,7 +9,7 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = 'https://deploy-project-product-management.vercel.app/'
-ASSETS = ['index.html', 'styles.css', 'data.js', 'engine.js', 'app.js']
+ASSETS = ['index.html', 'styles.css', 'data.js', 'engine.js', 'server.js', 'app.js']
 
 
 def check(name):
