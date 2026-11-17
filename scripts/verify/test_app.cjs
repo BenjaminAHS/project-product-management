@@ -772,26 +772,43 @@ test("without a server the page says it is a local preview", () => {
   const w = workspace();
   assert(w.get("assist-mode").textContent.includes("Local preview"));
 });
-test("the next-step bar always names the next action", () => {
+test("three steps: open both records, the cited reply appears, the person approves", () => {
   const w = workspace();
   const next = () => w.get("next-step-text").textContent;
-  assert.match(next(), /Open the ledger record, then the clearing record/);
+  assert(!w.get("steps").hidden);
+  assert(w.get("blocked-card").hidden);
+  assert.match(next(), /Step 1 · Open the ledger record, then the clearing record/);
+  assert.equal(w.get("editor").value, "");
   w.get("sources").children[0].click();
-  assert.match(next(), /open the clearing record/);
+  assert.match(next(), /Step 1 · Now open the clearing record/);
+  assert.equal(w.get("editor").value, "", "no reply before both records are opened");
   w.get("sources").children[1].click();
-  assert.match(next(), /tick “I checked…”/);
-  w.get("review").checked = true;
-  w.get("review").fire("change");
-  assert.match(next(), /Use draft in editor/);
-  w.get("use-draft").click();
-  assert.match(next(), /final check/);
+  assert.equal(w.get("editor").value, w.get("draft").value, "cited reply pre-filled after step 1");
+  assert.match(w.get("source-count").textContent, /2 of 2 opened/);
+  assert.match(next(), /Step 2 · Read the reply/);
+  assert(w.get("record-reply").disabled, "approval still required");
   w.get("final-review").checked = true;
   w.get("final-review").fire("change");
-  assert.match(next(), /Record reply & close/);
+  assert.match(next(), /Step 3 · Click “Approve & close”/);
   w.get("record-reply").click();
+  assert.equal(w.run("record().outcome"), "resolved");
   assert.match(next(), /Done/);
+});
+test("a ticket that can't be drafted shows one clear card with the handover open", () => {
+  const w = workspace();
   w.run('render("dispute")');
-  assert.match(next(), /needs a specialist/);
+  assert(w.get("steps").hidden);
+  assert(!w.get("blocked-card").hidden);
+  assert(w.get("handover").open);
+  assert.match(w.get("blocked-heading").textContent, /specialist/);
+  assert.match(w.get("next-step-text").textContent, /Hand this ticket to a specialist/);
+});
+test("writing your own reply stops the automatic pre-fill", () => {
+  const w = workspace();
+  w.get("manual").click();
+  w.get("sources").children.forEach((b) => b.click());
+  assert.equal(w.get("editor").value, "");
+  assert.match(w.get("next-step-text").textContent, /Write your reply/);
 });
 test("the tour walks five steps and can be skipped", () => {
   const w = workspace();

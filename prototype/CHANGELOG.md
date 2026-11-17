@@ -1,5 +1,13 @@
 # FlowAssist interface changelog
 
+## v0.8 · one guided flow in three steps · 17 November 2026
+
+- The workspace is rebuilt around three numbered steps in one column: **1 Check the payment** (amount, plain status, open the ledger then the clearing record) → **2 Review the reply** (one editor, pre-filled with the cited draft as soon as both records are opened, verified facts beside it) → **3 Approve & close** (one checkbox, one button). The current step is highlighted; the others are dimmed or ticked.
+- Tickets that can't be drafted show one clear card instead (why, and the reference to ask for) with the specialist handover already open.
+- One editor and one approval instead of two of each: the separate draft box and its review checkbox are now driven automatically, through the same server-checked insertion.
+- Secondary features leave the main screen: a **More** menu (new test ticket, tour, keyboard shortcuts, reset) and a folded **Details** panel (account, timeline, why this result, previous tickets, policy, activity, timing, priority, export). The icon rail is replaced by Tickets / Activity / Session tabs.
+- 43 interface tests (3 new: the three-step flow, the blocked-ticket card, writing your own reply). Checked at 1440 px and 375 px (no horizontal overflow). No change to the server or the guardrails.
+
 ## v0.7 · guided use · 17 November 2026
 
 - A "Next step" bar under the ticket title always says what to do now (open the ledger, then the clearing record; compare with the verified facts; use the draft; final check; record) and what to do when no draft is possible (ask for a reference, hand over).
