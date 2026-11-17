@@ -1,7 +1,7 @@
 # FlowAssist — final pitch: speaker notes
 
 Ten slides, one per course beat, then an appendix for questions (hidden when presenting). For each slide: what it is about, what to say, and **the code and documents behind it**.
-Files: [PDF (10 slides)](FlowAssist_Final_Pitch.pdf) · [PPTX with notes and appendix](FlowAssist_Final_Pitch.pptx) · live demo: https://deploy-project-product-management.vercel.app
+Files: [PDF (10 slides)](FlowAssist_Final_Pitch.pdf) · [PPTX with notes and appendix](FlowAssist_Final_Pitch.pptx) · live demo: https://deploy-project-product-management.vercel.app/?demo
 
 ## 1. FlowAssist
 *Data & AI Product · Final pitch*
@@ -39,7 +39,7 @@ Files: [PDF (10 slides)](FlowAssist_Final_Pitch.pdf) · [PPTX with notes and app
 
 **Say it:** be honest about the gate: 1 of 3 finished unaided (course gate: 4 of 5), so desirability is not validated yet.
 
-**In the code:** D08 = STATUS map + plainStatus() in prototype/app.js (amber "Sent to recipient's bank · not yet received"); D09 = renderFacts() and #verified-facts in prototype/index.html; D10 = sourceGuide() in renderSources(). Since v0.8 the whole screen is one guided flow in three steps (check the payment, review the reply, approve), with a Next-step bar and an onboarding tour. Evidence: 03_user_research.md.
+**In the code:** D08 = STATUS map + plainStatus() in prototype/app.js (amber "Sent to recipient's bank · not yet received"); D09 = renderFacts() and #verified-facts in prototype/index.html; D10 = sourceGuide() in renderSources(). The v0.8 three-step flow is a design hypothesis, not a user finding: it is what we retest with 5 users (gate: 4 of 5 finish unaided). Evidence: 03_user_research.md.
 
 ## 5. We size the workload, not a market report.
 *04 · Market · Course S2*
@@ -50,16 +50,16 @@ Files: [PDF (10 slides)](FlowAssist_Final_Pitch.pdf) · [PPTX with notes and app
 
 **In the code / docs:** 02_sizing.xlsx (Inputs, Upside, Decision tabs), 02_investment_memo.md. The €175k is the full-scope gross value before costs (also covers disputes and KYC tickets at lower rates).
 
-## 6. Three steps. One decision.
+## 6. Four fixed steps. A person decides.
 *05 · Product · Course S4*
 
-**What this slide is about:** the live demo of the new guided interface, three moves.
+**What this slide is about:** the product beat = live demo + the AI architecture decoded (graded at the oral). Workflow, not agent: four fixed steps, one rung per step (all rung 1: rules and templates, they pass the development set), a trust level per step (L1 router, L3 scoped lookup, L2 draft, person approves), human checkpoints ⊘ (abstention on sensitive or unclear tickets; one approval in step 3) and one override switch ⏻ with a named owner.
 
-**Demo script:** (1) DEMO-01: step 1, open the ledger then the clearing record; the cited reply appears in step 2 with the verified facts beside it; step 3, tick the check and click Approve & close. (2) Back on an open ticket, add "We will refund you next week" to the reply and approve: the server refuses it (HTTP 422) and the case stays open. (3) DEMO-03 (compliance hold): no steps, one clear card, the handover form is already open: pick a reason, preview, hand over.
+DEMO SCRIPT (open the link with ?demo so the tour stays closed): (1) DEMO-01: step 1, open the ledger then the clearing record; the cited reply appears in step 2 with the verified facts; step 3, tick "I checked the facts and the wording", click Approve & close · demo. (2) Add "We will refund you next week" to the reply and approve: the server refuses it (HTTP 422), the case stays open. (3) DEMO-03 (compliance): one clear card, the handover is already open: reason, preview, hand over.
 
-**In the code:** the three steps are #step-evidence, #step-review, #step-reply in prototype/index.html; maybePrefill() inserts the draft after both sources are opened, through serverGate() → POST /api/check; recordReply() needs the final check. The refusal is evaluate_draft() in flowassist/engine.py (code "commitment"). The blocked card and handover: render() and handover() → POST /api/handover. Next-step text: nextStepText() in prototype/app.js.
+**In the code:** classify() and analyze() in flowassist/engine.py (mirrored in prototype/engine.js), make_draft()/source_records(), evaluate_draft(); api/index.py (/api/check, /api/handover); ASSIST_MODE in flowassist/flags.py; maybePrefill(), recordReply(), nextStepText() in prototype/app.js. Diagram and component table: 04_architecture.md, spec.md §3.
 
-**Backup:** if the network fails, the banner says "Assistant server unavailable" and the page continues in manual mode: the designed outage behaviour.
+**Backup:** if the network fails, the banner says "Assistant server unavailable" and the page falls back to manual handling (designed outage behaviour).
 
 ## 7. Conditional GO: worth it above 41.2 % time saved.
 *06 · Business case · Course S2*
@@ -70,23 +70,25 @@ Files: [PDF (10 slides)](FlowAssist_Final_Pitch.pdf) · [PPTX with notes and app
 
 **In the code / docs:** 02_sizing.xlsx Decision and Build-or-buy tabs; 02_investment_memo.md. The 41.2 % flip point is the success criterion in 03_product_brief.md §7 and spec.md §1.
 
-## 8. Tested before anyone trusts it.
-*07 · Proof · Course S4–S6*
+## 8. Three promises, and how we’ll prove them.
+*07 · Proof · Course S5–S6*
 
-**What this slide is about:** evidence — S4 eval, S5 guardrails and judge, S6 experiment — in one slide. Details in the appendix (metrics, judge, experiment).
+**What this slide is about:** the two graded points "3 business metrics with expected effects" (S5, level 5 of the stack) and "A/B protocol with sample size" (S6). The eval numbers (levels 1–3) move to the footnote.
 
-**Say it:** "Demo data and evaluation data never meet." The judge agrees with our grader 73 % (11/15) after we fixed our rubric once; the 4 disagreements were a real bug we had missed (replies in the wrong language).
+**The metrics:** baselines from 02_sizing.xlsx; expected effects derived from the 41.2 % flip point (18.0 min × 0.588 = 10.6 min; €10 × 0.588 = €5.88); QA stated as a non-effect with a stop band. Counter-metrics (slide 9): 7-day reopen and edit rate.
 
-**In the code:** make eval → scripts/eval/eval_s4.cjs on evals/eval_set_v0.csv (results evals/v0/results_v0.json, report evals/report_v0.md). make adversarial → scripts/eval/run_adversarial.py on evals/adversarial_v0.csv; one miss fails CI. make judge → scripts/eval/judge.py, prompt evals/judge_prompt.txt, report evals/judge/judge_report.md. Metrics: make metrics → metrics/report.md.
+**The a/b:** unit = the eligible tracing ticket (18 agents would give 9 per arm, too few; risk: agents learn from drafts → report it). n per arm = 2 (z0.975 + z0.80)² σ² / Δ² = 2 × 2.80² × 18² / 3.6² ≈ 393, with σ = 18 min an assumption (CV 1) to measure in shadow mode before the start, and Δ = 3.6 min (20 %), the smallest saving that changes the decision (below it: kill). ≈ 786 tickets ≈ one week of eligible traffic (≈ 1,040 a week), but we run 4 weeks because QA is read weekly and reopen needs 7 days. Decision rule written before: ship ≥ 41.2 % with every guardrail held; iterate 20–41 %; kill < 20 % or any guardrail broken; stop early only on harm (a draft on a human-only ticket, another merchant's data). Segments pre-registered: language, plan.
 
-## 9. If something goes wrong, one person stops it fast.
+**In the code:** handling time = activeTime() in prototype/app.js, sent as handling_ms on reply_recorded; make metrics → metrics/report.md (p50/p95 by language and plan). Full protocol: 06_07_experiments_operations.md (to write); appendix slide "Experiment".
+
+## 9. One owner can stop it fast.
 *08 · Risks · Course S7*
 
-**What this slide is about:** operation — guardrails on the server, the override switch with a named owner, fail-closed behaviour, release path. Four monitoring layers and owners in the appendix / spec.md §7.
+**What this slide is about:** adverse effects, monitoring and rollback (graded point). Guardrail on the server, counter-metrics with a harm threshold and an owner, and the switch as the rollback.
 
-**Say it:** Air Canada 2024 — the company answers for its bot; so the switch has an owner, not the developer.
+**Say it:** Air Canada 2024 — the company answers for its bot, so the switch has an owner, not the developer. A pre-filled reply invites approval without reading (automation bias): the edit rate and the 7-day reopen rate are watched for that.
 
-**In the code:** api/index.py (/api/check → HTTP 422), flowassist/flags.py (ASSIST_MODE on | suggest_only | off, unknown → suggest_only), markServerDown() in prototype/app.js (fail-closed), .github/workflows/ci.yml (make ci on every PR), .github/workflows/sync-deploy.yml (deploy only after green CI, then scripts/verify/smoke.py). governance.md S7.
+**In the code / docs:** /api/check → HTTP 422 (api/index.py, evaluate_draft() in flowassist/engine.py); ASSIST_MODE on | suggest_only | off in flowassist/flags.py (unknown → suggest_only); markServerDown() in prototype/app.js (fail-closed); events reply_recorded (edited, handling_ms) and check_failed → make metrics; four monitoring layers with thresholds in docs/TRACKING_PLAN.md and spec.md §7; harm threshold and owners in governance.md S5–S7; release path .github/workflows/ci.yml and sync-deploy.yml (smoke test on production).
 
 ## 10. Conditional GO for a 4-week pilot on tracing tickets.
 *09 · The ask · Course S8*
@@ -141,7 +143,7 @@ Files: [PDF (10 slides)](FlowAssist_Final_Pitch.pdf) · [PPTX with notes and app
 
 **What this slide is about:** how we would prove causality. The hypothesis sentence, the design chain (shadow → A/B on tickets for 4 weeks → 5 % holdout) and the decision rule written before looking (ship / iterate / kill; stop early only on harm).
 
-**Say it:** “Unit = the ticket: 18 agents would give 9 per arm, too few. Duration is set by the slowest guardrail, not the first good number.” The sample size per arm is still to compute in 06_07_experiments_operations.md.
+**Say it:** “Unit = the ticket: 18 agents would give 9 per arm, too few. Duration is set by the slowest guardrail, not the first good number.” Sample size: 393 per arm to detect a 20 % saving (3.6 min) at α 5 %, power 80 %, with σ = 18 min assumed (to measure in shadow mode).
 
 **In the code:** assist modes in flowassist/flags.py give shadow-like operation (suggest_only = drafts visible, never used); handling time is measured per ticket (activeTime() in prototype/app.js, sent as handling_ms in reply_recorded events). The A/B assignment itself is deliberately not coded before the protocol is signed (docs/TRACKING_PLAN.md).
 
