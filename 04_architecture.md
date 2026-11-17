@@ -57,6 +57,13 @@ A workflow: every step and branch is written in advance, and no model chooses a 
 ## 8. Eval result v0
 **Acceptability: grader 1 judged 15/15 drafts sendable without editing; grader 2 pending; business criterion not demonstrated.** The FlowAssist criterion is ≥41.2% active-time saving on 200 eligible cases, QA ≥92%, detection precision ≥98% and zero critical exposures. It is not Paylio's 45% threshold. On the development set: 50/50 matching states, 15/50 automatic drafts; no human quality judgement. See the [report](evals/report_v0.md).
 
+## 8b. Server authority, global switch and trace (v0.6, 17 November 2026)
+- **Where the rules are enforced:** `api/index.py` (FastAPI on Vercel) runs `flowassist/engine.py` on its own fixtures. The browser engine is a preview; insertion, final reply and handover are refused by the server (HTTP 422 with reason codes) when a guardrail fails. API down → the page fails closed to manual handling (incident class "Outage").
+- **Guardrail layers:** input (injection, secrets/IBAN, money/legal/dispute/compliance routing), scope (merchant from the assigned session, unique reference, amount/currency, freshness, source schema), output (money/arrival/legal commitments, invented amounts or references, citations, status upgrade).
+- **Global override switch ⏻:** PostHog flag `assist-mode` = `on` / `suggest_only` (L1: drafts visible, not insertable) / `off` (humans only). Unknown or unreachable → `suggest_only`. Owner: a role (Head of Payment Ops; on-call engineer at night), see governance S7.
+- **Trace:** one JSON line per request (route, status, latency, spans, engine version, assist mode) in Vercel logs; product events in PostHog ([tracking plan](docs/TRACKING_PLAN.md)).
+- **Release path:** PR → CI (`make ci`: tests, parity, regression, attack set) → merge → deploy only after green CI → production smoke test. Rollback: revert on `main`, or flip `assist-mode` without redeploying.
+
 ## 9. What you would build next
 Have the labels validated and the outputs graded independently by two people.
 Build a new held-out set, then instrument the paired timing trial on 200 cases.

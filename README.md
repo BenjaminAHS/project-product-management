@@ -64,6 +64,24 @@ The 50 cases were examined during development: these results serve as regression
 
 [Architecture](04_architecture.md) · [Eval report](evals/report_v0.md) · [S4 delivery](04_s4_delivery.md) · [Session audit](docs/DELIVERY_AUDIT.md) · [Product coverage](docs/PRODUCT_COVERAGE.md).
 
+## Server, guardrails and CI (v0.6)
+
+The browser shows an instant preview; **the FastAPI server (`api/index.py`) decides every recorded action**: inserting a draft, recording a reply, recording a handover. The server uses only its own fixtures, so a client cannot inject evidence, and it refuses money promises, invented amounts, foreign references and status upgrades with HTTP 422. `tests/test_parity.py` keeps the browser engine and the server engine identical (123 cases, 468 draft checks).
+
+| Command | What it does |
+|---|---|
+| `make install` | Python 3.12 venv + dependencies |
+| `make dev` | API + prototype on http://127.0.0.1:8000 |
+| `make ci` | lint, data sync, 144 Python + 41 Node tests, 50-case regression, 30-row attack set |
+| `make adversarial` | OWASP-style attack set; one miss fails |
+| `make judge` | LLM-as-a-judge on the graded drafts (costs API credits) |
+| `make smoke URL=…` | post-deploy check of page, health, config and one refusal |
+
+- **Global switch:** PostHog flag `assist-mode` (`on` / `suggest_only` / `off`), env `ASSIST_MODE` as default, fail-safe `suggest_only`.
+- **Metrics before launch:** [tracking plan](docs/TRACKING_PLAN.md) (PostHog EU, no ticket text).
+- **CI/CD:** `.github/workflows/ci.yml` on every PR and push; deployment to Vercel only after green CI on `main`, then a production smoke test. Setup: [docs/SETUP_CI.md](docs/SETUP_CI.md).
+- **Evaluation:** [attack set](evals/adversarial_v0.csv), [grading guideline](evals/judge/rubric.md), [judge prompt](evals/judge/judge_prompt.txt).
+
 ## Using the prototype
 
 Open [prototype/index.html](prototype/index.html), or run from the repository root:
@@ -72,7 +90,7 @@ Open [prototype/index.html](prototype/index.html), or run from the repository ro
 python3 -m http.server 8000 --bind 127.0.0.1
 ```
 
-Then go to `http://127.0.0.1:8000/prototype/`. No account, npm install or API key is needed. Drafts and actions are stored in the tab's sessionStorage; enter synthetic data only.
+Then go to `http://127.0.0.1:8000/prototype/`: this static mode is a **local preview** (the banner says so; server guardrails are not active). Use `make dev` to run the real API with the page. No account or API key is needed. Drafts and actions are stored in the tab's sessionStorage; enter synthetic data only.
 
 [Hosted demo](https://deploy-project-product-management.vercel.app). The Git publication copy was verified in sync with the S4 delivery on 9 November, and the HTTP check the same day confirms all five files (anonymous HTTP 200, identical hashes). [Publication status and procedure](prototype/DEPLOYMENT.md).
 

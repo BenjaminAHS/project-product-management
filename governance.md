@@ -112,5 +112,10 @@ The engine filters public fixtures by assigned merchant, requires a unique refer
 ## Session 6 — protected segments and the harm threshold that stops an experiment (to come)
 *A/B trial experiment guardrails, enterprise merchant protection, and safety thresholds for experiment termination.*
 
-## Session 7 — accountable owner, rollback authority, incident path (to come)
+## Session 7 — accountable owner, rollback authority, incident path (draft, 17 November 2026)
+- **Global switch ⏻:** PostHog flag `assist-mode` (`on` / `suggest_only` / `off`), enforced by the server. **Who can press it:** Head of Payment Operations (day) and the on-call engineer (night), never only the person who wrote the code. Fail-safe: unknown or unreachable flag → `suggest_only`. **Last tested:** _to fill on the first production test (see docs/SETUP_CI.md §4)_.
+- **Release approval:** a PR merges only with green CI (tests, JS/Python parity, 50-case regression, attack set with zero misses); deployment runs only after CI on `main`, followed by a production smoke test.
+- **Trace keeper:** request traces in Vercel logs (no ticket text); product events in PostHog EU (no ticket, draft or note text). Retention to confirm with the DPO.
+- **Who signs an experiment on real users:** Head of Payment Operations signs, DPO reads (S6); the `copilot-ab` flag stays at 0 % until then.
+
 *Rollback triggers, operational on-call rotation, kill-switch authority, and incident post-mortem playbooks.*

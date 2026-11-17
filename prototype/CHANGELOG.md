@@ -1,5 +1,13 @@
 # FlowAssist interface changelog
 
+## v0.6 · server authority, global switch, CI · 17 November 2026
+
+- FastAPI server (`api/index.py`, `flowassist/engine.py`) enforces the rules on insertion, final reply and handover; the browser engine stays as the instant preview. Parity test: identical results on 123 cases and 468 draft checks.
+- Global assist-mode switch (PostHog flag, env default, fail-safe suggest-only) shown in the banner; API outage fails closed to manual handling; file:// opening is labelled "local preview".
+- PostHog EU product events without any ticket text (docs/TRACKING_PLAN.md); one JSON trace per request.
+- Attack set `evals/adversarial_v0.csv` (30 rows, 0 misses), grading guideline + judge prompt + `scripts/judge.py`.
+- Makefile, CI on every PR, deployment gated on green CI with a production smoke test. 39 interface tests (5 new on the server path).
+
 ## v0.5 · user-test changes in the interface · 17 November 2026
 
 - D08: the payment status reads in plain language ("Sent to recipient’s bank · not yet received", "Received by the recipient", "Returned · not received") with an amber / green / red tone, in the summary chip and the timeline. The ledger code no longer appears as a green "ready" chip. Draft wording is unchanged.
