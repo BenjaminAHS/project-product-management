@@ -60,6 +60,8 @@ Supporting S3 files: [AI Lean Canvas](03_ai_lean_canvas.md), [design details](03
 
 The full specification is in [spec.md](spec.md) v3.
 
+**Final pitch (17 slides, English):** [PDF](pitch/FlowAssist_Final_Pitch.pdf) · [PPTX with speaker notes](pitch/FlowAssist_Final_Pitch.pptx) · [speaker notes mapping each slide to the code](pitch/SPEAKER_NOTES.md).
+
 ## Server, guardrails and CI (v0.6)
 
 The browser shows an instant preview; **the FastAPI server (`api/index.py`) decides every recorded action**: inserting a draft, recording a reply, recording a handover. The server uses only its own fixtures, so a client cannot inject evidence, and it refuses money promises, invented amounts, foreign references and status upgrades with HTTP 422. `tests/test_parity.py` keeps the browser engine and the server engine identical (123 cases, 468 draft checks).
