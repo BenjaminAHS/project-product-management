@@ -27,7 +27,7 @@ Keyboard: `/` search; `J`/`K` next/previous visible ticket outside form fields; 
 - `app.js`: workflow, scoped ticket buffers, session storage, review state, audit/timing and exports.
 - `styles.css`: responsive visual system; no remote fonts or component libraries.
 
-Run `python scripts/verify_s3.py` (Python + Node.js) for artifact checks and **33 domain/interaction scenarios**. No npm installation is required. [Verification report](verification.md) states what remains unverified, including real browser rendering and live integrations.
+Run `python scripts/verify_s3.py` (Python + Node.js) for artifact checks and **34 domain/interaction scenarios**. No npm installation is required. [Verification report](verification.md) states what remains unverified, including real browser rendering and live integrations.
 
 Vercel builds from the repository root using [vercel.json](../vercel.json), copying the five runtime assets into `dist/`. Changes go to the primary repository and then [the deployment copy](DEPLOYMENT.md). [Changelog](CHANGELOG.md).
 

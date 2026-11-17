@@ -386,6 +386,15 @@
       )
     )
       issues.push("Unsupported promise or financial action.");
+    // Affirmative money, arrival or legal commitments in EN/FR/DE. Negated
+    // statements in generated drafts ("credit back ... is not confirmed") are
+    // not commitments and stay allowed.
+    if (
+      /\b(we|i)('ll| will| shall| are going to| can)\s+(credit|refund|reimburse|reverse|cancel|waive|compensate|pay|resend|release|transfer)|your (refund|reimbursement|credit)\b.{0,20}\b(is|has been|was|will be)\b.{0,10}\b(on its way|approved|processed|issued|initiated|sent)|(fee|charge)s?\b.{0,15}\b(waived|refunded|removed|cancel)|\bwaive|\b(compensation|reimbursement)\b|\bentitled to\b|(will|should)\s+(arrive|be credited|reach|land|be paid|be received)|next (week|monday|tuesday|wednesday|thursday|friday)|\bunder (psd2|the law|article)|rembourserons|recrediterons|nous (allons|pouvons|devons) (vous )?(rembourser|recrediter|annuler)|vous serez (rembourse|recredite)|indemnis|geste commercial|vous avez droit|arrivera|sera credite|devrait (arriver|etre credite)|semaine prochaine|sous \d+ jours|erstatten wir|wir (werden|erstatten|buchen)|wird (ihnen )?(erstattet|zuruckgebucht)|entschadig|anspruch auf|erlassen|nachste woche|innerhalb von \d+|wird.{0,30}(ankommen|gutgeschrieben werden|eingehen)/.test(
+        n,
+      )
+    )
+      issues.push("Unsupported promise, money action or legal claim.");
     const financial = entities(text);
     if (
       financial.amounts.some(

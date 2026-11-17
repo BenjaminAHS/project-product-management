@@ -1,10 +1,11 @@
 # FlowAssist interface changelog
 
-## Step 1 router · 17 November 2026
+## Step 1 router and policy gaps · 17 November 2026
 
 - Router (`classify`): money-action requests now cover reimburse, credit back, recredit, Rückerstattung/erstatten, Rückbuchung, devolución, cancel/reverse/annuler/stornieren a payment, fee waivers and compensation; a new `legal` route catches lawyer/avocat/Anwalt/court/lawsuit threats. All go to a person. "bloqué" (stuck) deliberately stays tracing.
+- Policy checker (`evaluateDraft`): added critical blocks for affirmative commitments added to a draft — "we will credit back/refund/reimburse", "your refund is on its way", fee waived, compensation/entitlement claims, "will arrive / next week" and their FR/DE equivalents. Negated wording in generated drafts ("credit back … is not confirmed") still passes.
 - Inbox status labels show "Legal" and "Money action".
-- One router regression test added (33 total). Development set unchanged: 50/50 expected states, 15 drafts, 0 drafts on human-only; `results_v0.json` regenerated for the new engine hash.
+- Two regression tests added (34 total). Development set unchanged: 50/50 expected states, 15 drafts, 0 drafts on human-only; `results_v0.json` regenerated for the new engine hash.
 
 ## S4 engine corrections and documentation · 9 November 2026
 

@@ -676,3 +676,29 @@ test("step 1 router sends money, legal and cancellation requests to a person", (
   ])
     assert.equal(E.classify(message), "tracing", message);
 });
+test("step 4 policy blocks added money, arrival and legal commitments in EN/FR/DE", () => {
+  const a = analyze("ready");
+  assert.equal(a.state, "draft_ready");
+  assert.equal(E.evaluateDraft(a, a.draft).passed, true);
+  for (const extra of [
+    "We will credit back the amount next week.",
+    "We will reimburse you shortly.",
+    "Your refund is on its way.",
+    "The fee has been waived.",
+    "You are entitled to compensation under PSD2.",
+    "The funds will arrive Monday.",
+    "The funds should arrive soon.",
+    "Nous vous rembourserons sous 3 jours.",
+    "Le montant sera crédité la semaine prochaine.",
+    "Wir erstatten den Betrag nächste Woche.",
+    "Die Gebühr wird erlassen.",
+  ]) {
+    const r = E.evaluateDraft(a, `${a.draft} ${extra}`);
+    assert.equal(r.critical, true, extra);
+    assert.equal(r.passed, false, extra);
+  }
+  for (const key of ["swift", "returned", "fees"]) {
+    const b = analyze(key);
+    assert.equal(E.evaluateDraft(b, b.draft).passed, true, key);
+  }
+});
