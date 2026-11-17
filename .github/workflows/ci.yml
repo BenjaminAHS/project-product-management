@@ -54,5 +54,11 @@ jobs:
             exit 1
           fi
 
+      - name: Eval-set v1 structure (200 held-out inputs, no overlap with v0)
+        run: python scripts/verify_eval_v1.py
+
+      - name: Labeller page tests
+        run: node --test scripts/test_labeller.cjs
+
       - name: Deployment sync script tests (local temp repos, no network)
         run: python scripts/test_sync_deploy.py
