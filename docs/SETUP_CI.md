@@ -1,6 +1,6 @@
-# Mise en place CI/CD, API et PostHog — guide pour Lenny
+# Mise en place CI/CD, API et PostHog — guide pour Benjamin
 
-**Pour qui :** Lenny (propriétaire du projet Vercel et du repo `lsantus-mines/deploy-project-product-management`) et Benjamin (admin de `BenjaminAHS/project-product-management`).
+**Pour qui :** Benjamin, admin du repo principal `BenjaminAHS/project-product-management`. Seule l'étape 2 demande l'accès au projet Vercel, qui est sur le compte de Lenny (`lsantus-mines`) : demande-lui de t'ajouter au projet, ou fais-la ensemble.
 **Durée :** ~30 min. **Coût :** 0 € — tout tient dans les offres gratuites (GitHub Actions, Vercel Hobby, PostHog Free).
 **Contexte :** la PR `anthony/production-hardening` ajoute une API FastAPI (guardrails côté serveur), une CI, un déploiement conditionné à la CI, un interrupteur global et le suivi PostHog. Rien ne change pour la démo tant que la PR n'est pas mergée.
 
@@ -8,7 +8,7 @@ Ordre conseillé : **1 → 2 → 3 → merge de la PR → 4**.
 
 ---
 
-## 1. GitHub — la CI (Benjamin, admin du repo principal)
+## 1. GitHub — la CI (sur ton repo)
 
 La CI tourne sur le repo principal `BenjaminAHS/project-product-management`, donc sur les minutes GitHub Actions de **ce** compte (illimitées si le repo est public, 2 000 min/mois sinon ; un run dure ~2 min).
 
@@ -25,7 +25,7 @@ La CI tourne sur le repo principal `BenjaminAHS/project-product-management`, don
 
 **Ce qui change pour le déploiement** (`.github/workflows/sync-deploy.yml`) : la synchro vers le repo Vercel ne part plus à chaque push, mais **après une CI verte sur `main`**, puis lance un smoke test sur la prod. Si le smoke échoue, le run est rouge avec la marche à suivre (rollback).
 
-## 2. Vercel — l'API Python (Lenny)
+## 2. Vercel — l'API Python (projet Vercel de Lenny : accès requis)
 
 Le projet Vercel existant suffit : `vercel.json` déclare maintenant la fonction `api/index.py` (FastAPI, détectée automatiquement grâce à `requirements.txt`) et la règle `/api/* → api/index`. Le front statique ne change pas.
 
@@ -49,7 +49,7 @@ Puis *Deployments → … → Redeploy* (les variables ne s'appliquent qu'aux no
 
 > ⚠️ Ne jamais mettre `ANTHROPIC_API_KEY` sur Vercel : le juge ne tourne pas en production.
 
-## 3. PostHog — analytics et interrupteur global (Anthony ou Lenny)
+## 3. PostHog — analytics et interrupteur global (Benjamin ou Anthony)
 
 1. Créer un compte sur **https://eu.posthog.com** (région **EU**, important pour le RGPD) → nouveau projet `FlowAssist`.
 2. Copier la **Project API key** (`phc_…`, publique par conception) → variable Vercel `POSTHOG_PROJECT_KEY` (étape 2).
