@@ -8,7 +8,7 @@
 - The GitHub workflow also synchronizes primary pushes by all teammates using the configured `DEPLOY_REPO_TOKEN` Actions secret (a successful push-triggered run is recorded in the deployment guide). Confirm each relevant run rather than assuming success. If the local fallback loses a race to the workflow, rerun from a fresh clone and confirm no differences; never force-push.
 - Workflow definitions are excluded from the snapshot. Preserve destination-owned workflows. Never read, print or commit credential values.
 - Verify changes with `make ci` (lint, Python + Node tests, JS/Python engine parity, regression, attack set). `python scripts/verify_s3.py` still runs the interface checks alone.
-- The server (`api/index.py`, `flowassist/engine.py`) is the authority; any rule change goes in both engines, and `tests/test_parity.py` must stay green. After editing `prototype/data.js`, run `make export-data`. Verify synchronization changes with `python scripts/test_sync_deploy.py` (local temporary Git repositories; no network).
+- The server (`api/index.py`, `flowassist/engine.py`) is the authority; any rule change goes in both engines, and `tests/test_parity.py` must stay green. After editing `prototype/data.js`, run `make export-data`. Metrics stay local (`metrics/`, git-ignored); never add third-party analytics or send ticket text in events. Verify synchronization changes with `python scripts/test_sync_deploy.py` (local temporary Git repositories; no network).
 - Hosting and synchronization setup: `prototype/DEPLOYMENT.md`. Do not claim a live deployment or public URL until verified.
 
 ## Current application

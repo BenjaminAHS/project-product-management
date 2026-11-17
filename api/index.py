@@ -5,10 +5,11 @@ decide. Evidence comes only from server fixtures (flowassist/fixtures.json),
 never from the request, so a client cannot inject transactions or sources.
 
 GET  /api/health    liveness + engine version
-GET  /api/config    assist mode (global switch) + public analytics settings
+GET  /api/config    assist mode (global switch)
 POST /api/analyze   verdict, authorized sources and draft for one ticket
 POST /api/check     server guardrail on a draft insertion or a final reply
 POST /api/handover  validated, redacted specialist handover packet
+POST /api/events    product events from the browser (allowlisted, no text)
 """
 
 from __future__ import annotations
@@ -93,11 +94,7 @@ def config() -> dict[str, Any]:
         "assist_mode": mode,
         "assist_mode_source": source,
         "engine_version": engine.ENGINE_VERSION,
-        "analytics": {
-            "posthog_key": os.environ.get("POSTHOG_PROJECT_KEY", ""),
-            "posthog_host": os.environ.get("POSTHOG_HOST", "https://eu.i.posthog.com"),
-            "env": os.environ.get("FLOWASSIST_ENV", "demo"),
-        },
+        "env": os.environ.get("FLOWASSIST_ENV", "demo"),
     }
 
 
@@ -108,7 +105,7 @@ def analyze(body: AnalyzeRequest, x_session_id: str = Header(default="anonymous"
     mode, _ = flags.assist_mode()
     draft = analysis["draft"] if mode != "off" else None
     if analysis["state"] != "draft_ready":
-        telemetry.capture(
+        telemetry.record_event(
             "guardrail_blocked",
             x_session_id,
             {
@@ -165,7 +162,7 @@ def check(body: CheckRequest, x_session_id: str = Header(default="anonymous", ma
     }
     status = 422 if verdict["critical"] else 200
     if verdict["critical"]:
-        telemetry.capture(
+        telemetry.record_event(
             "check_failed", x_session_id, {"action": body.action, "codes": verdict["codes"], **segment(body.ticket, analysis)}
         )
     trace.emit(status)
@@ -183,6 +180,22 @@ def handover(body: HandoverRequest) -> JSONResponse:
         return JSONResponse(status_code=422, content={"allowed": False, "issues": [str(error)]})
     trace.emit(200)
     return JSONResponse(content={"allowed": True, "packet": packet})
+
+
+class EventRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    event: str = Field(max_length=40)
+    properties: dict[str, Any] = Field(default_factory=dict)
+
+
+@app.post("/api/events", status_code=202)
+def events(body: EventRequest, x_session_id: str = Header(default="anonymous", max_length=80)) -> JSONResponse:
+    if len(body.properties) > 20:
+        return JSONResponse(status_code=422, content={"accepted": False, "issues": ["Too many properties."]})
+    line = telemetry.record_event(body.event, x_session_id, body.properties, source="browser")
+    if line is None:
+        return JSONResponse(status_code=422, content={"accepted": False, "issues": [f"Unknown event: {body.event}"]})
+    return JSONResponse(status_code=202, content={"accepted": True})
 
 
 # Local development only (`make dev`): serve the prototype from the same origin

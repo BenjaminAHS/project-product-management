@@ -53,5 +53,5 @@ jobs:
             if python3 source/scripts/smoke.py https://deploy-project-product-management.vercel.app --expect-version "$version"; then exit 0; fi
             echo "Waiting for the Vercel deployment ($attempt/20)"; sleep 30
           done
-          echo "::error::Production smoke test failed. Roll back: revert the commit on main, or set the PostHog flag assist-mode to off."
+          echo "::error::Production smoke test failed. Roll back: revert the commit on main, or set ASSIST_MODE=off on Vercel and redeploy."
           exit 1

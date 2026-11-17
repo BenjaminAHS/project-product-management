@@ -2,11 +2,13 @@
 
 from __future__ import annotations
 
+import json
+
 import pytest
 from fastapi.testclient import TestClient
 
 from api.index import app
-from flowassist import flags, telemetry
+from flowassist import flags
 from tests.cases import demo_data
 
 client = TestClient(app)
@@ -15,13 +17,10 @@ READY = next(t for t in demo_data()["tickets"] if t["key"] == "ready")
 
 @pytest.fixture(autouse=True)
 def clean_env(monkeypatch):
-    monkeypatch.delenv("POSTHOG_PROJECT_KEY", raising=False)
+    monkeypatch.delenv("METRICS_FILE", raising=False)
     monkeypatch.delenv("ASSIST_MODE", raising=False)
-    telemetry.reset()
     flags.reset_cache()
     yield
-    telemetry.reset()
-    flags.reset_cache()
 
 
 def analyze(message: str | None = None, **extra):
@@ -106,25 +105,36 @@ def test_switch_off_withholds_drafts(monkeypatch):
 
 def test_unknown_mode_fails_safe(monkeypatch):
     monkeypatch.setenv("ASSIST_MODE", "yolo")
-    assert client.get("/api/config").json()["assist_mode"] == "suggest_only"
+    config = client.get("/api/config").json()
+    assert config["assist_mode"] == "suggest_only" and config["assist_mode_source"] == "fail_safe"
 
 
-def test_posthog_failure_fails_safe(monkeypatch):
-    class Broken:
-        def get_feature_flag(self, *a, **k):
-            raise RuntimeError("network")
+def test_events_are_kept_locally_without_free_text(monkeypatch, tmp_path):
+    target = tmp_path / "events.jsonl"
+    monkeypatch.setenv("METRICS_FILE", str(target))
+    ok = client.post(
+        "/api/events",
+        headers={"x-session-id": "ops-test"},
+        json={
+            "event": "reply_recorded",
+            "properties": {"handling_ms": 61000, "language": "FR", "message": "secret ticket text", "gate": "x" * 200},
+        },
+    )
+    assert ok.status_code == 202
+    line = json.loads(target.read_text().splitlines()[0])
+    assert line["event"] == "reply_recorded" and line["handling_ms"] == 61000 and line["language"] == "FR"
+    assert "message" not in line and "gate" not in line  # unknown key and over-long text are dropped
+    assert client.post("/api/events", json={"event": "export_all_tickets"}).status_code == 422
 
-    monkeypatch.setattr(telemetry, "posthog_client", lambda: Broken())
-    assert flags.assist_mode() == ("suggest_only", "fail_safe")
 
-
-def test_posthog_flag_drives_mode(monkeypatch):
-    class Flag:
-        def get_feature_flag(self, *a, **k):
-            return "off"
-
-    monkeypatch.setattr(telemetry, "posthog_client", lambda: Flag())
-    assert flags.assist_mode() == ("off", "posthog")
+def test_refused_reply_is_recorded_as_check_failed(monkeypatch, tmp_path):
+    target = tmp_path / "events.jsonl"
+    monkeypatch.setenv("METRICS_FILE", str(target))
+    client.post("/api/check", json={"ticket": READY, "text": f"{draft()} We will refund you next week.", "action": "reply"})
+    lines = [json.loads(x) for x in target.read_text().splitlines()]
+    events = [x for x in lines if x["type"] == "event"]
+    assert [e["event"] for e in events] == ["check_failed"] and events[0]["codes"] == ["commitment"]
+    assert any(x["type"] == "trace" and x["route"] == "check" and x["status"] == 422 for x in lines)
 
 
 def test_handover_requires_reason_and_redacts_note():

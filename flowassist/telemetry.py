@@ -1,8 +1,14 @@
-"""Trace and product events. Never sends ticket, draft or note text.
+"""Traces and product events, kept locally. Never stores ticket, draft or note text.
 
-Every request emits one JSON trace line on stdout (Vercel runtime logs keep
-it): spans per pipeline step with their outcome and duration. Guardrail
-decisions are also sent to PostHog when POSTHOG_PROJECT_KEY is set.
+- One JSON trace line per request (`"type": "trace"`): route, status, latency,
+  spans. On Vercel these are the runtime logs; locally they also go to METRICS_FILE.
+- Product events (`"type": "event"`) from the browser (POST /api/events) and
+  from the server (guardrail decisions). They are printed on stdout and, when
+  METRICS_FILE is set (`make dev` sets metrics/events.jsonl), appended to that
+  JSONL file. `make metrics` turns the file into the pre-launch report.
+
+Events are validated against an allowlist of names and property keys, and only
+short scalar values are kept, so free text cannot leak into the metrics.
 """
 
 from __future__ import annotations
@@ -10,55 +16,93 @@ from __future__ import annotations
 import json
 import os
 import sys
+import threading
 import time
 import uuid
 from collections.abc import Iterator
 from contextlib import contextmanager
+from datetime import UTC, datetime
+from pathlib import Path
 from typing import Any
 
-_client: Any = None
-_client_ready = False
+EVENTS = {
+    "ticket_opened",
+    "source_inspected",
+    "draft_used",
+    "reply_recorded",
+    "handover_recorded",
+    "manual_mode_toggled",
+    "api_unavailable",
+    "guardrail_blocked",
+    "check_failed",
+}
+PROPERTIES = {
+    "language",
+    "plan",
+    "rail",
+    "state",
+    "gate",
+    "intent",
+    "layer",
+    "assist_mode",
+    "source_kind",
+    "order",
+    "handling_ms",
+    "sources_checked",
+    "edited",
+    "manual_review",
+    "queue",
+    "reason",
+    "to",
+    "endpoint",
+    "route",
+    "action",
+    "codes",
+}
+_lock = threading.Lock()
 
 
-def posthog_client() -> Any:
-    """Server PostHog client, or None when not configured (local, CI)."""
-    global _client, _client_ready
-    if _client_ready:
-        return _client
-    _client_ready = True
-    key = os.environ.get("POSTHOG_PROJECT_KEY", "").strip()
-    if not key:
+def clean(properties: dict[str, Any]) -> dict[str, Any]:
+    """Keep allowlisted keys with short scalar values (or lists of short strings)."""
+    kept: dict[str, Any] = {}
+    for key, value in properties.items():
+        if key not in PROPERTIES:
+            continue
+        if isinstance(value, bool) or value is None or (isinstance(value, (int, float)) and abs(value) < 1e12):
+            kept[key] = value
+        elif isinstance(value, str) and len(value) <= 80:
+            kept[key] = value
+        elif isinstance(value, list) and all(isinstance(v, str) and len(v) <= 40 for v in value[:10]):
+            kept[key] = value[:10]
+    return kept
+
+
+def record_event(event: str, session: str, properties: dict[str, Any], source: str = "server") -> dict[str, Any] | None:
+    if event not in EVENTS:
         return None
-    from posthog import Posthog
-
-    _client = Posthog(
-        key,
-        host=os.environ.get("POSTHOG_HOST", "https://eu.i.posthog.com"),
-        personal_api_key=os.environ.get("POSTHOG_PERSONAL_API_KEY") or None,
-        sync_mode=True,  # serverless: send before the function freezes
-        timeout=3,
-        feature_flags_request_timeout_seconds=2,
-    )
-    return _client
-
-
-def reset() -> None:
-    global _client, _client_ready
-    _client, _client_ready = None, False
+    line = {
+        "type": "event",
+        "at": datetime.now(UTC).isoformat(timespec="milliseconds"),
+        "event": event,
+        "session": session[:80],
+        "source": source,
+        "env": os.environ.get("FLOWASSIST_ENV", "demo"),
+        **clean(properties),
+    }
+    _write(line)
+    return line
 
 
-def capture(event: str, distinct_id: str, properties: dict[str, Any]) -> None:
-    client = posthog_client()
-    if client is None:
-        return
-    try:
-        client.capture(
-            event,
-            distinct_id=distinct_id,
-            properties={**properties, "env": os.environ.get("FLOWASSIST_ENV", "demo"), "$process_person_profile": False},
-        )
-    except Exception:  # noqa: BLE001 - analytics must never break the request
-        pass
+def _write(line: dict[str, Any]) -> None:
+    """stdout always (Vercel runtime logs); METRICS_FILE too when set (local)."""
+    text = json.dumps(line, ensure_ascii=False)
+    print(text, file=sys.stdout, flush=True)
+    target = os.environ.get("METRICS_FILE", "").strip()
+    if target:
+        path = Path(target)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with _lock, path.open("a", encoding="utf-8") as f:
+            f.write(text + "\n")
 
 
 class Trace:
@@ -81,6 +125,7 @@ class Trace:
 
     def emit(self, status: int) -> None:
         line = {
+            "type": "trace",
             "trace_id": self.trace_id,
             "route": self.route,
             "status": status,
@@ -88,4 +133,4 @@ class Trace:
             **self.attributes,
             "spans": self.spans,
         }
-        print(json.dumps(line, ensure_ascii=False), file=sys.stdout, flush=True)
+        _write(line)

@@ -23,3 +23,6 @@ dist/
 # Python tooling caches
 .pytest_cache/
 .ruff_cache/
+
+# Local metrics (demo events and generated reports stay on the machine)
+metrics/

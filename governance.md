@@ -113,9 +113,9 @@ The engine filters public fixtures by assigned merchant, requires a unique refer
 *A/B trial experiment guardrails, enterprise merchant protection, and safety thresholds for experiment termination.*
 
 ## Session 7 — accountable owner, rollback authority, incident path (draft, 17 November 2026)
-- **Global switch ⏻:** PostHog flag `assist-mode` (`on` / `suggest_only` / `off`), enforced by the server. **Who can press it:** Head of Payment Operations (day) and the on-call engineer (night), never only the person who wrote the code. Fail-safe: unknown or unreachable flag → `suggest_only`. **Last tested:** _to fill on the first production test (see docs/SETUP_CI.md §4)_.
+- **Global switch ⏻:** env `ASSIST_MODE` (`on` / `suggest_only` / `off`) on Vercel, enforced by the server; changing it requires a redeploy (~1 min). **Who can press it:** Head of Payment Operations (day) and the on-call engineer (night), never only the person who wrote the code. Fail-safe: any other value → `suggest_only`. **Last tested:** _to fill on the first production test (see docs/SETUP_CI.md §3)_.
 - **Release approval:** a PR merges only with green CI (tests, JS/Python parity, 50-case regression, attack set with zero misses); deployment runs only after CI on `main`, followed by a production smoke test.
-- **Trace keeper:** request traces in Vercel logs (no ticket text); product events in PostHog EU (no ticket, draft or note text). Retention to confirm with the DPO.
-- **Who signs an experiment on real users:** Head of Payment Operations signs, DPO reads (S6); the `copilot-ab` flag stays at 0 % until then.
+- **Trace keeper:** traces and product events stay with us: Vercel runtime logs in production, `metrics/events.jsonl` on the operator's machine locally (git-ignored); no third-party analytics, no ticket, draft or note text. Retention to confirm with the DPO.
+- **Who signs an experiment on real users:** Head of Payment Operations signs, DPO reads (S6); no A/B assignment is coded before that signature.
 
 *Rollback triggers, operational on-call rotation, kill-switch authority, and incident post-mortem playbooks.*

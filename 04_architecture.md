@@ -60,9 +60,9 @@ A workflow: every step and branch is written in advance, and no model chooses a 
 ## 8b. Server authority, global switch and trace (v0.6, 17 November 2026)
 - **Where the rules are enforced:** `api/index.py` (FastAPI on Vercel) runs `flowassist/engine.py` on its own fixtures. The browser engine is a preview; insertion, final reply and handover are refused by the server (HTTP 422 with reason codes) when a guardrail fails. API down → the page fails closed to manual handling (incident class "Outage").
 - **Guardrail layers:** input (injection, secrets/IBAN, money/legal/dispute/compliance routing), scope (merchant from the assigned session, unique reference, amount/currency, freshness, source schema), output (money/arrival/legal commitments, invented amounts or references, citations, status upgrade).
-- **Global override switch ⏻:** PostHog flag `assist-mode` = `on` / `suggest_only` (L1: drafts visible, not insertable) / `off` (humans only). Unknown or unreachable → `suggest_only`. Owner: a role (Head of Payment Ops; on-call engineer at night), see governance S7.
-- **Trace:** one JSON line per request (route, status, latency, spans, engine version, assist mode) in Vercel logs; product events in PostHog ([tracking plan](docs/TRACKING_PLAN.md)).
-- **Release path:** PR → CI (`make ci`: tests, parity, regression, attack set) → merge → deploy only after green CI → production smoke test. Rollback: revert on `main`, or flip `assist-mode` without redeploying.
+- **Global override switch ⏻:** env `ASSIST_MODE` = `on` / `suggest_only` (L1: drafts visible, not insertable) / `off` (humans only), read by the server on every request; any other value → `suggest_only`. Owner: a role (Head of Payment Ops; on-call engineer at night), see governance S7.
+- **Trace and metrics, local:** one JSON line per request and per product event (allowlisted, no ticket text) in the Vercel logs, and in `metrics/events.jsonl` with `make dev`; `make metrics` builds the report ([tracking plan](docs/TRACKING_PLAN.md)).
+- **Release path:** PR → CI (`make ci`: tests, parity, regression, attack set) → merge → deploy only after green CI → production smoke test. Rollback: revert on `main`, or set `ASSIST_MODE=off` and redeploy.
 
 ## 9. What you would build next
 Have the labels validated and the outputs graded independently by two people.

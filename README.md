@@ -74,11 +74,12 @@ The browser shows an instant preview; **the FastAPI server (`api/index.py`) deci
 | `make dev` | API + prototype on http://127.0.0.1:8000 |
 | `make ci` | lint, data sync, 144 Python + 41 Node tests, 50-case regression, 30-row attack set |
 | `make adversarial` | OWASP-style attack set; one miss fails |
-| `make judge` | LLM-as-a-judge on the graded drafts (costs API credits) |
+| `make judge` | LLM-as-a-judge on the graded drafts: OpenAI `gpt-6-luna`, key in `.env` (costs API credits) |
+| `make metrics` | pre-launch metrics report from the local event file |
 | `make smoke URL=…` | post-deploy check of page, health, config and one refusal |
 
-- **Global switch:** PostHog flag `assist-mode` (`on` / `suggest_only` / `off`), env `ASSIST_MODE` as default, fail-safe `suggest_only`.
-- **Metrics before launch:** [tracking plan](docs/TRACKING_PLAN.md) (PostHog EU, no ticket text).
+- **Global switch:** env `ASSIST_MODE` (`on` / `suggest_only` / `off`; Vercel variable in production), any other value fails safe to `suggest_only`.
+- **Metrics before launch, kept locally:** the page posts allowlisted events to our own server; `make dev` writes them to `metrics/events.jsonl` (git-ignored) and `make metrics` builds `metrics/report.md`. See the [tracking plan](docs/TRACKING_PLAN.md); no third-party analytics, no ticket text.
 - **CI/CD:** `.github/workflows/ci.yml` on every PR and push; deployment to Vercel only after green CI on `main`, then a production smoke test. Setup: [docs/SETUP_CI.md](docs/SETUP_CI.md).
 - **Evaluation:** [attack set](evals/adversarial_v0.csv), [grading guideline](evals/judge/rubric.md), [judge prompt](evals/judge/judge_prompt.txt).
 
