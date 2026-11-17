@@ -1,109 +1,112 @@
 # FlowAssist — final pitch: speaker notes
 
-One section per slide: what the slide is about, what to say, **the components of the code and documents behind it**, and the course point it answers.
-Files: [PDF](FlowAssist_Final_Pitch.pdf) · [PPTX with these notes](FlowAssist_Final_Pitch.pptx) · live demo: https://deploy-project-product-management.vercel.app
+Ten slides, one per course beat, then an appendix for questions (hidden when presenting). For each slide: what it is about, what to say, and **the code and documents behind it**.
+Files: [PDF (10 slides)](FlowAssist_Final_Pitch.pdf) · [PPTX with notes and appendix](FlowAssist_Final_Pitch.pptx) · live demo: https://deploy-project-product-management.vercel.app/?demo
 
 ## 1. FlowAssist
-*Data & AI Product · From Diagnosis to Delivery · Final pitch*
+*Data & AI Product · Final pitch*
 
-**What this slide is about:** the product in one sentence. FlowAssist helps a Tier-1 payment specialist answer “where is my money?” with evidence; the specialist always sends.
+**What this slide is about:** the promise in one line. FlowAssist is a copilot for payment-operations specialists at a B2B payments company.
 
-**Say it:** “We followed the course loop end to end: diagnose, size, design, build, measure, operate. Each slide shows the course checkpoint it answers.”
+**Say it:** "Ten slides, one per course step. We built it, measured it, and we ask you for a conditional go."
 
-**In the code:** the whole product is in the repo BenjaminAHS/project-product-management. Start at README.md, then spec.md v3 (the full specification, S1–S7). Live demo: deploy-project-product-management.vercel.app.
+**In the code:** repo BenjaminAHS/project-product-management — start at README.md and spec.md (the full specification). Live demo: deploy-project-product-management.vercel.app.
 
-**Course point:** the oral is a 10-beat pitch (Airbnb style), not a technical demo.
+## 2. Specialists spend 40 % of every ticket searching.
+*01 · Problem · Course S1*
 
-## 2. Specialists spend 40 % of every ticket hunting through six tools
-*Beat 1 · Problem — Course S1: symptom → cause, the do-nothing has a price*
+**What this slide is about:** the pain and its price — the course's "symptom → cause" and "the do-nothing has a price".
 
-**What this slide is about:** the pain and its price. 40 % of an 18-minute ticket is spent searching six tools; that is about €415k a year of investigation labour and a 4.5 h median first response.
+**Say it:** Karim, Tier-1 specialist, spends 5.7 min searching and 4.8 min drafting per ticket. Root cause: payment data split across services with no merchant view.
 
-**Say it:** start from Karim’s day (search 5.7 min, drafting 4.8 min), then the root cause (fragmented payment data), then the do-nothing with a price.
+**In the code / docs:** 01_problem_statement.md (problem sentence, persona, problem tree, do-nothing), governance.md S1. Figures are course scenario assumptions.
 
-**In the code / docs:** 01_problem_statement.md (problem sentence, persona, problem tree, 5 Whys, do-nothing), governance.md section S1 (the six governance questions). All figures are course scenario assumptions, labelled as such.
+**If asked:** why AI and not rules? Macros cover ~15 %; fuzzy references and fees need matching — but a wrong match is worse than no draft, so it is a copilot (appendix: architecture).
 
-**Course point (s1):** symptom ≠ cause; the do-nothing is not zero.
+## 3. FlowAssist finds the payment and drafts the reply. The specialist decides.
+*02 · Solution · Course S1–S3*
 
-## 3. Four questions before saying “AI”
-*Beat 2 · Solution — Course S1: is AI the right tool, and at which level?*
+**What this slide is about:** the agent's job in one sentence and its trust level per step (L1 read, L3 scoped lookup, L2 draft, person-only send).
 
-**What this slide is about:** why AI, and why only a copilot. The four course questions answered for our case.
+**Say it:** walk left to right; stop on the green box.
 
-**Say it:** “Rules alone can’t match vague references with fees; but one wrong match is worse than no draft, so the person keeps the send button.”
+**In the code:** prototype/engine.js (browser preview) and flowassist/engine.py (server authority): classify() reads the request, analyze() finds the payment within the assigned merchant, make_draft()/source_records() draft with citations, evaluate_draft() checks. There is deliberately no send function: the app records a reply only after human review (recordReply in prototype/app.js).
 
-**In the code / docs:** 01_problem_statement.md §3 (Is AI the right tool?) and §4 (four selection questions); governance.md S1 Q1–Q6 (EU AI Act tier, data, accountability, never-do list).
+## 4. Users showed us what we couldn’t see.
+*03 · Validation · Course S3*
 
-**Course point (s1):** rule for 80 %? prediction or organisational decision? data and rights? cost of one error?
+**What this slide is about:** the design loop — users change the design, not the threshold.
 
-## 4. Find the payment, draft a cited reply, let the specialist decide
-*Beat 2 · Solution — Course S1–S3: one job, a trust level per step*
+**Say it:** be honest about the gate: 1 of 3 finished unaided (course gate: 4 of 5), so desirability is not validated yet.
 
-**What this slide is about:** the agent’s job in one sentence and a trust level per step (L1 intent, L3 scoped lookup, L2 draft, person-only send), plus the never-do list.
+**In the code:** D08 = STATUS map + plainStatus() in prototype/app.js (amber "Sent to recipient's bank · not yet received"); D09 = renderFacts() and #verified-facts in prototype/index.html; D10 = sourceGuide() in renderSources(). The v0.8 three-step flow is a design hypothesis, not a user finding: it is what we retest with 5 users (gate: 4 of 5 finish unaided). Evidence: 03_user_research.md.
 
-**Say it:** walk left to right; stop on the green box: nothing reaches a merchant without a person.
+## 5. We size the workload, not a market report.
+*04 · Market · Course S2*
 
-**In the code:** the four steps live in prototype/engine.js (browser preview) and flowassist/engine.py (server authority): classify() = read intent, analyze() = find the payment within the assigned merchant, make_draft() / source_records() = cited reply, evaluate_draft() = checks. The send step does not exist in the code by design: the app only records a local reply after human review (prototype/app.js, recordReply).
+**What this slide is about:** bottom-up sizing of an internal product: tickets × share × success rate × value per ticket, net of AI and error cost.
 
-**Course point (s1–s3):** one job, one sentence; a trust level per step, at least one below L4.
+**Say it:** the one branch that decides everything is the time saved per eligible ticket (48 % base, a guess to test).
 
-## 5. An internal product: we size the workload, not a market report
-*Beat 4 · Market — Course S2: bottom-up, a source per branch, value is net*
+**In the code / docs:** 02_sizing.xlsx (Inputs, Upside, Decision tabs), 02_investment_memo.md. The €175k is the full-scope gross value before costs (also covers disputes and KYC tickets at lower rates).
 
-**What this slide is about:** bottom-up sizing of an internal product. We size tickets and minutes, not a market report: 144k tickets × 50 % tracing × 75 % eligible × 48 % time saved (base guess).
+## 6. Four fixed steps. A person decides.
+*05 · Product · Course S4*
 
-**Say it:** name the source type of each branch (measured / tag share / guess) and point at the one branch that decides everything: time saved.
+**What this slide is about:** the product beat = live demo + the AI architecture decoded (graded at the oral). Workflow, not agent: four fixed steps, one rung per step (all rung 1: rules and templates, they pass the development set), a trust level per step (L1 router, L3 scoped lookup, L2 draft, person approves), human checkpoints ⊘ (abstention on sensitive or unclear tickets; one approval in step 3) and one override switch ⏻ with a named owner.
 
-**In the code / docs:** 02_sizing.xlsx (Inputs, Upside, Decision tabs: low/base/high, source type per input, adoption ramp by quarter); 02_investment_memo.md.
+DEMO SCRIPT (open the link with ?demo so the tour stays closed): (1) DEMO-01: step 1, open the ledger then the clearing record; the cited reply appears in step 2 with the verified facts; step 3, tick "I checked the facts and the wording", click Approve & close · demo. (2) Add "We will refund you next week" to the reply and approve: the server refuses it (HTTP 422), the case stays open. (3) DEMO-03 (compliance): one clear card, the handover is already open: reason, preview, hand over.
 
-**Course point (s2):** bottom-up with a source per branch; ranges, not points; value is net (minus AI cost and error cost); adoption is staged.
+**In the code:** classify() and analyze() in flowassist/engine.py (mirrored in prototype/engine.js), make_draft()/source_records(), evaluate_draft(); api/index.py (/api/check, /api/handover); ASSIST_MODE in flowassist/flags.py; maybePrefill(), recordReply(), nextStepText() in prototype/app.js. Diagram and component table: 04_architecture.md, spec.md §3.
 
-## 6. Conditional GO: it beats the next-best project only above 41.2 % time saved
-*Beat 6 · Business case — Course S2: three scenarios, do-nothing, the hurdle*
+**Backup:** if the network fails, the banner says "Assistant server unavailable" and the page falls back to manual handling (designed outage behaviour).
 
-**What this slide is about:** the decision. Three scenarios with probabilities give an expected value of €159.8k, above do-nothing (€57.6k) and above the hurdle (€125k, the self-serve portal). The pessimistic case does not clear the hurdle, so the answer is a conditional GO. Flip point: 41.2 % time saved.
+## 7. Conditional GO: worth it above 41.2 % time saved.
+*06 · Business case · Course S2*
 
-**Say it:** be the first to say what could flip it: the sheet’s own check row implies €6.875 per ticket, not €10; at that cost the base case drops to ~€87k.
+**What this slide is about:** a number, an alternative, a threshold. EV €159.8k (pessimistic −€59.8k p 0.2, base €141.3k p 0.6, optimistic €434.9k p 0.2) vs do-nothing €57.6k vs hurdle €125k. The pessimistic case doesn't clear the hurdle, hence conditional.
 
-**In the code / docs:** 02_sizing.xlsx Decision tab (EV, comparisons, sensitivity table); 02_investment_memo.md (the four CFO questions, sensitivity paragraph). The 41.2 % threshold is reused as the success criterion in 03_product_brief.md §7 and spec.md §1.
+**Say it:** say the weakness first (cost per ticket). Build/buy/orchestrate → orchestrate (4.35 vs 3.15 vs 2.15), see appendix.
 
-**Course point (s2):** a number, an alternative, a threshold; the hurdle is another project.
+**In the code / docs:** 02_sizing.xlsx Decision and Build-or-buy tabs; 02_investment_memo.md. The 41.2 % flip point is the success criterion in 03_product_brief.md §7 and spec.md §1.
 
-## 7. We orchestrate: our rules and data, a rented model only where it earns its place
-*Beat 7 · Alternatives — Course S2: build, buy or orchestrate · the hurdle is another project*
+## 8. Three promises, and how we’ll prove them.
+*07 · Proof · Course S5–S6*
 
-**What this slide is about:** build, buy or orchestrate, scored on the course’s ten questions: orchestrate 4.35, build 3.15, buy 2.15.
+**What this slide is about:** the two graded points "3 business metrics with expected effects" (S5, level 5 of the stack) and "A/B protocol with sample size" (S6). The eval numbers (levels 1–3) move to the footnote.
 
-**Say it:** give the counter-argument yourself: a vendor at €0.92 per resolution would cost ~€34k a year less at base volume; we pay that for data control and the ability to leave.
+**The metrics:** baselines from 02_sizing.xlsx; expected effects derived from the 41.2 % flip point (18.0 min × 0.588 = 10.6 min; €10 × 0.588 = €5.88); QA stated as a non-effect with a stop band. Counter-metrics (slide 9): 7-day reopen and edit rate.
 
-**In the code / docs:** 02_sizing.xlsx Build or buy tab (weights, scores, break-even). In the product, “orchestrate” means our own rules and data (flowassist/), with a rented model only where it earns its place: today only the offline judge (scripts/judge.py, OpenAI gpt-6-luna).
+**The a/b:** unit = the eligible tracing ticket (18 agents would give 9 per arm, too few; risk: agents learn from drafts → report it). n per arm = 2 (z0.975 + z0.80)² σ² / Δ² = 2 × 2.80² × 18² / 3.6² ≈ 393, with σ = 18 min an assumption (CV 1) to measure in shadow mode before the start, and Δ = 3.6 min (20 %), the smallest saving that changes the decision (below it: kill). ≈ 786 tickets ≈ one week of eligible traffic (≈ 1,040 a week), but we run 4 weeks because QA is read weekly and reopen needs 7 days. Decision rule written before: ship ≥ 41.2 % with every guardrail held; iterate 20–41 %; kill < 20 % or any guardrail broken; stop early only on harm (a draft on a human-only ticket, another merchant's data). Segments pre-registered: language, plan.
 
-**Course point (s2):** build/buy/orchestrate; the real competitor is the next-best project.
+**In the code:** handling time = activeTime() in prototype/app.js, sent as handling_ms on reply_recorded; make metrics → metrics/report.md (p50/p95 by language and plan). Full protocol: 06_07_experiments_operations.md (to write); appendix slide "Experiment".
 
-## 8. The smallest product that can pass or fail the 41.2 % test
-*Beat 5 · Product — Course S3: map the process, cut until it can fail, climb the ladder only when needed*
+## 9. One owner can stop it fast.
+*08 · Risks · Course S7*
 
-**What this slide is about:** the MVP. Process redesign (18 → 7.6 min, a hypothesis), MoSCoW (3 MUST, 5 WON’T), the model ladder (rung 1 rules on all four steps) and the one-sentence success criterion.
+**What this slide is about:** adverse effects, monitoring and rollback (graded point). Guardrail on the server, counter-metrics with a harm threshold and an owner, and the switch as the rollback.
 
-**Say it:** “We cut until it could fail. The draft is a MUST because it tests the flip assumption, even with a lower RICE score.”
+**Say it:** Air Canada 2024 — the company answers for its bot, so the switch has an owner, not the developer. A pre-filled reply invites approval without reading (automation bias): the edit rate and the 7-day reopen rate are watched for that.
 
-**In the code / docs:** 03_product_brief.md (process, MoSCoW, criterion), 03_design_details.md (RICE table, eight automation tests), spec.md §2 (scope) and §3 (one rung per component: classify, analyze, make_draft, evaluate_draft are all rules/templates).
+**In the code / docs:** /api/check → HTTP 422 (api/index.py, evaluate_draft() in flowassist/engine.py); ASSIST_MODE on | suggest_only | off in flowassist/flags.py (unknown → suggest_only); markServerDown() in prototype/app.js (fail-closed); events reply_recorded (edited, handling_ms) and check_failed → make metrics; four monitoring layers with thresholds in docs/TRACKING_PLAN.md and spec.md §7; harm threshold and owners in governance.md S5–S7; release path .github/workflows/ci.yml and sync-deploy.yml (smoke test on production).
 
-**Course point (s3):** map the process first; MUST ≤ 4, WON’T ≥ 5; climb the ladder only when the rung below fails.
+## 10. Conditional GO for a 4-week pilot on tracing tickets.
+*09 · The ask · Course S8*
 
-## 9. Users found what we couldn’t see: “sent to bank” read as “received”
-*Beat 3 · Validation — Course S3: the design loop, users change the design, not the threshold*
+**What this slide is about:** the decision we ask for. A conditional GO for a 4-week shadow + A/B pilot on tracing tickets only, with four preconditions; a clear no-go if the pilot misses 41.2 % or breaks a guardrail.
 
-**What this slide is about:** what users changed. 2 of 3 testers read the green “sent to bank” chip as money received. That produced D08–D10, now shipped.
+**Say it:** end on the decision, not the technology. Then each member names their part (fill the “who did what” line before the oral).
 
-**Say it:** be honest about the gate: only 1 of 3 finished unaided (the course gate is 4 of 5), so desirability is not validated yet; we retest on v0.5.
+**In the code / docs:** preconditions map to open items in spec.md §11 (grader 2, held-out eval_set_v1, loaded cost per ticket, Legal on scope). The launch memo goes in 08_launch_memo.md with the final tag v1.0.
 
-**In the code:** prototype/app.js STATUS map + plainStatus() = D08 plain-language amber/green/red status; renderFacts() and the #verified-facts box in prototype/index.html = D09 checklist; sourceGuide() in renderSources() = D10 “what each source confirms, ledger first”; styles in prototype/styles.css (.status-wait/.status-done/.status-stop, .facts). Evidence: 03_user_research.md.
+**Course point (s8):** go / no-go and the launch plan.
 
-**Course point (s3):** Mom Test, five users, users change the design but not the threshold.
+---
 
-## 10. A workflow you can draw, and a server that has the last word
-*Beat 5 · Product — Course S4: decode the architecture · workflow or agent?*
+# Appendix (for questions, hidden when presenting)
+
+## 11. A workflow you can draw, and a server that has the last word
+*Appendix · Architecture*
 
 **What this slide is about:** the architecture decoded. Four steps in a fixed workflow (router, routing rule, drafter, policy checker) and a server that re-checks every recorded action. A global switch can reduce the assistant to suggestions or turn it off.
 
@@ -113,30 +116,8 @@ Files: [PDF](FlowAssist_Final_Pitch.pdf) · [PPTX with these notes](FlowAssist_F
 
 **Course point (s4):** decode the architecture, human checkpoints ⊘ and one override switch ⏻ with an owner.
 
-## 11. Live demo
-*Beat 5 · Product — Course S4: a live demo on real tickets, not a mockup*
-
-**What this slide is about:** the live demo, three moves.
-
-**Demo script:** (1) DEMO-01: open the ledger, then the clearing record, tick the review, insert the cited draft, record the reply. (2) In the editor, add “We will refund you next week” and try to record: the server refuses it with HTTP 422 and the case stays open. (3) DEMO-03 (compliance hold): no draft; prepare and record a handover with a reason.
-
-**In the code:** (1) renderSources(), applyDraft(), recordReply() in prototype/app.js, each gated by serverGate() → POST /api/check. (2) evaluate_draft() in flowassist/engine.py, code “commitment”; COMMITMENT_RE lists the EN/FR/DE promises. (3) classify() routes to “compliance”; analyze() returns human_only; handover() builds the redacted packet, POST /api/handover.
-
-**Backup:** if the network fails, the banner shows “Assistant server unavailable” and the page continues in manual mode: that is the designed outage behaviour.
-
-## 12. What the prototype proves today, and what it doesn’t
-*Beat 8 · Proof — Course S4–S5: demo data ≠ eval data · guardrails tested under attack*
-
-**What this slide is about:** what the prototype proves and what it doesn’t. 50/50 expected states, 0 drafts on the 13 human-only cases, 30/30 attacks caught, never a source from another merchant. The 50 cases are regression only.
-
-**Say it:** “Demo data and evaluation data never meet: these 50 were examined while fixing bugs, so the real number will come from 200 held-out tickets.”
-
-**In the code:** make eval → scripts/eval_s4.cjs on evals/eval_set_v0.csv + evals/fixtures_v0.json (results in evals/results_v0.json, report evals/report_v0.md). make adversarial → scripts/run_adversarial.py on evals/adversarial_v0.csv (OWASP LLM01/02/06/09 rows); one miss fails CI (.github/workflows/ci.yml). Guardrail layers: input = INJECTION_RE, SECRET_RE, ROUTES; scope = analyze(); output = PROMISE_RE, COMMITMENT_RE, citation and amount checks in evaluate_draft().
-
-**Course point (s4–s5):** demo ≠ eval data; every miss becomes a spec line; red-team the guardrails.
-
-## 13. What we promise, and what must not break
-*Beat 8 · Proof — Course S5: 3 business metrics with expected effects · what to protect*
+## 12. What we promise, and what must not break
+*Appendix · Metrics*
 
 **What this slide is about:** three business metrics with expected effects (time per eligible ticket 18.0 → ≤ 10.6 min, cost €10 → ≤ €5.88, QA ≥ 92 % unchanged as a stated non-effect), then what to protect: primary, guardrails, counter-metrics.
 
@@ -146,8 +127,8 @@ Files: [PDF](FlowAssist_Final_Pitch.pdf) · [PPTX with these notes](FlowAssist_F
 
 **Course point (s5):** five-level stack; Goodhart; report by segment; harm threshold.
 
-## 14. An LLM judge we checked before trusting
-*Beat 8 · Proof — Course S5: make the judge trustworthy · fix once, re-measure*
+## 13. An LLM judge we checked before trusting
+*Appendix · AI judge*
 
 **What this slide is about:** the LLM-as-a-judge and how we validated it. Guideline v1.0 gave 53 % agreement with our human grader; reading the disagreements showed two ambiguities in our own rubric; after one fix (v1.1) agreement is 73 % and the judge escalates 41/41 known-bad drafts with 0 over-accepted. The 4 remaining disagreements are a real defect the human missed: English messages answered in French or German.
 
@@ -157,35 +138,24 @@ Files: [PDF](FlowAssist_Final_Pitch.pdf) · [PPTX with these notes](FlowAssist_F
 
 **Course point (s5):** make the judge trustworthy: rubric first, human–human then human–judge agreement, fix once, re-measure.
 
-## 15. How we would prove it caused the saving
-*Beat 8 · Proof — Course S6: randomise the right unit · size it and decide before you look*
+## 14. How we would prove it caused the saving
+*Appendix · Experiment*
 
 **What this slide is about:** how we would prove causality. The hypothesis sentence, the design chain (shadow → A/B on tickets for 4 weeks → 5 % holdout) and the decision rule written before looking (ship / iterate / kill; stop early only on harm).
 
-**Say it:** “Unit = the ticket: 18 agents would give 9 per arm, too few. Duration is set by the slowest guardrail, not the first good number.” The sample size per arm is still to compute in 06_07_experiments_operations.md.
+**Say it:** “Unit = the ticket: 18 agents would give 9 per arm, too few. Duration is set by the slowest guardrail, not the first good number.” Sample size: 393 per arm to detect a 20 % saving (3.6 min) at α 5 %, power 80 %, with σ = 18 min assumed (to measure in shadow mode).
 
 **In the code:** assist modes in flowassist/flags.py give shadow-like operation (suggest_only = drafts visible, never used); handling time is measured per ticket (activeTime() in prototype/app.js, sent as handling_ms in reply_recorded events). The A/B assignment itself is deliberately not coded before the protocol is signed (docs/TRACKING_PLAN.md).
 
 **Course point (s6):** randomise the right unit; size it and decide before; no peeking; pre-register segments.
 
-## 16. Something will go wrong; one person can stop it in minutes
-*Beat 9 · Risks — Course S7: four layers, an owner each, a switch that is a tested procedure*
+## 15. We orchestrate: our rules and data, a rented model only where it earns its place
+*Appendix · Build or buy*
 
-**What this slide is about:** operation. Four monitoring layers with a paging threshold and an owner each, the switch as a rollback procedure, the release path and the drifts to watch.
+**What this slide is about:** build, buy or orchestrate, scored on the course’s ten questions: orchestrate 4.35, build 3.15, buy 2.15.
 
-**Say it:** “Rolling back is one setting changed by a role, not by the developer: on → suggest-only → off in under 15 minutes.” Mention Air Canada 2024: the company answers for its bot.
+**Say it:** give the counter-argument yourself: a vendor at €0.92 per resolution would cost ~€34k a year less at base volume; we pay that for data control and the ability to leave.
 
-**In the code:** switch = ASSIST_MODE in flowassist/flags.py (any unknown value fails safe to suggest_only); traces = Trace in flowassist/telemetry.py (one JSON line per request); release path = .github/workflows/ci.yml (make ci on every PR) then .github/workflows/sync-deploy.yml (deploy only after green CI, then scripts/smoke.py on production). Rollback plan, incident classes and drift: spec.md §7 and governance.md S7. Setup: docs/SETUP_CI.md.
+**In the code / docs:** 02_sizing.xlsx Build or buy tab (weights, scores, break-even). In the product, “orchestrate” means our own rules and data (flowassist/), with a rented model only where it earns its place: today only the offline judge (scripts/judge.py, OpenAI gpt-6-luna).
 
-**Course point (s7):** four layers, four clocks, four owners; the switch is a tested procedure; the company answers for the bot.
-
-## 17. Conditional GO: a 4-week shadow + A/B pilot, tracing tickets only
-*Beat 10 · The ask — Course S8: go / no-go and the launch plan*
-
-**What this slide is about:** the decision we ask for. A conditional GO for a 4-week shadow + A/B pilot on tracing tickets only, with four preconditions; a clear no-go if the pilot misses 41.2 % or breaks a guardrail.
-
-**Say it:** end on the decision, not the technology. Then each member names their part (fill the “who did what” line before the oral).
-
-**In the code / docs:** preconditions map to open items in spec.md §11 (grader 2, held-out eval_set_v1, loaded cost per ticket, Legal on scope). The launch memo goes in 08_launch_memo.md with the final tag v1.0.
-
-**Course point (s8):** go / no-go and the launch plan.
+**Course point (s2):** build/buy/orchestrate; the real competitor is the next-best project.

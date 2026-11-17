@@ -84,7 +84,7 @@ Supporting S3 files: [AI Lean Canvas](03_ai_lean_canvas.md), [design details](do
 
 The full specification is in [spec.md](spec.md) v3.
 
-**Final pitch (17 slides, English):** [PDF](pitch/FlowAssist_Final_Pitch.pdf) · [PPTX with speaker notes](pitch/FlowAssist_Final_Pitch.pptx) · [speaker notes mapping each slide to the code](pitch/SPEAKER_NOTES.md).
+**Final pitch (10 slides + appendix, English):** [PDF](pitch/FlowAssist_Final_Pitch.pdf) · [PPTX with speaker notes](pitch/FlowAssist_Final_Pitch.pptx) · [speaker notes mapping each slide to the code](pitch/SPEAKER_NOTES.md).
 
 ## Server, guardrails and CI (v0.6)
 
