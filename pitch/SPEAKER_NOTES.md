@@ -4,7 +4,7 @@ Ten slides, one per course beat, then an appendix for questions (hidden when pre
 Files: [PDF (10 slides)](FlowAssist_Final_Pitch.pdf) · [PPTX with notes and appendix](FlowAssist_Final_Pitch.pptx) · live demo: https://deploy-project-product-management.vercel.app
 
 ## 1. FlowAssist
-
+*Data & AI Product · Final pitch*
 
 **What this slide is about:** the promise in one line. FlowAssist is a copilot for payment-operations specialists at a B2B payments company.
 
@@ -12,8 +12,8 @@ Files: [PDF (10 slides)](FlowAssist_Final_Pitch.pdf) · [PPTX with notes and app
 
 **In the code:** repo BenjaminAHS/project-product-management — start at README.md and spec.md (the full specification). Live demo: deploy-project-product-management.vercel.app.
 
-## 2. Specialists spend 40 % of every ticket searching
-*1 · Problem — Course S1*
+## 2. Specialists spend 40 % of every ticket searching.
+*01 · Problem · Course S1*
 
 **What this slide is about:** the pain and its price — the course's "symptom → cause" and "the do-nothing has a price".
 
@@ -23,8 +23,8 @@ Files: [PDF (10 slides)](FlowAssist_Final_Pitch.pdf) · [PPTX with notes and app
 
 **If asked:** why AI and not rules? Macros cover ~15 %; fuzzy references and fees need matching — but a wrong match is worse than no draft, so it is a copilot (appendix: architecture).
 
-## 3. Find the payment. Draft a cited reply. The specialist sends.
-*2 · Solution — Course S1–S3*
+## 3. FlowAssist finds the payment and drafts the reply. The specialist decides.
+*02 · Solution · Course S1–S3*
 
 **What this slide is about:** the agent's job in one sentence and its trust level per step (L1 read, L3 scoped lookup, L2 draft, person-only send).
 
@@ -32,17 +32,17 @@ Files: [PDF (10 slides)](FlowAssist_Final_Pitch.pdf) · [PPTX with notes and app
 
 **In the code:** prototype/engine.js (browser preview) and flowassist/engine.py (server authority): classify() reads the request, analyze() finds the payment within the assigned merchant, make_draft()/source_records() draft with citations, evaluate_draft() checks. There is deliberately no send function: the app records a reply only after human review (recordReply in prototype/app.js).
 
-## 4. Users showed us what we couldn’t see
-*3 · Validation — Course S3*
+## 4. Users showed us what we couldn’t see.
+*03 · Validation · Course S3*
 
 **What this slide is about:** the design loop — users change the design, not the threshold.
 
 **Say it:** be honest about the gate: 1 of 3 finished unaided (course gate: 4 of 5), so desirability is not validated yet.
 
-**In the code:** D08 = STATUS map + plainStatus() in prototype/app.js (amber "Sent to recipient's bank · not yet received"); D09 = renderFacts() and #verified-facts in prototype/index.html; D10 = sourceGuide() in renderSources(). Since v0.7 the Next-step bar and the guided tour make the flow obvious for a first-time user. Evidence: 03_user_research.md.
+**In the code:** D08 = STATUS map + plainStatus() in prototype/app.js (amber "Sent to recipient's bank · not yet received"); D09 = renderFacts() and #verified-facts in prototype/index.html; D10 = sourceGuide() in renderSources(). Since v0.8 the whole screen is one guided flow in three steps (check the payment, review the reply, approve), with a Next-step bar and an onboarding tour. Evidence: 03_user_research.md.
 
-## 5. We size the workload, not a market report
-*4 · Market — Course S2*
+## 5. We size the workload, not a market report.
+*04 · Market · Course S2*
 
 **What this slide is about:** bottom-up sizing of an internal product: tickets × share × success rate × value per ticket, net of AI and error cost.
 
@@ -50,19 +50,19 @@ Files: [PDF (10 slides)](FlowAssist_Final_Pitch.pdf) · [PPTX with notes and app
 
 **In the code / docs:** 02_sizing.xlsx (Inputs, Upside, Decision tabs), 02_investment_memo.md. The €175k is the full-scope gross value before costs (also covers disputes and KYC tickets at lower rates).
 
-## 6. See it work: live demo
-*5 · Product — Course S4*
+## 6. Three steps. One decision.
+*05 · Product · Course S4*
 
-**What this slide is about:** the live demo, three moves.
+**What this slide is about:** the live demo of the new guided interface, three moves.
 
-**Demo script:** (1) DEMO-01: open the ledger, then the clearing record, tick the review, insert the cited draft, record the reply. (2) In the editor, add “We will refund you next week” and try to record: the server refuses it with HTTP 422 and the case stays open. (3) DEMO-03 (compliance hold): no draft; prepare and record a handover with a reason.
+**Demo script:** (1) DEMO-01: step 1, open the ledger then the clearing record; the cited reply appears in step 2 with the verified facts beside it; step 3, tick the check and click Approve & close. (2) Back on an open ticket, add "We will refund you next week" to the reply and approve: the server refuses it (HTTP 422) and the case stays open. (3) DEMO-03 (compliance hold): no steps, one clear card, the handover form is already open: pick a reason, preview, hand over.
 
-**In the code:** (1) renderSources(), applyDraft(), recordReply() in prototype/app.js, each gated by serverGate() → POST /api/check. (2) evaluate_draft() in flowassist/engine.py, code “commitment”; COMMITMENT_RE lists the EN/FR/DE promises. (3) classify() routes to “compliance”; analyze() returns human_only; handover() builds the redacted packet, POST /api/handover.
+**In the code:** the three steps are #step-evidence, #step-review, #step-reply in prototype/index.html; maybePrefill() inserts the draft after both sources are opened, through serverGate() → POST /api/check; recordReply() needs the final check. The refusal is evaluate_draft() in flowassist/engine.py (code "commitment"). The blocked card and handover: render() and handover() → POST /api/handover. Next-step text: nextStepText() in prototype/app.js.
 
-**Backup:** if the network fails, the banner shows “Assistant server unavailable” and the page continues in manual mode: that is the designed outage behaviour.
+**Backup:** if the network fails, the banner says "Assistant server unavailable" and the page continues in manual mode: the designed outage behaviour.
 
-## 7. Conditional GO: worth it above 41.2 % time saved
-*6 · Business case — Course S2*
+## 7. Conditional GO: worth it above 41.2 % time saved.
+*06 · Business case · Course S2*
 
 **What this slide is about:** a number, an alternative, a threshold. EV €159.8k (pessimistic −€59.8k p 0.2, base €141.3k p 0.6, optimistic €434.9k p 0.2) vs do-nothing €57.6k vs hurdle €125k. The pessimistic case doesn't clear the hurdle, hence conditional.
 
@@ -70,8 +70,8 @@ Files: [PDF (10 slides)](FlowAssist_Final_Pitch.pdf) · [PPTX with notes and app
 
 **In the code / docs:** 02_sizing.xlsx Decision and Build-or-buy tabs; 02_investment_memo.md. The 41.2 % flip point is the success criterion in 03_product_brief.md §7 and spec.md §1.
 
-## 8. Tested before anyone trusts it
-*7 · Proof — Course S4–S6*
+## 8. Tested before anyone trusts it.
+*07 · Proof · Course S4–S6*
 
 **What this slide is about:** evidence — S4 eval, S5 guardrails and judge, S6 experiment — in one slide. Details in the appendix (metrics, judge, experiment).
 
@@ -79,8 +79,8 @@ Files: [PDF (10 slides)](FlowAssist_Final_Pitch.pdf) · [PPTX with notes and app
 
 **In the code:** make eval → scripts/eval/eval_s4.cjs on evals/eval_set_v0.csv (results evals/v0/results_v0.json, report evals/report_v0.md). make adversarial → scripts/eval/run_adversarial.py on evals/adversarial_v0.csv; one miss fails CI. make judge → scripts/eval/judge.py, prompt evals/judge_prompt.txt, report evals/judge/judge_report.md. Metrics: make metrics → metrics/report.md.
 
-## 9. If something goes wrong, one person stops it fast
-*8 · Risks — Course S7*
+## 9. If something goes wrong, one person stops it fast.
+*08 · Risks · Course S7*
 
 **What this slide is about:** operation — guardrails on the server, the override switch with a named owner, fail-closed behaviour, release path. Four monitoring layers and owners in the appendix / spec.md §7.
 
@@ -88,8 +88,8 @@ Files: [PDF (10 slides)](FlowAssist_Final_Pitch.pdf) · [PPTX with notes and app
 
 **In the code:** api/index.py (/api/check → HTTP 422), flowassist/flags.py (ASSIST_MODE on | suggest_only | off, unknown → suggest_only), markServerDown() in prototype/app.js (fail-closed), .github/workflows/ci.yml (make ci on every PR), .github/workflows/sync-deploy.yml (deploy only after green CI, then scripts/verify/smoke.py). governance.md S7.
 
-## 10. Conditional GO: a 4-week shadow + A/B pilot, tracing tickets only
-*9 · The ask — Course S8*
+## 10. Conditional GO for a 4-week pilot on tracing tickets.
+*09 · The ask · Course S8*
 
 **What this slide is about:** the decision we ask for. A conditional GO for a 4-week shadow + A/B pilot on tracing tickets only, with four preconditions; a clear no-go if the pilot misses 41.2 % or breaks a guardrail.
 
