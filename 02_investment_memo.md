@@ -26,4 +26,4 @@ Do-nothing assumes 4% annual efficiency improvement: €57,600 in Base. The name
 ## Build, buy or orchestrate?
 **Orchestrate**, conditionally: workbook judgement scores are 4.35 versus Build 3.15 and Buy 2.15. The limited comparable-cost scenario breaks even at approximately 56,266 equivalent resolutions/year. Actual billable outcomes, connectors, provider terms and security must determine the choice before investment. The local app is a deterministic prototype, not evidence of vendor or production readiness.
 
-Trace: editable workbook; detailed registers and recalculation in `Assignments/Assignment_2_Sizing_Investment_Memo.pdf`; archived prior memo in `research/investment_memo_v1.md`. S4 result: `evals/report_v0.md`.
+Trace: editable workbook; detailed registers and recalculation in `assignments/Assignment_2_Sizing_Investment_Memo.pdf`; archived prior memo in `research/investment_memo_v1.md`. S4 result: `evals/report_v0.md`.

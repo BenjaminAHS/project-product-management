@@ -1,6 +1,6 @@
 import json
 
-from scripts.metrics_report import load, report
+from scripts.eval.metrics_report import load, report
 
 
 def test_report_covers_the_tracking_plan_views(tmp_path):

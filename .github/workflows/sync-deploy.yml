@@ -28,7 +28,7 @@ jobs:
           DEPLOY_REPO_TOKEN: ${{ secrets.DEPLOY_REPO_TOKEN }}
         run: |
           if [ -z "$DEPLOY_REPO_TOKEN" ]; then
-            echo "::error::Add the DEPLOY_REPO_TOKEN Actions secret to the primary repository. See prototype/DEPLOYMENT.md."
+            echo "::error::Add the DEPLOY_REPO_TOKEN Actions secret to the primary repository. See docs/DEPLOYMENT.md."
             exit 1
           fi
       - name: Read latest primary main
@@ -45,12 +45,12 @@ jobs:
           path: deployment
           token: ${{ secrets.DEPLOY_REPO_TOKEN }}
       - name: Synchronize committed files and push safely
-        run: python3 source/scripts/sync_deploy.py --source source --checkout deployment
+        run: python3 source/scripts/deploy/sync_deploy.py --source source --checkout deployment
       - name: Smoke test production once Vercel has deployed this version
         run: |
           version=$(grep -oP 'ENGINE_VERSION = "\K[^"]+' source/flowassist/engine.py)
           for attempt in $(seq 1 20); do
-            if python3 source/scripts/smoke.py https://deploy-project-product-management.vercel.app --expect-version "$version"; then exit 0; fi
+            if python3 source/scripts/verify/smoke.py https://deploy-project-product-management.vercel.app --expect-version "$version"; then exit 0; fi
             echo "Waiting for the Vercel deployment ($attempt/20)"; sleep 30
           done
           echo "::error::Production smoke test failed. Roll back: revert the commit on main, or set ASSIST_MODE=off on Vercel and redeploy."

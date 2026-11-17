@@ -1,4 +1,4 @@
-from scripts.run_adversarial import run
+from scripts.eval.run_adversarial import run
 
 
 def test_every_attack_is_caught():

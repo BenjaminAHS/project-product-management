@@ -5,7 +5,7 @@
 - FastAPI server (`api/index.py`, `flowassist/engine.py`) enforces the rules on insertion, final reply and handover; the browser engine stays as the instant preview. Parity test: identical results on 123 cases and 468 draft checks.
 - Global assist-mode switch (`ASSIST_MODE`, fail-safe suggest-only) shown in the banner; API outage fails closed to manual handling; file:// opening is labelled "local preview".
 - Local metrics: allowlisted product events and one trace per request, written to `metrics/events.jsonl` with `make dev`; `make metrics` builds the pre-launch report (docs/TRACKING_PLAN.md). No third-party analytics.
-- Attack set `evals/adversarial_v0.csv` (30 rows, 0 misses), grading guideline + judge prompt + `scripts/judge.py` (OpenAI `gpt-6-luna` by default, Claude optional).
+- Attack set `evals/adversarial_v0.csv` (30 rows, 0 misses), grading guideline + judge prompt + `scripts/eval/judge.py` (OpenAI `gpt-6-luna` by default, Claude optional).
 - Makefile, CI on every PR, deployment gated on green CI with a production smoke test. 39 interface tests (5 new on the server path).
 
 ## v0.5 · user-test changes in the interface · 17 November 2026

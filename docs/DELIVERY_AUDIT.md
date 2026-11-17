@@ -19,13 +19,13 @@ Automated checks, synthetic scenarios and AI desk analysis are identified as suc
 ## Reproduce
 
 ```sh
-python3 scripts/verify_s3.py
-python3 scripts/verify_s4.py
-/opt/anaconda3/bin/python scripts/run_paylio.py
+python3 scripts/verify/verify_s3.py
+python3 scripts/verify/verify_s4.py
+/opt/anaconda3/bin/python scripts/eval/run_paylio.py
 ```
 
 Paylio needs pandas/scikit-learn; the existing Anaconda environment provides them. `docs/evidence/s4/paylio-run.txt` captures the successful original starter run. The starter score is an automated citation heuristic.
 
 ## Release
 
-Primary target: `BenjaminAHS/project-product-management`, `main`. After a successful push run `python3 scripts/sync_deploy.py`, confirm workflow synchronization, and run `python3 scripts/verify_production.py` before claiming updated production delivery. Primary `034267c` was pushed successfully on 9 November. Publication `8a8a2cf` was verified synchronized with zero changes/removals. Updated production HTTP delivery was verified on 9 November with `scripts/verify_production.py` (five assets, HTTP 200, matching hashes); the Actions run itself was not inspected because GitHub CLI was not authenticated.
+Primary target: `BenjaminAHS/project-product-management`, `main`. After a successful push run `python3 scripts/deploy/sync_deploy.py`, confirm workflow synchronization, and run `python3 scripts/verify/verify_production.py` before claiming updated production delivery. Primary `034267c` was pushed successfully on 9 November. Publication `8a8a2cf` was verified synchronized with zero changes/removals. Updated production HTTP delivery was verified on 9 November with `scripts/verify/verify_production.py` (five assets, HTTP 200, matching hashes); the Actions run itself was not inspected because GitHub CLI was not authenticated.

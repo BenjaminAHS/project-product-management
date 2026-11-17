@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def build_cases() -> list[dict]:
     cases: list[dict] = []
-    for fixture in json.loads((ROOT / "evals/fixtures_v0.json").read_text()):
+    for fixture in json.loads((ROOT / "evals/v0/fixtures_v0.json").read_text()):
         cases.append({"name": fixture["id"], "ticket": fixture["ticket"], "data": fixture["data"]})
     data = demo_data()
     for ticket in data["tickets"]:
@@ -40,7 +40,7 @@ def build_cases() -> list[dict]:
 def run_js(cases: list[dict]) -> list[dict]:
     payload = [{k: v for k, v in c.items() if not k.startswith("_") and k != "name"} for c in cases]
     result = subprocess.run(
-        ["node", str(ROOT / "scripts/js_engine_runner.cjs")],
+        ["node", str(ROOT / "scripts/eval/js_engine_runner.cjs")],
         input=json.dumps(payload),
         capture_output=True,
         text=True,

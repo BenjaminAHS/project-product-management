@@ -28,10 +28,10 @@ jobs:
           JUDGE_PROVIDER: openai
           JUDGE_MODEL: gpt-6-luna
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-        run: .venv/bin/python scripts/judge.py
+        run: .venv/bin/python scripts/eval/judge.py
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: judge-report
           path: |
-            evals/judge_report.md
-            evals/judge_results.json
+            evals/judge/judge_report.md
+            evals/judge/judge_results.json

@@ -65,7 +65,7 @@ make dev          # API + démo sur http://127.0.0.1:8000 ; les événements von
 # … utiliser la démo (ouvrir des tickets, inspecter les sources, enregistrer des réponses) …
 make metrics      # → metrics/report.md : funnel, blocages, temps de traitement par segment, escalade, infra
 ```
-`metrics/` est ignoré par Git : les données restent sur la machine. Le détail des événements est dans `docs/TRACKING_PLAN.md`. Pour la prod, on peut exporter les logs Vercel (lignes JSON) et lancer `python scripts/metrics_report.py export.jsonl`.
+`metrics/` est ignoré par Git : les données restent sur la machine. Le détail des événements est dans `docs/TRACKING_PLAN.md`. Pour la prod, on peut exporter les logs Vercel (lignes JSON) et lancer `python scripts/eval/metrics_report.py export.jsonl`.
 
 ## En cas de problème
 

@@ -1,6 +1,6 @@
 # FlowAssist specification · v3 · whole project (S1–S7)
 
-**Updated 17 November 2026.** One document that traces the product from diagnosis to operation and that a developer (or Claude Code) can build from. Each section names the course session it comes from and the file that holds the detail. **Shipped** means it exists in this repository and is tested; **target** means the production design, not yet built.
+**Updated 17 November 2026.** One document that traces the product from diagnosis to operation and that a developer can build from. Each section names the course session it comes from and the file that holds the detail. **Shipped** means it exists in this repository and is tested; **target** means the production design, not yet built.
 
 | Session | Decision it fixes here | Detail |
 |---|---|---|
@@ -65,7 +65,7 @@ flowchart LR
 | 2 | Routing rule: scope and match | `analyze` | 1 rules | chaining with gates | L3 on the assigned merchant | abstention when ambiguous, stale or inconsistent |
 | 3 | Drafter | `source_records`, `make_draft` | 1 templates | chaining | L2 draft | inspect every source, then approve |
 | 4 | Policy checker | `evaluate_draft` | 1 rules | evaluator gate | L2 + server refusal | re-approval after any edit; final human review |
-| — | Judge (offline) | `scripts/judge.py` | 3 pretrained model (OpenAI `gpt-6-luna`) | evaluator | none in the product | humans validate the judge |
+| — | Judge (offline) | `scripts/eval/judge.py` | 3 pretrained model (OpenAI `gpt-6-luna`) | evaluator | none in the product | humans validate the judge |
 
 **Workflow, not agent.** Every path is drawn in advance and no model chooses a tool. That fits a domain where a wrong match is worse than no draft.
 
@@ -184,7 +184,7 @@ On Vercel, change the variable and redeploy (about 1 minute). Who can press it: 
   - `evals/eval_set_v0.csv`: 50 development cases, consumed by fixes, so used for regression only.
   - `evals/eval_set_v1.csv`: 200 held-out inputs, labelling in progress.
   - `evals/adversarial_v0.csv`: 30 attack rows.
-- **Judge.** `evals/judge/rubric.md` (v1.1) was written before grading, and `judge_prompt.txt` is a copy of it. `scripts/judge.py` (OpenAI `gpt-6-luna`; Claude optional) gives 11/15 human–judge agreement and catches 41/41 known-bad variants, with 0 over-accepted. The remaining 4 disagreements are a real defect: the reply language differs from the merchant's language (S5-M01). A second blind human grader is still required for human–human agreement.
+- **Judge.** `evals/judge/rubric.md` (v1.1) was written before grading, and `judge_prompt.txt` is a copy of it. `scripts/eval/judge.py` (OpenAI `gpt-6-luna`; Claude optional) gives 11/15 human–judge agreement and catches 41/41 known-bad variants, with 0 over-accepted. The remaining 4 disagreements are a real defect: the reply language differs from the merchant's language (S5-M01). A second blind human grader is still required for human–human agreement.
 - **Local metrics.** The page posts allowlisted events (`ticket_opened`, `source_inspected`, `draft_used`, `reply_recorded`, `handover_recorded`, `manual_mode_toggled`, `api_unavailable`) and the server adds `guardrail_blocked` and `check_failed`.
   - Unknown keys and long text are dropped, and no ticket text is stored.
   - `make dev` writes events and traces to `metrics/events.jsonl` (git-ignored).

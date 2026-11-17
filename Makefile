@@ -23,39 +23,39 @@ test-py: ## pytest: engine parity JS/Python, API guardrails, attacks
 	$(PY) -m pytest
 
 test-js: ## Node: interface workflow and labelling page
-	node scripts/test_app.cjs
-	node scripts/test_labeller.cjs
+	node scripts/verify/test_app.cjs
+	node scripts/verify/test_labeller.cjs
 
 eval: ## Development regression: 50/50 states, artefact and hash checks
-	node scripts/eval_s4.cjs
-	git diff --exit-code -- evals/results_v0.json || (echo "evals/results_v0.json changed: rerun and commit it"; exit 1)
-	$(PY) scripts/verify_s3.py
-	$(PY) scripts/verify_s4.py
+	node scripts/eval/eval_s4.cjs
+	git diff --exit-code -- evals/v0/results_v0.json || (echo "evals/v0/results_v0.json changed: rerun and commit it"; exit 1)
+	$(PY) scripts/verify/verify_s3.py
+	$(PY) scripts/verify/verify_s4.py
 
 adversarial: ## Attack set (OWASP LLM rows): any miss fails
-	$(PY) scripts/run_adversarial.py
+	$(PY) scripts/eval/run_adversarial.py
 
 judge: ## LLM-as-a-judge on the graded drafts (OPENAI_API_KEY in .env, model gpt-6-luna)
-	$(PY) scripts/judge.py
+	$(PY) scripts/eval/judge.py
 
 metrics: ## Pre-launch metrics report from metrics/events.jsonl → metrics/report.md
-	$(PY) scripts/metrics_report.py
+	$(PY) scripts/eval/metrics_report.py
 
 lint: ## ruff checks
-	$(PY) -m ruff check flowassist api tests scripts/run_adversarial.py scripts/judge.py scripts/metrics_report.py
-	$(PY) -m ruff format --check flowassist api tests scripts/run_adversarial.py scripts/judge.py scripts/metrics_report.py
+	$(PY) -m ruff check flowassist api tests scripts/eval/run_adversarial.py scripts/eval/judge.py scripts/eval/metrics_report.py
+	$(PY) -m ruff format --check flowassist api tests scripts/eval/run_adversarial.py scripts/eval/judge.py scripts/eval/metrics_report.py
 
 fmt: ## Format Python code
-	$(PY) -m ruff check --fix flowassist api tests scripts/run_adversarial.py scripts/judge.py scripts/metrics_report.py
-	$(PY) -m ruff format flowassist api tests scripts/run_adversarial.py scripts/judge.py scripts/metrics_report.py
+	$(PY) -m ruff check --fix flowassist api tests scripts/eval/run_adversarial.py scripts/eval/judge.py scripts/eval/metrics_report.py
+	$(PY) -m ruff format flowassist api tests scripts/eval/run_adversarial.py scripts/eval/judge.py scripts/eval/metrics_report.py
 
 export-data: ## Regenerate flowassist/fixtures.json from prototype/data.js
-	node scripts/export_data.cjs
+	node scripts/eval/export_data.cjs
 
 check-data:
-	node scripts/export_data.cjs --check
+	node scripts/eval/export_data.cjs --check
 
 ci: lint check-data test eval adversarial ## Everything CI runs
 
 smoke: ## Check a running or deployed instance: make smoke URL=https://...
-	$(PY) scripts/smoke.py $(URL)
+	$(PY) scripts/verify/smoke.py $(URL)
