@@ -1,5 +1,16 @@
 # FlowAssist interface changelog
 
+## v0.9 · features that explain themselves · 17 November 2026
+
+> Status: design hypothesis, retested with the 5-user test (gate: 4 of 5 unaided). No change to the engine, the server rules or the routing.
+
+- **Clear outcome.** An approved, handed-over or waiting case shows one outcome card instead of greyed-out steps: what happened and when, the approved reply (with Copy reply) or the hand-over summary (reason, note, records attached), **Next open ticket**, and Reopen. The page scrolls to it.
+- **Visible refusals.** When an edit breaks a rule, a red notice in step 2 says what is wrong in plain words and quotes the sentence that triggers it (e.g. "We will refund you next week."), with **Put FlowAssist's reply back**. The approval box is disabled until the reply passes. The server still re-checks the same rules (HTTP 422).
+- **Blocked tickets explained.** Each stop has a plain title, the reason and the concrete next action: two payments match (both listed with reference, amount and status, so you know what to ask), reference outside this account, data too old, records disagree, compliance or dispute specialist. The engine's rule stays visible on one line.
+- **Hand-over in fewer clicks.** The reason is pre-selected from the check (labelled "suggested, change it if needed"); the person still previews and confirms ("Confirm hand-over · demo").
+- Fixes: step 3 now lights up as soon as the reply is pre-filled (the step marker lagged one step); the Next step bar names the concrete action on every ticket; opening a ticket scrolls back to the top; "Draft saved in this tab" no longer shows on closed cases.
+- 46 interface tests (3 new: outcome card and next ticket, refused edit with the quoted sentence and restore, plain-language blocked cards). Walked through all 10 demo tickets in Chrome at 1440 px; no horizontal overflow at 390 px.
+
 ## v0.8 · one guided flow in three steps · 17 November 2026
 
 > **Status: design hypothesis, not a user finding.** Unlike D08–D10, v0.7 and v0.8 were not tried by users yet. They are retested with 5 users before any pilot; gate: 4 of 5 finish a ticket without help. Automation-bias watch: a pre-filled reply can be approved without reading, so the edit rate and the 7-day reopen rate are tracked as counter-metrics.
