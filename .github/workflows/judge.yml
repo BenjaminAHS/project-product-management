@@ -1,6 +1,7 @@
 name: LLM judge (manual)
 
-# Costs API credits: run on demand only. Needs the ANTHROPIC_API_KEY secret.
+# Costs API credits: run on demand only. Needs the OPENAI_API_KEY secret
+# (default judge: gpt-6-luna). Set JUDGE_PROVIDER=anthropic to use Claude instead.
 on:
   workflow_dispatch:
 
@@ -24,7 +25,9 @@ jobs:
           .venv/bin/python -m pip install -q -r requirements-dev.txt
       - name: Grade drafts
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          JUDGE_PROVIDER: openai
+          JUDGE_MODEL: gpt-6-luna
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: .venv/bin/python scripts/judge.py
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:

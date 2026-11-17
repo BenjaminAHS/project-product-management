@@ -11,6 +11,12 @@ evals/judge/judge_prompt.txt, then measures:
 
 Writes evals/judge_results.json and evals/judge_report.md.
 
+Provider (read from the environment or a local .env, never committed):
+  JUDGE_PROVIDER=openai     (default) OPENAI_API_KEY, model JUDGE_MODEL or gpt-6-luna
+  JUDGE_PROVIDER=anthropic  ANTHROPIC_API_KEY or `ant auth login`, model claude-opus-5-5
+A judge from another model family than the drafter avoids self-preference;
+the drafts here are rule templates, so either family is independent.
+
 Costs money: about 60 short calls. Run `python scripts/judge.py --dry-run`
 first to check the inputs without calling the API.
 """
@@ -20,6 +26,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -32,7 +39,18 @@ sys.path.insert(0, str(ROOT))
 
 from flowassist import engine  # noqa: E402
 
-MODEL = "claude-opus-5-5"
+try:  # local secrets live in .env (git-ignored); CI passes real env vars
+    from dotenv import load_dotenv
+
+    load_dotenv(ROOT / ".env")
+except ImportError:
+    pass
+
+PROVIDER = os.environ.get("JUDGE_PROVIDER", "openai").strip().lower()
+DEFAULT_MODELS = {"openai": "gpt-6-luna", "anthropic": "claude-opus-5-5"}
+if PROVIDER not in DEFAULT_MODELS:
+    raise SystemExit(f"JUDGE_PROVIDER must be one of {sorted(DEFAULT_MODELS)}, not {PROVIDER!r}")
+MODEL = os.environ.get("JUDGE_MODEL", "").strip() or DEFAULT_MODELS[PROVIDER]
 PROMPT = (ROOT / "evals/judge/judge_prompt.txt").read_text()
 DEFECTS = {
     "wrong_amount": lambda d: re.sub(r"\d[\d,]*\.\d{2}", "9,999.00", d, count=1),
@@ -82,7 +100,33 @@ def human_grades() -> dict[str, dict[str, str]]:
     return {r["case_id"]: r for r in rows}
 
 
-def grade(client, item: dict) -> tuple[Grade | None, dict]:
+def user_content(item: dict) -> str:
+    return (
+        f"<merchant_message>\n{item['message']}\n</merchant_message>\n\n"
+        f"<sources>\n{item['sources']}\n</sources>\n\n<draft>\n{item['draft']}\n</draft>"
+    )
+
+
+def grade_openai(client, item: dict) -> tuple[Grade | None, dict]:
+    response = client.responses.parse(
+        model=MODEL,
+        instructions=PROMPT,
+        input=user_content(item),
+        text_format=Grade,
+        max_output_tokens=4000,
+        prompt_cache_key="flowassist-judge-v1",  # the guideline prefix is shared by every call
+        store=False,
+    )
+    details = getattr(response.usage, "input_tokens_details", None)
+    usage = {
+        "input": response.usage.input_tokens,
+        "output": response.usage.output_tokens,
+        "cache_read": getattr(details, "cached_tokens", 0) or 0,
+    }
+    return response.output_parsed, usage  # None on a refusal
+
+
+def grade_anthropic(client, item: dict) -> tuple[Grade | None, dict]:
     response = client.beta.messages.parse(
         model=MODEL,
         max_tokens=4000,
@@ -90,12 +134,7 @@ def grade(client, item: dict) -> tuple[Grade | None, dict]:
         fallbacks="default",
         output_config={"effort": "low"},
         system=[{"type": "text", "text": PROMPT, "cache_control": {"type": "ephemeral"}}],
-        messages=[
-            {
-                "role": "user",
-                "content": f"<merchant_message>\n{item['message']}\n</merchant_message>\n\n<sources>\n{item['sources']}\n</sources>\n\n<draft>\n{item['draft']}\n</draft>",
-            }
-        ],
+        messages=[{"role": "user", "content": user_content(item)}],
         output_format=Grade,
     )
     usage = {
@@ -121,19 +160,27 @@ def main() -> int:
     args = parser.parse_args()
     items = cases()
     real = [i for i in items if i["variant"] == "real"]
-    print(f"{len(real)} real drafts, {len(items) - len(real)} known-bad variants, model {MODEL}")
+    print(f"{len(real)} real drafts, {len(items) - len(real)} known-bad variants, {PROVIDER} model {MODEL}")
     if args.dry_run:
         print(json.dumps(items[0], indent=2, ensure_ascii=False))
         return 0
 
-    import anthropic
+    if PROVIDER == "openai":
+        import openai
 
-    client = anthropic.Anthropic()
+        if not os.environ.get("OPENAI_API_KEY"):
+            print("OPENAI_API_KEY is missing: add it to .env (see .env.example).", file=sys.stderr)
+            return 1
+        client, grade, api_error = openai.OpenAI(), grade_openai, openai.APIStatusError
+    else:
+        import anthropic
+
+        client, grade, api_error = anthropic.Anthropic(), grade_anthropic, anthropic.APIStatusError
     results, totals = [], {"input": 0, "output": 0, "cache_read": 0}
     for n, item in enumerate(items, 1):
         try:
             verdict, usage = grade(client, item)
-        except anthropic.APIStatusError as error:
+        except api_error as error:
             print(f"{item['id']} {item['variant']}: API error {error.status_code}", file=sys.stderr)
             return 1
         for k in totals:
