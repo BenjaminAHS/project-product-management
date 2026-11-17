@@ -1,0 +1,37 @@
+name: LLM judge (manual)
+
+# Costs API credits: run on demand only. Needs the OPENAI_API_KEY secret
+# (default judge: gpt-6-luna). Set JUDGE_PROVIDER=anthropic to use Claude instead.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  judge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: |
+          python -m venv .venv
+          .venv/bin/python -m pip install -q -r requirements-dev.txt
+      - name: Grade drafts
+        env:
+          JUDGE_PROVIDER: openai
+          JUDGE_MODEL: gpt-6-luna
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: .venv/bin/python scripts/eval/judge.py
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: judge-report
+          path: |
+            evals/judge/judge_report.md
+            evals/judge/judge_results.json

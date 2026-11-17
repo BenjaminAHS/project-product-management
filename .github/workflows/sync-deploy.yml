@@ -1,7 +1,10 @@
 name: Sync Vercel deployment repository
 
+# Deploy only what passed CI: runs after the CI workflow succeeds on main.
 on:
-  push:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
     branches: [main]
   workflow_dispatch:
 
@@ -14,22 +17,24 @@ concurrency:
 
 jobs:
   sync:
-    if: github.repository == 'BenjaminAHS/project-product-management'
+    if: >-
+      github.repository == 'BenjaminAHS/project-product-management' &&
+      (github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success')
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 20  # the smoke loop alone can wait 20 × 30 s
     steps:
       - name: Check destination credential
         env:
           DEPLOY_REPO_TOKEN: ${{ secrets.DEPLOY_REPO_TOKEN }}
         run: |
           if [ -z "$DEPLOY_REPO_TOKEN" ]; then
-            echo "::error::Add the DEPLOY_REPO_TOKEN Actions secret to the primary repository. See prototype/DEPLOYMENT.md."
+            echo "::error::Add the DEPLOY_REPO_TOKEN Actions secret to the primary repository. See docs/DEPLOYMENT.md."
             exit 1
           fi
       - name: Read latest primary main
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
-          ref: main
+          ref: ${{ github.event.workflow_run.head_sha || 'main' }}
           path: source
           persist-credentials: false
       - name: Check out deployment main
@@ -40,4 +45,13 @@ jobs:
           path: deployment
           token: ${{ secrets.DEPLOY_REPO_TOKEN }}
       - name: Synchronize committed files and push safely
-        run: python3 source/scripts/sync_deploy.py --source source --checkout deployment
+        run: python3 source/scripts/deploy/sync_deploy.py --source source --checkout deployment
+      - name: Smoke test production once Vercel has deployed this version
+        run: |
+          version=$(grep -oP 'ENGINE_VERSION = "\K[^"]+' source/flowassist/engine.py)
+          for attempt in $(seq 1 20); do
+            if python3 source/scripts/verify/smoke.py https://deploy-project-product-management.vercel.app --expect-version "$version"; then exit 0; fi
+            echo "Waiting for the Vercel deployment ($attempt/20)"; sleep 30
+          done
+          echo "::error::Production smoke test failed. Roll back: revert the commit on main, or set ASSIST_MODE=off on Vercel and redeploy."
+          exit 1
