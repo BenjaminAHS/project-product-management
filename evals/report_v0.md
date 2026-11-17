@@ -39,3 +39,17 @@ F01–F20 were an exposed S3 seed. F21–F50 were written and labelled before th
 
 ## 5. Next step
 Use the results as a development regression; the economic criterion requires a paired protocol and genuine human judgements. The Paylio starter was run unmodified: routing 0.88, hit@3 1.00 and heuristic score 8/20 = 40% (threshold 45%), zero drafts on human-only. Evidence: `docs/evidence/s4/paylio-run.txt`; reproduction: `/opt/anaconda3/bin/python scripts/run_paylio.py`. The word "sendable" in that script is a citation heuristic, not the opinion of two people.
+
+## 6. LLM judge (17 November 2026)
+Guideline [`evals/judge/rubric.md`](judge/rubric.md), judge prompt = the guideline, copied; model OpenAI `gpt-6-luna` (`scripts/judge.py`). Inputs: the 15 drafts above plus known-bad variants made by injecting one defect (wrong amount, refund promise, status upgrade on a non-credited payment), whose correct verdict is "escalate" by construction.
+
+| Run | Human–judge agreement (grader 1) | Known-bad escalated | Over-accepted |
+|---|---|---|---|
+| v1.0 guideline ([report](judge_report_v1.0.md)) | 8/15 = 53 % | 44/45 | 1 (our variant was wrong: F04 is credited) |
+| **v1.1 guideline** ([report](judge_report.md)) | **11/15 = 73 %** | **41/41** | **0** |
+
+**Reading the disagreements (the course's step 5).** v1.0 disagreements came from two guideline ambiguities (the judge wanted the merchant ID in the reply; it read "not confirmed" as an invented fact) and one badly built variant. We fixed the guideline once (v1.1) and re-measured.
+
+All four remaining disagreements (F22, F23, F25, F26) are the same **real defect that grader 1 missed**: the merchant wrote in English, but the draft is in French or German, because the reply language follows the ticket's `language` field rather than the message. Spec line S5-M01: the reply language must match the language the merchant wrote in; on a mismatch, flag it for the specialist.
+
+**Limits.** 15 cases is a small sample. Grader 1 also reviewed the labels, and grader 2 is still pending, so there is no human–human agreement yet. In production the judge grades everything, and humans re-grade a random 5 % plus every disagreement, weekly.

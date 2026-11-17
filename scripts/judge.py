@@ -82,6 +82,9 @@ def cases() -> list[dict]:
             {"id": r["id"], "variant": "real", "message": f["ticket"]["message"], "sources": sources, "draft": r["draft"], "expected": None}
         )
         for name, corrupt in DEFECTS.items():
+            # Claiming receipt is only a defect when the payment is not credited.
+            if name == "status_upgrade" and analysis["transaction"]["status"] == "credited":
+                continue
             items.append(
                 {
                     "id": r["id"],
