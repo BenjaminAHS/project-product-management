@@ -1,4 +1,4 @@
-# Delivery audit — available session instructions, 9 November 2026
+# Delivery audit — available session instructions, 9 November 2026 (updated 17 November)
 
 This index concerns the supplied Assignments 1–4. The repository has no complete assignment instructions for later sessions; future governance headings do not establish delivered experiments.
 
@@ -8,6 +8,9 @@ This index concerns the supplied Assignments 1–4. The repository has no comple
 | 2 | Editable `02_sizing.xlsx`; root one-page memo aligned with the existing PDF’s corrected economics; source register, seven costs, scenarios/probabilities, named hurdle, sensitivity and build/buy comparison in the Assignment 2 PDF. The workbook’s historical scenario limitations are retained transparently rather than silently changing the threshold. |
 | 3 | Brief v1/v2, one-page canvas, process times/error rates as assumptions, RICE/MoSCoW, per-component rungs, governance data audit, clickable local app and deployment configuration; desk-based design synthesis and two executable task scenarios; three conversations on 9 November (two from past jobs, one in role) and a three-person prototype test (self-reported), adding D06–D10. |
 | 4 | Four logical steps in the engine; unmodified Paylio replay recorded; 50 CSV cases with pre-existing expected labels and executable adapters; versioned baseline/current outputs; architecture, spec v2 and human checkpoints; 32 automated scenarios and 50/50 expected development states. |
+
+| 4 (update, 17 Nov) | `step-1-router` commit (money/legal/cancellation intents to a person); policy checker blocks money, arrival and legal commitments; interface v0.5 with D08–D10. |
+| 5–7 (inputs, 17 Nov) | FastAPI server authority, global switch `ASSIST_MODE`, attack set (30/30), LLM judge with guideline v1.1 and report, local metrics (`make metrics`), CI on every PR and deployment after green CI. The written deliverables `05_metrics.md` and `06_07_experiments_operations.md` remain to be written by the team. |
 
 ## Evidence categories
 

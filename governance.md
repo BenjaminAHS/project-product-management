@@ -4,6 +4,7 @@
 > Answers are provisional: write what you know today, and mark what you still have to check.
 
 ## Session 1 — the six questions
+> Provisional S1 answers. Where they mention model providers, a dual-LLM evaluator or a 0.95 confidence gate, the S3 section below supersedes them.
 | # | Question | Our answer (provisional) | To check with |
 |---|---|---|---|
 | 1 | **EU AI Act:** which risk tier is our agent in, and why? (minimal · limited — transparency: tell the user it is an AI · high-risk · prohibited) | **Limited risk (transparency obligations under Art. 50).** FlowAssist is an internal agent-assist copilot (Trust Level L2) assisting human support agents; it does NOT make automated decisions granting or denying access to essential financial services (credit, insurance, or account opening), which avoids the High-Risk tier (Annex III). We must log internal AI usage, maintain an AI transparency notice for agents, and ensure auditability. | Legal Counsel / Compliance Officer (confirm interpretation with ACPR/BaFin guidelines) |
