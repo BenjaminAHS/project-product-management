@@ -19,11 +19,8 @@ for number, source, output in (
 ):
     content = (ROOT / source).read_text()
     pages = [content]
-    if number == "6–7":
-        design, operations = content.split("## 3. Monitoring", 1)
-        pages = [design, "## 3. Monitoring" + operations]
     body = "".join(
-        "<section>" + markdown.markdown(page, extensions=["tables"]) + "</section>"
+        "<section>" + markdown.markdown(page, extensions=["tables", "fenced_code"]) + "</section>"
         for page in pages
     )
     css = style.replace("ASSIGNMENT 4 · 9 NOVEMBER 2026", f"ASSIGNMENT {number}")
@@ -31,6 +28,7 @@ for number, source, output in (
         string=f'<!doctype html><html lang="en"><meta charset="utf-8"><style>{css}</style>{body}</html>',
         base_url=str(ROOT),
     ).render()
-    assert len(document.pages) == len(pages), (output, len(document.pages))
+    # Each section starts on a new page; the reworked deliverables may run longer than one page.
+    assert len(document.pages) >= len(pages), (output, len(document.pages))
     document.write_pdf(ROOT / "assignments" / output)
     print(f"{output}: {len(document.pages)} page(s)")
