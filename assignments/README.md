@@ -19,3 +19,11 @@ The Sources archives keep the required files in their original format along with
 [Original sources archive](Sources/Assignment_4_sources.zip): prototype, spec, architecture, governance, 50 cases, before/after fixtures and results, grids and instructions. The PDF summarizes the documented elements without turning automated results into human validation. The archive is the 9 November snapshot; the Markdown files in the repository are the current versions.
 
 Independent build (does not modify the S1–S3 editions): `/opt/anaconda3/bin/python Assignments/Sources/build_assignment4.py`. Editable content: `Sources/assignment4_content.md`; HTML: `Sources/Assignment_4.html`; pagination and hash checks: `Sources/validation_s4.json`.
+
+## Assignments 5–8 · 18 November 2026
+
+- [Assignment 5 · Metrics](Assignment_5_Metrics.pdf) · [editable source](../05_metrics.md)
+- [Assignment 6–7 · Experiments and operations](Assignment_6_7_Experiments_and_Operations.pdf) · [editable source](../06_07_experiments_operations.md)
+- [Session 8 · Launch memo](Assignment_8_Launch_Memo.pdf) · [editable source](../08_launch_memo.md)
+
+Build with the S4 PDF environment by running `/opt/anaconda3/bin/python assignments/Sources/build_assignments_5_to_8.py` from the repository root.
