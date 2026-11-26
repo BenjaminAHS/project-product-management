@@ -1,0 +1,263 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>FlowAssist</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F6F7F3;--ink:#13281F;--g:#17694A;--dk:#143F33;--mu:#55665D;--ln:#CBD5CF;--card:#E8EFEA;--amber:#9A5B0C;--amberbg:#FBEFD9;--red:#A23B2C}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1920px;height:1080px;overflow:hidden;background:var(--bg)}
+body{font-family:Inter,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+.s{display:none;position:absolute;inset:0;padding:120px 140px 110px;background:var(--bg)}
+.s.on{display:block}
+.dark{background:var(--dk);color:#F1F5F1}
+.eb{font:600 28px Inter;color:var(--g);letter-spacing:.2px}
+.dark .eb{color:#9CCFB4}
+h1{font:700 84px/1.08 'Space Grotesk';letter-spacing:-1.5px;margin-top:34px;max-width:1640px}
+h2{font:600 40px/1.2 'Space Grotesk';letter-spacing:-.4px}
+h3{font:600 34px/1.2 'Space Grotesk'}
+p,li{font-size:30px;line-height:1.4;color:var(--mu)}
+.dark p,.dark li{color:#C9DAD0}
+.cols{display:grid;gap:64px;position:absolute;left:140px;right:140px}
+.col{border-top:3px solid var(--ln);padding-top:36px}
+.col.hi{border-top-color:var(--g)}
+.dark .col{border-top-color:#3F6B5B}
+.big{font:600 136px/1 'Space Grotesk';letter-spacing:-4px;color:var(--g)}
+.big.gr{color:#7C8C84}
+.mid{font:600 96px/1 'Space Grotesk';letter-spacing:-2.5px;color:var(--g)}
+.num{font:600 30px 'Space Grotesk';color:var(--g)}
+.lbl{font:600 26px Inter;color:var(--g);margin-bottom:14px;text-transform:none}
+.card{background:var(--card);border-radius:22px;padding:40px 46px}
+.band{position:absolute;left:140px;right:140px;bottom:110px;border-radius:22px;padding:34px 46px;background:var(--card);display:flex;gap:40px;align-items:center}
+.band b{font:600 30px 'Space Grotesk';color:var(--ink);white-space:nowrap}
+.band span{font-size:29px;color:var(--mu);line-height:1.35}
+.ok{color:var(--g);font-weight:700}
+.no{color:var(--red);font-weight:700}
+table{border-collapse:collapse;width:100%}
+td,th{font-size:27px;text-align:left;padding:18px 20px;border-bottom:2px solid var(--ln);vertical-align:top;color:var(--mu);line-height:1.35}
+th{font:600 24px Inter;color:var(--g)}
+td b{color:var(--ink);font-weight:600}
+.pill{display:inline-block;font:600 26px Inter;padding:10px 20px;border-radius:40px;margin-right:12px}
+</style></head><body>
+
+<!-- 1 TITLE -->
+<section class="s dark" id="s1">
+  <div class="eb">PayFlow B2B · Payment Operations</div>
+  <div style="position:absolute;top:380px;left:140px">
+    <div style="font:700 190px/1 'Space Grotesk';letter-spacing:-6px">FlowAssist</div>
+    <div style="font:500 62px/1.3 'Space Grotesk';color:#CFE3D7;margin-top:56px;max-width:1500px">Answer “where is my money?” in minutes, with proof — and a person always decides.</div>
+  </div>
+  <div style="position:absolute;bottom:100px;left:140px;font-size:28px;color:#9CCFB4">Lenny Santus · Antoine Rabeau · Benjamin Caujolle · Anthony Rascle · Colin Sibieude &nbsp;—&nbsp; 27 November 2026</div>
+</section>
+
+<!-- 2 PROBLEM -->
+<section class="s" id="s2">
+  <div class="eb">01 · Problem</div>
+  <h1>Specialists spend 40 % of every ticket searching.</h1>
+  <div class="cols" style="grid-template-columns:1fr 1fr 1fr;top:440px">
+    <div class="col hi"><div class="big">7.2 min</div><p style="margin-top:26px">of an 18-minute ticket spent hunting through six tools</p></div>
+    <div class="col hi"><div class="big">€415k</div><p style="margin-top:26px">of specialist time lost to searching every year</p></div>
+    <div class="col hi"><div class="big">4.5 h</div><p style="margin-top:26px">before a merchant learns where the money is</p></div>
+  </div>
+  <div class="band"><b>Doing nothing has a price</b><span>Ticket volume grows 25 %: four more hires, €220k a year. The cause is structural — payment data is split across services, with no single view per merchant.</span></div>
+</section>
+
+<!-- 3 SOLUTION -->
+<section class="s" id="s3">
+  <div class="eb">02 · Solution</div>
+  <h1>FlowAssist finds the payment and drafts the reply. The specialist decides.</h1>
+  <div class="cols" style="grid-template-columns:repeat(4,1fr);gap:48px;top:470px">
+    <div class="col"><div class="num">1</div><h3 style="margin:14px 0 16px">Reads</h3><p>the request; money, legal or compliance go to a person</p></div>
+    <div class="col"><div class="num">2</div><h3 style="margin:14px 0 16px">Finds</h3><p>the payment in this merchant’s records only</p></div>
+    <div class="col"><div class="num">3</div><h3 style="margin:14px 0 16px">Drafts</h3><p>a reply where every fact cites its record</p></div>
+    <div class="col hi"><div class="num">4</div><h3 style="margin:14px 0 16px">You approve</h3><p>nothing leaves without a person</p></div>
+  </div>
+  <div class="band"><b>It never</b><span>sends on its own · moves money · shows another merchant’s data · says “received” when the payment is only “sent”</span></div>
+</section>
+
+<!-- 4 USERS -->
+<section class="s" id="s4">
+  <div class="eb">03 · What users changed</div>
+  <h1>Users showed us what we couldn’t see.</h1>
+  <div class="cols" style="grid-template-columns:1fr 1fr;top:400px;gap:72px">
+    <div class="col hi"><div class="big">2 of 3</div><p style="margin-top:26px">testers read the green “sent to bank” as money received — the exact error we must prevent</p></div>
+    <div class="col hi"><div class="lbl">So we changed the product</div><h2 style="margin-bottom:22px">Plain-language status, a verified-facts checklist, guidance on which record to open first</h2>
+      <span class="pill" style="background:var(--amberbg);color:var(--amber);margin-top:6px">Sent to recipient’s bank · not yet received</span></div>
+  </div>
+  <div class="band"><b>Next test</b><span>Only 1 of 3 finished unaided. We retest the new 3-step flow with 5 users before any pilot — the bar is 4 of 5.</span></div>
+</section>
+
+<!-- 5 PRODUCT -->
+<section class="s" id="s5">
+  <div class="eb">04 · Product</div>
+  <h1>Four fixed steps. A person decides.</h1>
+  <div style="position:absolute;top:330px;left:140px;width:820px">
+    <div style="border-top:2px solid var(--ln);padding:24px 0;display:flex;gap:36px"><div class="num">1</div><div><h3>Router · rules</h3><p style="font-size:27px">money, legal, compliance → a person</p></div></div>
+    <div style="border-top:2px solid var(--ln);padding:24px 0;display:flex;gap:36px"><div class="num">2</div><div><h3>Scoped match · rules</h3><p style="font-size:27px">this merchant only, unique reference — else a person</p></div></div>
+    <div style="border-top:2px solid var(--ln);padding:24px 0;display:flex;gap:36px"><div class="num">3</div><div><h3>Cited draft · templates</h3><p style="font-size:27px">every fact cites the ledger or clearing record</p></div></div>
+    <div style="border-top:2px solid var(--ln);padding:24px 0;display:flex;gap:36px"><div class="num">4</div><div><h3>Policy check · server</h3><p style="font-size:27px">refuses promises, wrong amounts, foreign data</p></div></div>
+    <div style="border-top:3px solid var(--g);padding:24px 0;display:flex;gap:36px"><div class="num">⏻</div><div><h3>Switch: on · suggestions · off</h3><p style="font-size:27px">owner: Head of Payment Operations</p></div></div>
+  </div>
+  <div style="position:absolute;top:330px;left:1030px;right:140px;height:640px;border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(20,63,51,.16);border:1px solid var(--ln);background:#fff">
+    <img src="app.png" style="width:100%;height:100%;object-fit:cover;object-position:top left;display:block">
+  </div>
+</section>
+
+<!-- 6 BUSINESS CASE -->
+<section class="s" id="s6">
+  <div class="eb">05 · Business case</div>
+  <h1>Worth building above 41.2 % time saved.</h1>
+  <div class="cols" style="grid-template-columns:1fr 1fr 1fr;top:380px">
+    <div class="col hi"><div class="big">€160k</div><p style="margin-top:24px">expected value a year, across three scenarios</p></div>
+    <div class="col"><div class="big gr">€125k</div><p style="margin-top:24px">the next-best project: a merchant self-serve portal</p></div>
+    <div class="col"><div class="big gr">€58k</div><p style="margin-top:24px">what doing nothing delivers anyway</p></div>
+  </div>
+  <div style="position:absolute;left:140px;right:140px;bottom:110px;display:grid;grid-template-columns:1fr 1fr;gap:40px">
+    <div class="card"><div class="lbl">Scope</div><p style="color:var(--ink)">54k of 144k tickets a year are payment tracing FlowAssist can answer. Base case: 48 % time saved — a guess we must test.</p></div>
+    <div class="card"><div class="lbl" style="color:var(--amber)">What could flip it</div><p style="color:var(--ink)">At €6.88 per ticket instead of €10, the base case falls below the hurdle. Finance confirms the cost first.</p></div>
+  </div>
+</section>
+
+<!-- 7 PROOF -->
+<section class="s" id="s7">
+  <div class="eb">06 · Three numbers and the test</div>
+  <h1>Three numbers, one test.</h1>
+  <div style="position:absolute;top:350px;left:140px;width:900px">
+    <div style="border-top:2px solid var(--ln);padding:30px 0;display:flex;justify-content:space-between;align-items:center"><div><h3>Active time per ticket</h3><p style="font-size:26px">eligible tracing tickets</p></div><div style="font:600 58px 'Space Grotesk';color:var(--g)">18 → ≤ 10.6 min</div></div>
+    <div style="border-top:2px solid var(--ln);padding:30px 0;display:flex;justify-content:space-between;align-items:center"><div><h3>Cost per ticket</h3><p style="font-size:26px">loaded specialist cost</p></div><div style="font:600 58px 'Space Grotesk';color:var(--g)">€10 → ≤ €5.88</div></div>
+    <div style="border-top:2px solid var(--ln);border-bottom:2px solid var(--ln);padding:30px 0;display:flex;justify-content:space-between;align-items:center"><div><h3>QA score — must not drop</h3><p style="font-size:26px">in every language</p></div><div style="font:600 58px 'Space Grotesk';color:var(--g)">≥ 92 / 100</div></div>
+  </div>
+  <div class="card" style="position:absolute;top:350px;left:1110px;right:140px;bottom:110px;padding:44px 48px">
+    <div class="lbl">A/B on specialist-days · 7 weeks</div>
+    <div class="mid" style="margin:8px 0 22px;font-size:84px;white-space:nowrap">6,800 tickets</div>
+    <p style="color:var(--ink);font-size:28px">3,400 per arm. Sized by the slowest guardrail — 7-day reopens — not by the first good number. One read date.</p>
+    <div style="margin-top:34px;font-size:28px;line-height:1.75;color:var(--ink)">
+      <div><b class="ok">Ship</b> &nbsp;≥ 41.2 % saved, every guardrail held</div>
+      <div><b style="color:var(--amber)">Iterate</b> &nbsp;13 – 41.2 %</div>
+      <div><b class="no">Kill</b> &nbsp;&lt; 13 % or any guardrail broken</div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 RISKS -->
+<section class="s" id="s8">
+  <div class="eb">07 · What can go wrong</div>
+  <h1>What can go wrong, and how we stop it.</h1>
+  <div class="cols" style="grid-template-columns:1fr 1fr 1fr;top:380px;gap:56px">
+    <div class="col hi"><div class="lbl">Wrong or foreign data</div><h2 style="margin-bottom:20px">The server says no</h2><p>Promises, invented amounts and another merchant’s data are refused server-side — even if the screen is bypassed.</p></div>
+    <div class="col hi"><div class="lbl">Rubber-stamping</div><h2 style="margin-bottom:20px">We watch what winning could break</h2><p>Edit rate and 7-day reopens, per language. French or German reopens above 1.5 × English for 2 weeks: that language drops to suggestions.</p></div>
+    <div class="col hi"><div class="lbl">Something we missed</div><h2 style="margin-bottom:20px">One owner, under 15 minutes</h2><p>The Head of Payment Operations switches it to suggestions or off; the page falls back to manual work.</p></div>
+  </div>
+  <div class="band"><b>Tested today</b><span>30 / 30 attacks blocked · 0 drafts on 13 human-only tickets · switch rehearsed on 18 November: on → suggestions → off → on</span></div>
+</section>
+
+<!-- 9 DECISION -->
+<section class="s dark" id="s9">
+  <div class="eb">08 · Decision</div>
+  <h1>No-go for live rollout. Go to prepare a controlled pilot.</h1>
+  <div class="cols" style="grid-template-columns:1fr 1fr;top:420px;gap:72px">
+    <div class="col"><div class="lbl" style="color:#9CCFB4">What we know</div>
+      <p style="margin-bottom:12px">✓ &nbsp;It routes correctly — 50 / 50 cases</p>
+      <p style="margin-bottom:12px">✓ &nbsp;It never drafts what a person must handle</p>
+      <p>✓ &nbsp;It can be stopped in minutes</p></div>
+    <div class="col"><div class="lbl" style="color:#F0C27A">What we don’t know yet</div>
+      <p style="margin-bottom:12px">○ &nbsp;Its replies are sendable at scale</p>
+      <p style="margin-bottom:12px">○ &nbsp;The AI judge is reliable — 73 %, bar 80 %</p>
+      <p>○ &nbsp;It saves 41.2 % of handling time</p></div>
+  </div>
+  <div style="position:absolute;left:140px;right:140px;bottom:110px;border-radius:22px;padding:36px 46px;background:#1F5444;display:flex;gap:40px;align-items:center">
+    <b style="font:600 34px 'Space Grotesk';color:#fff;white-space:nowrap">Our ask</b>
+    <span style="font-size:30px;color:#DCEAE1;line-height:1.35">Approve Stage 1: two weeks of shadow mode in staging, on real data, with no merchant exposed.</span>
+  </div>
+</section>
+
+<!-- A1 ARCHITECTURE -->
+<section class="s" id="s10">
+  <div class="eb">Appendix · Architecture</div>
+  <h1>A workflow you can draw. The server has the last word.</h1>
+  <div style="position:absolute;top:420px;left:140px;right:140px;display:grid;grid-template-columns:1fr 70px 1fr 70px 1fr;align-items:stretch">
+    <div class="card"><div class="lbl">Browser</div><h3 style="margin-bottom:14px">Instant preview</h3><p style="font-size:27px">Same rules as the server, for speed. Fails closed to manual work if the server is down.</p></div>
+    <div style="display:flex;align-items:center;justify-content:center;font-size:48px;color:var(--g)">→</div>
+    <div class="card"><div class="lbl">API · FastAPI on Vercel</div><h3 style="margin-bottom:14px">analyze · check · handover</h3><p style="font-size:27px">Re-checks every recorded action. A refused edit returns HTTP 422.</p></div>
+    <div style="display:flex;align-items:center;justify-content:center;font-size:48px;color:var(--g)">→</div>
+    <div class="card"><div class="lbl">Engine · the authority</div><h3 style="margin-bottom:14px">Rules and templates</h3><p style="font-size:27px">No model chooses a tool. Every path is drawn in advance.</p></div>
+  </div>
+  <div class="band"><b>Release gate</b><span>Nothing deploys without green CI: unit tests, browser–server parity (123 cases), the 50-case regression and zero attack misses.</span></div>
+</section>
+
+<!-- A2 METRICS -->
+<section class="s" id="s11">
+  <div class="eb">Appendix · Metrics</div>
+  <h1>What we promise, and what must not break.</h1>
+  <div style="position:absolute;top:380px;left:140px;right:140px">
+  <table>
+    <tr><th style="width:330px">Level</th><th>Metric</th><th style="width:520px">Threshold</th></tr>
+    <tr><td><b>Business</b></td><td>Active time · cost per ticket</td><td>≤ 10.6 min · ≤ €5.88</td></tr>
+    <tr><td><b>Quality guardrail</b></td><td>Audited QA score, per language</td><td>≥ 92 / 100 everywhere</td></tr>
+    <tr><td><b>Safety guardrail</b></td><td>Critical exposures</td><td>Zero — one stops assistance</td></tr>
+    <tr><td><b>Counter-metrics</b></td><td>7-day reopens · hand-overs · edit rate</td><td>≤ manual + 2 pts · ≤ manual + 5 pts</td></tr>
+    <tr><td><b>Segments</b></td><td colspan="2">Language · plan · payment rail · severity — fixed before the test, always reported</td></tr>
+  </table></div>
+</section>
+
+<!-- A3 JUDGE -->
+<section class="s" id="s12">
+  <div class="eb">Appendix · AI judge</div>
+  <h1>An AI judge we checked before trusting it.</h1>
+  <div class="cols" style="grid-template-columns:1fr 1fr 1fr;top:420px">
+    <div class="col"><div class="big gr">53 %</div><p style="margin-top:24px">agreement with our human grader on the first rubric</p></div>
+    <div class="col hi"><div class="big">73 %</div><p style="margin-top:24px">after one rubric fix (11 of 15) — below our 80 % bar</p></div>
+    <div class="col hi"><div class="big">41 / 41</div><p style="margin-top:24px">known-bad drafts escalated, none accepted</p></div>
+  </div>
+  <div class="band"><b>What it found</b><span>The remaining disagreements were a real defect the human missed: English messages answered in French or German. Fixing it is a Stage 0 gate.</span></div>
+</section>
+
+<!-- A4 EXPERIMENT -->
+<section class="s" id="s13">
+  <div class="eb">Appendix · Experiment design</div>
+  <h1>Randomise the specialist-day, size for the slowest guardrail.</h1>
+  <div style="position:absolute;top:420px;left:140px;width:960px">
+  <table>
+    <tr><th>Step</th><th style="width:330px">Tickets per arm</th></tr>
+    <tr><td><b>Primary</b> · 13 % saving, SD 14.4 min</td><td>~600</td></tr>
+    <tr><td><b>Reopen guardrail</b> · 5 % → 7 %</td><td>~2,210</td></tr>
+    <tr><td><b>Clustering</b> · 12 tickets a day, ICC 0.05</td><td>× 1.54 → <b>~3,400</b></td></tr>
+    <tr><td><b>Duration</b> · 214 eligible tickets a day</td><td><b>7 weeks</b></td></tr>
+  </table></div>
+  <div class="card" style="position:absolute;top:420px;left:1170px;right:140px">
+    <div class="lbl">Why specialist-days</div>
+    <p style="color:var(--ink);font-size:27px;margin-bottom:22px">Tickets leak: drafts seen in the morning change manual answers in the afternoon. 18 specialists give only 9 per arm.</p>
+    <div class="lbl">Rules set before</div>
+    <p style="color:var(--ink);font-size:27px">α 5 %, power 80 %. One read at week 7 + 7 days. Stop early only on harm. Assumptions measured in shadow mode, then frozen.</p>
+  </div>
+</section>
+
+<!-- A5 BUILD OR BUY -->
+<section class="s" id="s14">
+  <div class="eb">Appendix · Build or buy</div>
+  <h1>We orchestrate: our rules and data, a model only where it earns its place.</h1>
+  <div class="cols" style="grid-template-columns:1fr 1fr 1fr;top:470px">
+    <div class="col hi"><div class="big">4.35</div><h3 style="margin-top:22px">Orchestrate</h3><p>our rules and data, rented model where useful</p></div>
+    <div class="col"><div class="big gr">3.15</div><h3 style="margin-top:22px">Build</h3><p>everything in-house</p></div>
+    <div class="col"><div class="big gr">2.15</div><h3 style="margin-top:22px">Buy</h3><p>a support-AI vendor</p></div>
+  </div>
+  <div class="band"><b>The trade-off</b><span>A vendor at €0.92 per resolution costs ~€34k a year less. We pay that for control of the data and the ability to leave.</span></div>
+</section>
+
+<!-- A6 LAUNCH GATES -->
+<section class="s" id="s15">
+  <div class="eb">Appendix · Launch plan</div>
+  <h1>Four gates, each with a signature.</h1>
+  <div style="position:absolute;top:360px;left:140px;right:140px">
+  <table>
+    <tr><th style="width:330px">Stage</th><th>Gate to pass</th><th style="width:470px">Who signs</th></tr>
+    <tr><td><b>0 · Synthetic</b></td><td>Language defect fixed · 100 held-out labels · second grader and judge ≥ 80 %</td><td>Product + Engineering</td></tr>
+    <tr><td><b>1 · Staging</b></td><td>2 weeks of shadow mode on real data · switch rehearsed by both holders</td><td>Engineering · DPO</td></tr>
+    <tr><td><b>2 · Pilot</b></td><td>A/B on specialist-days, 7 weeks · one critical exposure stops it</td><td>Head of Payment Operations</td></tr>
+    <tr><td><b>3 · Expansion</b></td><td>≥ 41.2 % saved · QA ≥ 92 everywhere · 5 % holdout for 6 months</td><td>Payment Ops + Product + Finance</td></tr>
+  </table></div>
+</section>
+
+<script>
+const n=new URLSearchParams(location.search).get('s')||'1';
+document.getElementById('s'+n).classList.add('on');
+</script>
+</body></html>
