@@ -1,7 +1,7 @@
 # FlowAssist — final pitch script
 
 Friday 27 November 2026 · 8 minutes of pitch (hard stop), then 3 minutes of questions.
-Files: [PPTX with notes](FlowAssist_Final_Pitch.pptx) · [PDF, 9 slides](FlowAssist_Final_Pitch.pdf) · [PDF with appendix](FlowAssist_Final_Pitch_with_appendix.pdf) · [demo video, 1:58](FlowAssist_Demo.mp4) (embedded in slide 5 of the PPTX, also [online](https://deploy-project-product-management.vercel.app/demo.mp4)) · live demo https://deploy-project-product-management.vercel.app/?demo
+Files: [PPTX with notes](FlowAssist_Final_Pitch.pptx) · [PDF, 9 slides](FlowAssist_Final_Pitch.pdf) · [PDF with appendix](FlowAssist_Final_Pitch_with_appendix.pdf) · [demo video with voice-over, 2:11](FlowAssist_Demo.mp4) (embedded in slide 5 of the PPTX, also [online](https://deploy-project-product-management.vercel.app/demo.mp4)) · live demo https://deploy-project-product-management.vercel.app/?demo
 
 ## Running order
 
@@ -11,13 +11,13 @@ Files: [PPTX with notes](FlowAssist_Final_Pitch.pptx) · [PDF, 9 slides](FlowAss
 | 2 · Problem | Lenny | 0:35 | 0:45 |
 | 3 · Solution | Antoine | 0:30 | 1:15 |
 | 4 · What users changed | Antoine | 0:30 | 1:45 |
-| 5 · Product + demo video | Colin | 2:15 | 4:00 |
-| 6 · Business case | Benjamin | 0:45 | 4:45 |
-| 7 · Three numbers, one test | Benjamin | 0:55 | 5:40 |
-| 8 · What can go wrong | Anthony | 0:35 | 6:15 |
-| 9 · Decision and ask | Lenny | 0:40 | **6:55** |
+| 5 · Product + demo video | Colin | 2:30 | 4:15 |
+| 6 · Business case | Benjamin | 0:45 | 5:00 |
+| 7 · Three numbers, one test | Benjamin | 0:55 | 5:55 |
+| 8 · What can go wrong | Anthony | 0:35 | 6:30 |
+| 9 · Decision and ask | Lenny | 0:40 | **7:10** |
 
-About one minute of margin. The demo is a 1:58 video embedded in slide 5: it cannot be shortened, so everyone else keeps to their time. If the clock reads more than **1:55 when slide 5 starts**, Colin skips the sentence on the slide and plays the video straight away.
+50 seconds of margin. The demo is a 2:11 video with Benjamin's recorded voice-over, embedded in slide 5: it cannot be shortened, so everyone else keeps to their time. If the clock reads more than **1:55 when slide 5 starts**, Colin skips the sentence on the slide and plays the video straight away.
 
 Slides 10–15 are hidden appendix slides for questions: in PowerPoint, type the slide number and press Enter to jump to one.
 
@@ -56,23 +56,13 @@ Slides 10–15 are hidden appendix slides for questions: in PowerPoint, type the
 >
 > Colin will show you the product.
 
-## 5 · Product and demo video — Colin (2:15)
+## 5 · Product and demo video — Colin (2:30)
 
 **On the slide (0:10):**
 
 > Four fixed steps: a router, a scoped match, a cited draft, and a policy check on the server. A workflow, not an agent — and one switch turns it off. Here it is.
 
-**Next click (or the clicker):** the video plays full screen (1:58, no sound). **Don't click again until it ends** — the next click goes to slide 6 and cuts the video. Say each line when the video reaches its time:
-
-- **0:00** — A merchant asks where their 1,240 euros are. I open the ledger, then the clearing record.
-- **0:13** — The status is in amber: sent to the bank, not yet received.
-- **0:21** — The reply is already drafted, and every fact is checked against the records.
-- **0:30** — I tick the box and approve. Nothing is sent from here: the specialist sends it from the support inbox.
-- **0:41** — Next, a failed USD transfer. Same steps: two records, a cited draft.
-- **0:57** — Now I replace the reply with a promise: "we will refund you next week". FlowAssist quotes it and blocks approval. If someone bypasses the screen, the server refuses it anyway.
-- **1:17** — I put FlowAssist's reply back: that one can be approved.
-- **1:25** — Last, a compliance hold. FlowAssist doesn't draft at all: it says why, and pre-fills the hand-over reason.
-- **1:49** — I preview the hand-over and confirm it.
+**Next click (or the clicker):** the video plays full screen, 2:11, with Benjamin's recorded voice-over. **Nobody speaks over it.** **Don't click again until it ends**: the next click goes to slide 6 and cuts the video.
 
 **When the video ends (back on slide 5):**
 
@@ -80,7 +70,7 @@ Slides 10–15 are hidden appendix slides for questions: in PowerPoint, type the
 >
 > Benjamin.
 
-**If the video doesn't play:** open `FlowAssist_Demo.mp4` (same cut) or https://deploy-project-product-management.vercel.app/demo.mp4 and say the same lines. The live app https://deploy-project-product-management.vercel.app/?demo stays open in Chrome for questions.
+**If the video doesn't play:** open `FlowAssist_Demo.mp4` (same video, same sound) or https://deploy-project-product-management.vercel.app/demo.mp4. The live app https://deploy-project-product-management.vercel.app/?demo stays open in Chrome for questions.
 
 ## 6 · Business case — Benjamin (0:45)
 
@@ -150,9 +140,9 @@ One person answers, in two sentences at most. If an appendix slide helps, the pe
 
 ## Before 9:00 on Friday
 
-- [ ] **Laptop 1 (presenting):** PPTX open in presenter view. In slide show, go to slide 5 and click once to check the video starts, then Esc. Chrome tab on https://deploy-project-product-management.vercel.app/?demo for questions; `FlowAssist_Demo.mp4` downloaded locally as a backup.
+- [ ] **Laptop 1 (presenting):** PPTX open in presenter view. In slide show, go to slide 5 and click once: check the video starts **and the voice comes out of the room's speakers through HDMI** (not the laptop), then Esc. Laptop volume at maximum. Chrome tab on https://deploy-project-product-management.vercel.app/?demo for questions; `FlowAssist_Demo.mp4` downloaded locally as a backup.
 - [ ] **Laptop 2 (backup):** the PPTX and `FlowAssist_Demo.mp4`, downloaded locally, not only in the cloud.
 - [ ] Notifications off, battery charged, HDMI / USB-C adapter in the bag.
 - [ ] Phone charged: we grade the other teams in the Google Form during their questions.
 - [ ] Connect our laptop while the team before us answers its questions.
-- [ ] One full run-through with a stopwatch tonight, video included. Target 6:55.
+- [ ] One full run-through with a stopwatch tonight, video included. Target 7:10.
