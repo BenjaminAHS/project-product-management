@@ -1,6 +1,6 @@
 # FlowAssist v0.4 + S4 fixes — coverage of the P2 journey
 
-The reference statement is **P2 · Agent-assist copilot for a fintech (B2B payments)** in `reference/course/project_proposals.docx`. v0.4 runs the business journey in a self-contained demo. It does not claim to replace real payment systems.
+The reference statement is **P2 · Agent-assist copilot for a fintech (B2B payments)** in the course's project proposals. v0.4 runs the business journey in a self-contained demo. It does not claim to replace real payment systems.
 
 | Problem step | Usable function in the application | Explicit limit |
 |---|---|---|

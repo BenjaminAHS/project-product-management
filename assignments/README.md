@@ -8,9 +8,9 @@ PDFs revised on 6 November 2026. Antoine: **@antorabo75**; Colin: **@csib-wq**. 
 
 Instructions that require human actions remain explicitly unattested: interviews, user tests, human labels and personal Git contributions. The original financial model's limitations remain flagged. The PDFs do not claim full compliance where evidence is missing.
 
-Documentation update of 9 November: these PDFs and archives remain the 6 November S1–S3 editions, with their historical 20-case index. The current CSV holds 50 development cases; [the S4 report](../evals/report_v0.md), [the architecture](../04_architecture.md) and [the audit](../docs/DELIVERY_AUDIT.md) describe the recent changes. The current Markdown memo includes the economic corrections made explicit in the S2 PDF.
+Documentation update of 9 November: these PDFs and archives remain the 6 November S1–S3 editions, with their historical 20-case index. The current CSV holds 50 development cases; [the S4 report](../evals/report_v0.md), [the architecture](../04_architecture.md) describe the recent changes. The current Markdown memo includes the economic corrections made explicit in the S2 PDF.
 
-The Sources archives keep the required files in their original format along with the DOCX instructions. Earlier assumptions and unverified source claims are kept there for traceability; the explicit corrections in the PDFs take precedence. Build: from the root of the project-product-management repository, `/opt/anaconda3/bin/python Assignments/Sources/build_assignments.py`.
+The Sources archives keep the required files in their original format along with the DOCX instructions. Earlier assumptions and unverified source claims are kept there for traceability; the explicit corrections in the PDFs take precedence. Build: from the root of the project-product-management repository, `python3 assignments/Sources/build_assignments.py`.
 
 ## Assignment 4 · 9 November 2026
 
@@ -18,7 +18,7 @@ The Sources archives keep the required files in their original format along with
 
 [Original sources archive](Sources/Assignment_4_sources.zip): prototype, spec, architecture, governance, 50 cases, before/after fixtures and results, grids and instructions. The PDF summarizes the documented elements without turning automated results into human validation. The archive is the 9 November snapshot; the Markdown files in the repository are the current versions.
 
-Independent build (does not modify the S1–S3 editions): `/opt/anaconda3/bin/python Assignments/Sources/build_assignment4.py`. Editable content: `Sources/assignment4_content.md`; HTML: `Sources/Assignment_4.html`; pagination and hash checks: `Sources/validation_s4.json`.
+Independent build (does not modify the S1–S3 editions): `python3 assignments/Sources/build_assignment4.py`. Editable content: `Sources/assignment4_content.md`; HTML: `Sources/Assignment_4.html`; pagination and hash checks: `Sources/validation_s4.json`.
 
 ## Assignments 5–8 · 18 November 2026
 
@@ -26,4 +26,4 @@ Independent build (does not modify the S1–S3 editions): `/opt/anaconda3/bin/py
 - [Assignment 6–7 · Experiments and operations](Assignment_6_7_Experiments_and_Operations.pdf) · [editable source](../06_07_experiments_operations.md)
 - [Session 8 · Launch memo](Assignment_8_Launch_Memo.pdf) · [editable source](../08_launch_memo.md)
 
-Build with the S4 PDF environment by running `/opt/anaconda3/bin/python assignments/Sources/build_assignments_5_to_8.py` from the repository root.
+Build with the S4 PDF environment by running `python3 assignments/Sources/build_assignments_5_to_8.py` from the repository root.

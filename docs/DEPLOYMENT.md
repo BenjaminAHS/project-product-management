@@ -28,8 +28,6 @@ The [GitHub workflow](../.github/workflows/sync-deploy.yml) triggers on every pu
 
 The workflow copies committed files and deletions into the deployment repository and makes a normal commit/push. It preserves the destination history and destination-owned `.github/workflows/` files. Workflow definitions are excluded from cross-repository copying, so the destination credential requires only Contents write permission. The sync fails on an unexpected repository, dirty checkout, unsafe path/symlink or concurrent remote update; it never force-pushes. Secrets and local `.git` metadata are never copied. A no-change run creates no commit.
 
-**Step-by-step guide (in French): [enable the Actions secret](ACTIVER_SYNC_GITHUB.md).**
-
 **Verified status:** [push-triggered workflow run](https://github.com/BenjaminAHS/project-product-management/actions/runs/41667205280) succeeded for primary `e33deb3`. The secret is now effective. The following instructions remain for renewal or reconfiguration.
 
 **One-time activation:** the owner or an authorized collaborator of the primary repository must add an Actions repository secret named `DEPLOY_REPO_TOKEN` at [primary repository secrets](https://github.com/BenjaminAHS/project-product-management/settings/secrets/actions). Use a fine-grained token from `lsantus-mines`, limited to `deploy-project-product-management`, with **Contents: Read and write**. Enter the token in GitHub’s secret form, not source files or chat. If this secret is absent or expires, the workflow explicitly fails with a setup message. GitHub’s default workflow token does not provide this cross-repository write access. See [GitHub token guidance](https://docs.github.com/en/actions/tutorials/authenticate-with-github_token).

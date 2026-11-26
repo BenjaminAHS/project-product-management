@@ -1,6 +1,6 @@
 # Session 4 — delivery status at 9 November 2026
 
-Reference: `reference/templates/S4/README_S4.md` and Assignment 4 (due 15 November, 23:59).
+Reference: the course's Session 4 instructions and Assignment 4 (due 15 November, 23:59).
 
 | Requirement | Deliverable / status |
 |---|---|

@@ -47,7 +47,7 @@ project-product-management/
 ├── research/       interviews, prototype test, archived brief and memo v1
 ├── pitch/          final deck (PDF, PPTX with notes), demo video, timed script
 ├── assignments/    submitted assignment PDFs and their sources
-└── reference/      course material: slides and docs, S3/S4 templates, Paylio starter
+└── reference/      Paylio starter (course starter code, replayed in S4)
 ```
 
 ### Deliverables by session
@@ -61,13 +61,13 @@ project-product-management/
 | `02_investment_memo.md` | S2 — Assignment 2 | Updated: conditional GO, named alternative and 41.2% flip threshold |
 | `03_product_brief.md` | S3 | Brief v2, final for `v1.0`; supporting process/design record and archived v1 |
 | `04_architecture.md` | S4 | Implemented workflow, components, checkpoints, fallbacks; §8b server authority, switch and release path (v0.6) |
-| `05_metrics.md` | S5 | Reworked 18 Nov: five-level stack, stop criterion, hierarchy by segment with harm threshold, three business metrics with expected effects, evaluation plan. Pending (people): 100 labels, second grader, human–human agreement |
-| `06_07_experiments_operations.md` | S6–S7 | Reworked 18 Nov: hypotheses, A/B on specialist-days, sample size (~6,800 tickets, 7 weeks), ship/iterate/kill rule, four-layer monitoring, incident classes, 6-field rollback (local test 18 Nov; staging test pending), five owners |
-| `08_launch_memo.md` | S8 | Reworked 18 Nov: NO-GO live, GO to prepare a pilot; evidence table, gated launch plan with signers, risks, ask, who did what |
+| `05_metrics.md` | S5 | Final for `v1.0`: five-level stack, stop criterion, hierarchy by segment with harm threshold, three business metrics with expected effects, evaluation plan. Pending (people): 100 labels, second grader, human–human agreement |
+| `06_07_experiments_operations.md` | S6–S7 | Final for `v1.0`: hypotheses, A/B on specialist-days, sample size (~6,800 tickets, 7 weeks), ship/iterate/kill rule, four-layer monitoring, incident classes, 6-field rollback (local test 18 Nov; staging test pending), five owners |
+| `08_launch_memo.md` | S8 | Final for `v1.0`: NO-GO live, GO to prepare a pilot; evidence table, gated launch plan with signers, risks, ask, who did what |
 | `spec.md`, `product_brief.md` | final | **`spec.md` v3: whole project S1–S8** (product, architecture, contracts, guardrails, operation, metrics, delivery, decision log); consolidated `product_brief.md`; tagged `v1.0` on 26 November |
 | `/prototype`, `/api`, `/flowassist`, `/evals` | from S4 | Interface v0.9 (three-step flow, clear outcomes) + FastAPI authority v0.6; 146 Python + 46 interface tests; 50 development cases, 200 held-out inputs, 30 attacks, LLM judge |
 
-Supporting S3 files: [AI Lean Canvas](03_ai_lean_canvas.md), [design details](docs/03_design_details.md), [needs/design record](03_user_research.md), [prototype link](03_prototype_link.md) and [delivery matrix](docs/03_s3_delivery.md). S4: [report](evals/report_v0.md), [delivery matrix](docs/04_s4_delivery.md) and [evaluation guide](evals/README.md). [Cross-session evidence audit](docs/DELIVERY_AUDIT.md).
+Supporting S3 files: [AI Lean Canvas](03_ai_lean_canvas.md), [design details](docs/03_design_details.md), [needs/design record](03_user_research.md), [prototype link](03_prototype_link.md) and [delivery matrix](docs/03_s3_delivery.md). S4: [report](evals/report_v0.md), [delivery matrix](docs/04_s4_delivery.md) and [evaluation guide](evals/README.md).
 
 ## Rules
 
@@ -84,7 +84,7 @@ Supporting S3 files: [AI Lean Canvas](03_ai_lean_canvas.md), [design details](do
 
 The full specification is in [spec.md](spec.md) v3.
 
-**Final pitch (9 slides + hidden appendix, English):** [PDF](pitch/FlowAssist_Final_Pitch.pdf) · [PDF with appendix](pitch/FlowAssist_Final_Pitch_with_appendix.pdf) · [PPTX with speaker notes](pitch/FlowAssist_Final_Pitch.pptx) · [demo video](pitch/FlowAssist_Demo.mp4) · [watch it online](https://deploy-project-product-management.vercel.app/demo.mp4) · [timed script and Q&A](pitch/SPEAKER_NOTES.md) · [source](pitch/source/).
+**Final pitch (9 slides + hidden appendix, English):** [PDF](pitch/FlowAssist_Final_Pitch.pdf) · [PDF with appendix](pitch/FlowAssist_Final_Pitch_with_appendix.pdf) · [PPTX with speaker notes](pitch/FlowAssist_Final_Pitch.pptx) · [demo video with voice-over](pitch/FlowAssist_Demo.mp4) · [watch it online](https://deploy-project-product-management.vercel.app/demo.mp4) · [timed script and Q&A](pitch/SPEAKER_NOTES.md) · [source](pitch/source/).
 
 ## Server, guardrails and CI (v0.6)
 
@@ -133,27 +133,28 @@ node scripts/eval/eval_s4.cjs
 node scripts/eval/eval_s4.cjs --baseline
 ```
 
-The Paylio starter needs pandas and scikit-learn. In the local environment where they are installed:
+The Paylio starter replay needs pandas and scikit-learn:
 
 ```sh
-/opt/anaconda3/bin/python scripts/eval/run_paylio.py
+python3 scripts/eval/run_paylio.py
 ```
 
-On another machine, use a Python interpreter that has these dependencies. [Runtime instructions](prototype/README.md) · [Verification evidence and limits](docs/prototype_verification.md) · [Changelog](prototype/CHANGELOG.md).
+[Runtime instructions](prototype/README.md) · [Verification evidence and limits](docs/prototype_verification.md) · [Changelog](prototype/CHANGELOG.md).
 
-## Assignment PDFs and sources
+## Assignment PDFs
 
 - [Assignment 1 — Team, agent and problem](assignments/Assignment_1_Team_Agent_Problem.pdf) · 4 pages.
 - [Assignment 2 — Sizing and investment memo](assignments/Assignment_2_Sizing_Investment_Memo.pdf) · 6 pages.
 - [Assignment 3 — MVP brief and design loop](assignments/Assignment_3_MVP_Brief_and_Design_Loop.pdf) · 7 pages.
 - [Assignment 4 — Prototype and architecture](assignments/Assignment_4_Prototype_and_Architecture.pdf) · 4 pages · [original-format sources](assignments/Sources/Assignment_4_sources.zip).
+- [Assignment 5 — Metrics](assignments/Assignment_5_Metrics.pdf) · 3 pages.
+- [Assignment 6–7 — Experiments and operations](assignments/Assignment_6_7_Experiments_and_Operations.pdf) · 3 pages.
+- [Assignment 8 — Launch memo](assignments/Assignment_8_Launch_Memo.pdf) · 2 pages.
 
-[Package notes and reproduction](assignments/README.md). S1–S3 PDFs and archives retain their 6 November edition, including the historical 20-case S3 index; the current CSV has 50 development cases. The current Markdown documents describe the S4 code and results. Original instructions remain in `reference/course/`, `reference/templates/S3/` and `reference/templates/S4/`.
+[Package notes and reproduction](assignments/README.md). S1–S3 PDFs and archives retain their 6 November edition, including the historical 20-case S3 index; the current CSV has 50 development cases. The Markdown documents at the root are the final versions.
 
-The documents distinguish automated checks, assumptions and human validation. They do not certify real conversations, independent judgements or individual contributions beyond the available evidence. Future deliverables in the template remain visible as future work rather than being omitted or described as completed.
+The documents distinguish automated checks, assumptions and human validation. They do not certify real conversations, independent judgements or individual contributions beyond the available evidence.
 
 ## Source and publication
 
-Develop in [BenjaminAHS/project-product-management](https://github.com/BenjaminAHS/project-product-management), branch `main`. Vercel uses the copy [lsantus-mines/deploy-project-product-management](https://github.com/lsantus-mines/deploy-project-product-management), which has a separate history. After every successful primary push, run `python3 scripts/deploy/sync_deploy.py` and confirm the result; preserve destination workflows and never force-push. [Sync setup guide (French)](docs/ACTIVER_SYNC_GITHUB.md).
-
-The S4 PDF delivery `60267d0` was pushed and its publication copy compared with no differences. Git synchronization is not an HTTP check of the site; dated evidence is kept in [the deployment guide](docs/DEPLOYMENT.md).
+Develop in [BenjaminAHS/project-product-management](https://github.com/BenjaminAHS/project-product-management), branch `main`. Vercel uses the copy [lsantus-mines/deploy-project-product-management](https://github.com/lsantus-mines/deploy-project-product-management), which has a separate history. After every successful primary push, run `python3 scripts/deploy/sync_deploy.py` and confirm the result; preserve destination workflows and never force-push. Setup and dated evidence: [deployment guide](docs/DEPLOYMENT.md).
