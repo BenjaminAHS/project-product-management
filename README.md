@@ -31,7 +31,7 @@ project-product-management/
 ├── README.md · spec.md · governance.md     start here: overview, full spec, governance log
 ├── 00_pitch.md … 04_architecture.md        graded deliverables, course template names
 │   (02_sizing.xlsx, 03_*.md, 05/06_07/08)
-├── Makefile · pyproject.toml · requirements*.txt · vercel.json · .env.example · AGENTS.md
+├── Makefile · pyproject.toml · requirements*.txt · vercel.json · .env.example
 │
 ├── prototype/      browser app (HTML/CSS/JS): preview engine, interface, API client
 ├── api/            FastAPI entry point on Vercel (/api/analyze · check · handover · events)
@@ -45,7 +45,7 @@ project-product-management/
 ├── evals/          eval sets, attack set, judge prompt, reports (v0/ v1/ judge/ tools/)
 ├── docs/           setup (CI, deploy), tracking plan, delivery audits, S3/S4 annexes
 ├── research/       interviews, prototype test, archived brief and memo v1
-├── pitch/          final deck: PDF, PPTX with speaker notes, notes mapped to the code
+├── pitch/          final deck (PDF, PPTX with notes), demo video, timed script
 ├── assignments/    submitted assignment PDFs and their sources
 └── reference/      course material: slides and docs, S3/S4 templates, Paylio starter
 ```
@@ -56,15 +56,15 @@ project-product-management/
 |---|---|---|
 | `00_pitch.md` | before S3 — only if you bring your own idea | Present: optional adaptation of supplied P2, not a separate custom proposal |
 | `01_problem_statement.md` | S1–S2 — Assignment 1 | Documented: quantified scenario, causes, AI choice, hypotheses and baseline |
-| `governance.md` | created for Assignment 1, one line added every session | Updated through S7: data audit, checkpoints, global switch, release approval, trace keeper |
+| `governance.md` | created for Assignment 1, one line added every session | Updated through S8: data audit, checkpoints, global switch, release approval, trace keeper |
 | `02_sizing.xlsx` | S2 — Assignment 2 | Editable three-scenario model; financial limitations explained in the memo |
 | `02_investment_memo.md` | S2 — Assignment 2 | Updated: conditional GO, named alternative and 41.2% flip threshold |
-| `03_product_brief.md` | S3 | Brief v2 present; supporting process/design record and archived v1 |
+| `03_product_brief.md` | S3 | Brief v2, final for `v1.0`; supporting process/design record and archived v1 |
 | `04_architecture.md` | S4 | Implemented workflow, components, checkpoints, fallbacks; §8b server authority, switch and release path (v0.6) |
 | `05_metrics.md` | S5 | Reworked 18 Nov: five-level stack, stop criterion, hierarchy by segment with harm threshold, three business metrics with expected effects, evaluation plan. Pending (people): 100 labels, second grader, human–human agreement |
 | `06_07_experiments_operations.md` | S6–S7 | Reworked 18 Nov: hypotheses, A/B on specialist-days, sample size (~6,800 tickets, 7 weeks), ship/iterate/kill rule, four-layer monitoring, incident classes, 6-field rollback (local test 18 Nov; staging test pending), five owners |
 | `08_launch_memo.md` | S8 | Reworked 18 Nov: NO-GO live, GO to prepare a pilot; evidence table, gated launch plan with signers, risks, ask, who did what |
-| `spec.md`, `product_brief.md` | final | **`spec.md` v3: whole project S1–S8** (product, architecture, contracts, guardrails, operation, metrics, delivery, decision log); consolidated `product_brief.md` present, final tag pending |
+| `spec.md`, `product_brief.md` | final | **`spec.md` v3: whole project S1–S8** (product, architecture, contracts, guardrails, operation, metrics, delivery, decision log); consolidated `product_brief.md`; tagged `v1.0` on 26 November |
 | `/prototype`, `/api`, `/flowassist`, `/evals` | from S4 | Interface v0.9 (three-step flow, clear outcomes) + FastAPI authority v0.6; 146 Python + 46 interface tests; 50 development cases, 200 held-out inputs, 30 attacks, LLM judge |
 
 Supporting S3 files: [AI Lean Canvas](03_ai_lean_canvas.md), [design details](docs/03_design_details.md), [needs/design record](03_user_research.md), [prototype link](03_prototype_link.md) and [delivery matrix](docs/03_s3_delivery.md). S4: [report](evals/report_v0.md), [delivery matrix](docs/04_s4_delivery.md) and [evaluation guide](evals/README.md). [Cross-session evidence audit](docs/DELIVERY_AUDIT.md).
@@ -74,7 +74,7 @@ Supporting S3 files: [AI Lean Canvas](03_ai_lean_canvas.md), [design details](do
 - Commit with your own Git account: the individual question at the oral is about a commit you signed.
 - Tag the final version `v1.0` before the first oral of your cohort. No commits after the first oral starts.
 
-## Current version · 17 November 2026
+## Current version · 26 November 2026 (`v1.0`)
 
 - **Interface v0.9** is one guided flow in three steps (check the payment, review the cited reply, approve & close), with a single human approval, a clear outcome card and plain-language explanations when a reply is refused or a ticket cannot be drafted; this layout is a design hypothesis to retest with 5 users. Since v0.5 it also puts the user-test findings in the product: plain-language payment status (D08), a verified-facts checklist above the draft (D09) and guidance on which source to open first (D10).
 - **Server v0.6** is the authority for every recorded action (FastAPI on Vercel). It also brings the global switch `ASSIST_MODE`, an attack set (30/30 caught), an LLM judge and local metrics.
@@ -84,7 +84,7 @@ Supporting S3 files: [AI Lean Canvas](03_ai_lean_canvas.md), [design details](do
 
 The full specification is in [spec.md](spec.md) v3.
 
-**Final pitch (9 slides + hidden appendix, English):** [PDF](pitch/FlowAssist_Final_Pitch.pdf) · [PDF with appendix](pitch/FlowAssist_Final_Pitch_with_appendix.pdf) · [PPTX with speaker notes](pitch/FlowAssist_Final_Pitch.pptx) · [demo video](pitch/FlowAssist_Demo.mp4) · [recorded demo on Loom](https://www.loom.com/share/9daead1178a946f493772d29345e90f2) · [timed script and Q&A](pitch/SPEAKER_NOTES.md) · [source](pitch/source/).
+**Final pitch (9 slides + hidden appendix, English):** [PDF](pitch/FlowAssist_Final_Pitch.pdf) · [PDF with appendix](pitch/FlowAssist_Final_Pitch_with_appendix.pdf) · [PPTX with speaker notes](pitch/FlowAssist_Final_Pitch.pptx) · [demo video](pitch/FlowAssist_Demo.mp4) · [same demo on Loom](https://www.loom.com/share/9daead1178a946f493772d29345e90f2) · [timed script and Q&A](pitch/SPEAKER_NOTES.md) · [source](pitch/source/).
 
 ## Server, guardrails and CI (v0.6)
 
@@ -154,6 +154,6 @@ The documents distinguish automated checks, assumptions and human validation. Th
 
 ## Source and publication
 
-Develop in [BenjaminAHS/project-product-management](https://github.com/BenjaminAHS/project-product-management), branch `main`. Vercel uses the copy [lsantus-mines/deploy-project-product-management](https://github.com/lsantus-mines/deploy-project-product-management), which has a separate history. After every successful primary push, run `python3 scripts/deploy/sync_deploy.py` and confirm the result; preserve destination workflows and never force-push. [Repository instructions](AGENTS.md) · [Sync setup guide (French)](docs/ACTIVER_SYNC_GITHUB.md).
+Develop in [BenjaminAHS/project-product-management](https://github.com/BenjaminAHS/project-product-management), branch `main`. Vercel uses the copy [lsantus-mines/deploy-project-product-management](https://github.com/lsantus-mines/deploy-project-product-management), which has a separate history. After every successful primary push, run `python3 scripts/deploy/sync_deploy.py` and confirm the result; preserve destination workflows and never force-push. [Sync setup guide (French)](docs/ACTIVER_SYNC_GITHUB.md).
 
 The S4 PDF delivery `60267d0` was pushed and its publication copy compared with no differences. Git synchronization is not an HTTP check of the site; dated evidence is kept in [the deployment guide](docs/DEPLOYMENT.md).

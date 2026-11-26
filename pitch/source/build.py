@@ -21,7 +21,7 @@ N_MAIN, N_ALL = 9, 15
 
 # Recorded demo: embedded in the PPTX (offline, plays full screen on click) and linked from the PDFs (Loom).
 # The zone is the app screenshot on slide 5, in 1920x1080 px.
-DEMO_VIDEO = PITCH / "FlowAssist_Demo_Loom.mp4"
+DEMO_VIDEO = PITCH / "FlowAssist_Demo.mp4"
 DEMO_URL = "https://www.loom.com/share/9daead1178a946f493772d29345e90f2"
 DEMO_SLIDE, DEMO_BOX = 5, (1030, 330, 750, 640)  # left, top, width, height
 
