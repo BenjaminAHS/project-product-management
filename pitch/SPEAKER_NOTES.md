@@ -1,7 +1,7 @@
 # FlowAssist — final pitch script
 
 Friday 27 November 2026 · 8 minutes of pitch (hard stop), then 3 minutes of questions.
-Files: [PPTX with notes](FlowAssist_Final_Pitch.pptx) · [PDF, 9 slides](FlowAssist_Final_Pitch.pdf) · [PDF with appendix](FlowAssist_Final_Pitch_with_appendix.pdf) · [demo video, 1:58](FlowAssist_Demo.mp4) (embedded in slide 5 of the PPTX, also [on Loom](https://www.loom.com/share/9daead1178a946f493772d29345e90f2)) · live demo https://deploy-project-product-management.vercel.app/?demo
+Files: [PPTX with notes](FlowAssist_Final_Pitch.pptx) · [PDF, 9 slides](FlowAssist_Final_Pitch.pdf) · [PDF with appendix](FlowAssist_Final_Pitch_with_appendix.pdf) · [demo video, 1:58](FlowAssist_Demo.mp4) (embedded in slide 5 of the PPTX, also [online](https://deploy-project-product-management.vercel.app/demo.mp4)) · live demo https://deploy-project-product-management.vercel.app/?demo
 
 ## Running order
 
@@ -80,7 +80,7 @@ Slides 10–15 are hidden appendix slides for questions: in PowerPoint, type the
 >
 > Benjamin.
 
-**If the video doesn't play:** open `FlowAssist_Demo.mp4` (same cut) or the Loom link https://www.loom.com/share/9daead1178a946f493772d29345e90f2 and say the same lines. The live app https://deploy-project-product-management.vercel.app/?demo stays open in Chrome for questions.
+**If the video doesn't play:** open `FlowAssist_Demo.mp4` (same cut) or https://deploy-project-product-management.vercel.app/demo.mp4 and say the same lines. The live app https://deploy-project-product-management.vercel.app/?demo stays open in Chrome for questions.
 
 ## 6 · Business case — Benjamin (0:45)
 

@@ -24,10 +24,14 @@ def git(directory, *args, capture=True):
 
 # Not needed to build or run the site: keep the deployment copy light.
 NOT_DEPLOYED = {'pitch', 'reference', 'assignments'}
+# Except the demo video, served at /demo.mp4 for the link in the pitch PDFs.
+DEPLOYED_ANYWAY = {'pitch/FlowAssist_Demo.mp4'}
 
 
 def excluded(name):
     parts = PurePosixPath(name).parts
+    if name in DEPLOYED_ANYWAY:
+        return False
     return '.git' in parts or parts[:2] == ('.github', 'workflows') or (len(parts) > 1 and parts[0] in NOT_DEPLOYED)
 
 

@@ -2,7 +2,7 @@
 
 Usage: python3 pitch/source/build.py   (needs Google Chrome, python-pptx, Pillow; PyMuPDF for PDF links)
 Slides 1-9 are the pitch; 10-15 are hidden appendix slides for questions.
-Slide 5: clicking the app screenshot plays the demo video (embedded in the PPTX, Loom link in the PDFs).
+Slide 5: clicking the app screenshot plays the demo video (embedded in the PPTX, link in the PDFs to the same video on the live site).
 Speaker notes come from pitch/SPEAKER_NOTES.md (sections "## N · ...").
 """
 import os, re, shutil, subprocess, sys, tempfile
@@ -19,10 +19,10 @@ CHROME = os.environ.get("CHROME") or next(
                  shutil.which("google-chrome") or "") if c and Path(c).exists()), "chrome")
 N_MAIN, N_ALL = 9, 15
 
-# Recorded demo: embedded in the PPTX (offline, plays full screen on click) and linked from the PDFs (Loom).
+# Recorded demo: embedded in the PPTX (offline, plays full screen on click) and linked from the PDFs (served by the live site at /demo.mp4).
 # The zone is the app screenshot on slide 5, in 1920x1080 px.
 DEMO_VIDEO = PITCH / "FlowAssist_Demo.mp4"
-DEMO_URL = "https://www.loom.com/share/9daead1178a946f493772d29345e90f2"
+DEMO_URL = "https://deploy-project-product-management.vercel.app/demo.mp4"
 DEMO_SLIDE, DEMO_BOX = 5, (1030, 330, 750, 640)  # left, top, width, height
 
 APPENDIX_NOTES = {
