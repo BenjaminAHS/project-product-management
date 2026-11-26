@@ -1,7 +1,7 @@
 # FlowAssist — final pitch script
 
 Friday 27 November 2026 · 8 minutes of pitch (hard stop), then 3 minutes of questions.
-Files: [PPTX with notes](FlowAssist_Final_Pitch.pptx) · [PDF, 9 slides](FlowAssist_Final_Pitch.pdf) · [PDF with appendix](FlowAssist_Final_Pitch_with_appendix.pdf) · [demo video, 1:58](FlowAssist_Demo_Loom.mp4) (embedded in slide 5 of the PPTX, also [on Loom](https://www.loom.com/share/9daead1178a946f493772d29345e90f2)) · [older silent demo](FlowAssist_Demo.mp4) · live demo https://deploy-project-product-management.vercel.app/?demo
+Files: [PPTX with notes](FlowAssist_Final_Pitch.pptx) · [PDF, 9 slides](FlowAssist_Final_Pitch.pdf) · [PDF with appendix](FlowAssist_Final_Pitch_with_appendix.pdf) · [demo video, 1:58](FlowAssist_Demo.mp4) (embedded in slide 5 of the PPTX, also [on Loom](https://www.loom.com/share/9daead1178a946f493772d29345e90f2)) · live demo https://deploy-project-product-management.vercel.app/?demo
 
 ## Running order
 
@@ -14,7 +14,7 @@ Files: [PPTX with notes](FlowAssist_Final_Pitch.pptx) · [PDF, 9 slides](FlowAss
 | 5 · Product + demo video | Colin | 2:15 | 4:00 |
 | 6 · Business case | Benjamin | 0:45 | 4:45 |
 | 7 · Three numbers, one test | Benjamin | 0:55 | 5:40 |
-| 8 · What can go wrong | Benjamin | 0:35 | 6:15 |
+| 8 · What can go wrong | Anthony | 0:35 | 6:15 |
 | 9 · Decision and ask | Lenny | 0:40 | **6:55** |
 
 About one minute of margin. The demo is a 1:58 video embedded in slide 5: it cannot be shortened, so everyone else keeps to their time. If the clock reads more than **1:55 when slide 5 starts**, Colin skips the sentence on the slide and plays the video straight away.
@@ -80,7 +80,7 @@ Slides 10–15 are hidden appendix slides for questions: in PowerPoint, type the
 >
 > Benjamin.
 
-**If the video doesn't play:** open `FlowAssist_Demo_Loom.mp4` (same cut) or the Loom link https://www.loom.com/share/9daead1178a946f493772d29345e90f2 and say the same lines. The live app https://deploy-project-product-management.vercel.app/?demo stays open in Chrome for questions.
+**If the video doesn't play:** open `FlowAssist_Demo.mp4` (same cut) or the Loom link https://www.loom.com/share/9daead1178a946f493772d29345e90f2 and say the same lines. The live app https://deploy-project-product-management.vercel.app/?demo stays open in Chrome for questions.
 
 ## 6 · Business case — Benjamin (0:45)
 
@@ -99,8 +99,10 @@ Slides 10–15 are hidden appendix slides for questions: in PowerPoint, type the
 > To prove FlowAssist causes the saving, we run an A/B test on specialist-days: each specialist works some days with it and some without, in random order.
 >
 > The 7-day reopen rate sets the size: about 3,400 tickets per arm, seven weeks. We read it once, with the rule written before: ship at 41.2 % or more with every guardrail held, iterate between 13 and 41.2, kill below 13. We stop early only on harm.
+>
+> Anthony.
 
-## 8 · What can go wrong — Benjamin (0:35)
+## 8 · What can go wrong — Anthony (0:35)
 
 > What can go wrong? A wrong or foreign answer: the server refuses promises, invented amounts and another merchant's data — 30 out of 30 attacks blocked today.
 >
@@ -148,8 +150,8 @@ One person answers, in two sentences at most. If an appendix slide helps, the pe
 
 ## Before 9:00 on Friday
 
-- [ ] **Laptop 1 (presenting):** PPTX open in presenter view. In slide show, go to slide 5 and click once to check the video starts, then Esc. Chrome tab on https://deploy-project-product-management.vercel.app/?demo for questions; `FlowAssist_Demo_Loom.mp4` downloaded locally as a backup.
-- [ ] **Laptop 2 (backup):** the PPTX and `FlowAssist_Demo_Loom.mp4`, downloaded locally, not only in the cloud.
+- [ ] **Laptop 1 (presenting):** PPTX open in presenter view. In slide show, go to slide 5 and click once to check the video starts, then Esc. Chrome tab on https://deploy-project-product-management.vercel.app/?demo for questions; `FlowAssist_Demo.mp4` downloaded locally as a backup.
+- [ ] **Laptop 2 (backup):** the PPTX and `FlowAssist_Demo.mp4`, downloaded locally, not only in the cloud.
 - [ ] Notifications off, battery charged, HDMI / USB-C adapter in the bag.
 - [ ] Phone charged: we grade the other teams in the Google Form during their questions.
 - [ ] Connect our laptop while the team before us answers its questions.

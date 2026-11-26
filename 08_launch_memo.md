@@ -47,10 +47,10 @@ From the Git history (path-filtered authorship), confirmed by the team for `v1.0
 
 | Member | Main contributions |
 |---|---|
-| Anthony Rascle | FastAPI server, global switch, attack set, LLM judge, CI/CD and deployment sync, interface v0.9, pitch deck |
+| Anthony Rascle | FastAPI server, global switch, attack set, LLM judge, CI/CD and deployment sync, interface v0.9, pitch deck; final pitch: risks |
 | Lenny Santus | prototype engine and interface, spec v3, S1–S3 documents, S5–S8 first drafts and PDF builds |
 | Antoine Rabeau | architecture, user research and prototype test, grader 1, switch owner, S5–S8 rework and switch rehearsal |
-| Benjamin Caujolle | sizing and memo, CI workflow, pull-request reviews and merges |
-| Colin Sibieude | final pitch: metrics, A/B test and risk sections; Q&A on the experiment |
+| Benjamin Caujolle | sizing and memo, CI workflow, pull-request reviews and merges, demo video; final pitch: business case, metrics and A/B test |
+| Colin Sibieude | demo script; final pitch: product and demo |
 
 [Metrics](05_metrics.md) · [Experiments and operations](06_07_experiments_operations.md) · [Specification](spec.md) · [Brief](product_brief.md) · [Governance](governance.md)
