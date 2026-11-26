@@ -1,6 +1,6 @@
 # 08 — Launch memo · FlowAssist
 
-**To:** Head of Payment Operations, PayFlow B2B · **cc:** DPO, Finance · **Date:** 18 November 2026
+**To:** Head of Payment Operations, PayFlow B2B · **cc:** DPO, Finance · **Date:** 18 November 2026 · final for v1.0, 26 November 2026
 
 ## Decision
 
@@ -25,7 +25,7 @@ The business case clears the €125k hurdle only above a 41.2% time saving, and 
 
 | Stage | Gate to pass | Who signs |
 |---|---|---|
-| **0 · Now → 26 Nov** · synthetic | `make ci` green; S5-M01 fixed (reply in the merchant's language); 100 labels + 30-case human–human ≥ 80%; judge re-validated ≥ 80% | PM + Engineering |
+| **0 · Now** · synthetic · *open at v1.0* | `make ci` green; S5-M01 fixed (reply in the merchant's language); 100 labels + 30-case human–human ≥ 80%; judge re-validated ≥ 80% | PM + Engineering |
 | **1 · Staging** · real data, zero merchants | 2 weeks of shadow mode; measured SD, reopen rate and ICC replace the assumptions in the sample size; switch rehearsed in staging by both holders; paging webhook tested | Engineering signs readiness; DPO approves data handling and 30-day trace retention |
 | **2 · Pilot** · A/B on specialist-days, 7 weeks + 7 days | `06_07` decision rule read once at the read date. One critical exposure stops assistance the same day | Head of Payment Operations, after DPO review |
 | **3 · Expansion** · stepped to 100%, 5% holdout for 6 months | saving ≥ 41.2%, QA ≥ 92 in every language, reopens ≤ manual + 2 pts; Finance confirms the cost per ticket | Head of Payment Operations with Product and Finance |
@@ -43,7 +43,7 @@ Approve Stage 1. Name the on-call engineer and the QA lead, and give DPO and Fin
 
 ## Who did what
 
-From the Git history (path-filtered authorship), to be confirmed by the team before `v1.0`:
+From the Git history (path-filtered authorship), confirmed by the team for `v1.0`:
 
 | Member | Main contributions |
 |---|---|
@@ -51,6 +51,6 @@ From the Git history (path-filtered authorship), to be confirmed by the team bef
 | Lenny Santus | prototype engine and interface, spec v3, S1–S3 documents, S5–S8 first drafts and PDF builds |
 | Antoine Rabeau | architecture, user research and prototype test, grader 1, switch owner, S5–S8 rework and switch rehearsal |
 | Benjamin Caujolle | sizing and memo, CI workflow, pull-request reviews and merges |
-| Colin Sibieude | *no commit recorded on `main`; contribution to be stated by the team* |
+| Colin Sibieude | final pitch: metrics, A/B test and risk sections; Q&A on the experiment |
 
 [Metrics](05_metrics.md) · [Experiments and operations](06_07_experiments_operations.md) · [Specification](spec.md) · [Brief](product_brief.md) · [Governance](governance.md)
