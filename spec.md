@@ -1,6 +1,6 @@
 # FlowAssist specification · v3 · whole project (S1–S8)
 
-**Updated 18 November 2026.** One document that traces the product from diagnosis to operation and that a developer can build from. Each section names the course session it comes from and the file that holds the detail. **Shipped** means it exists in this repository and is tested; **target** means the production design, not yet built.
+**v1.0 · final · 26 November 2026.** One document that traces the product from diagnosis to operation and that a developer can build from. Each section names the course session it comes from and the file that holds the detail. **Shipped** means it exists in this repository and is tested; **target** means the production design, not yet built.
 
 | Session | Decision it fixes here | Detail |
 |---|---|---|
@@ -214,7 +214,9 @@ On Vercel, change the variable and redeploy (about 1 minute). Who can press it: 
 | v0.5 | D08–D10 in the interface; payment summary first | 17 Nov |
 | v0.6 | server authority, global switch, attack set, judge, local metrics, CI/CD | 17 Nov |
 | judge v1.1 | guideline fixed once after reading disagreements: 11/15 human–judge agreement, 41/41 known-bad escalated, 0 over-accepted | 17 Nov |
+| v0.9 | interface: three-step flow, outcome cards, visible refusals, blocked tickets explained | 17 Nov |
 | S5-M01 (open) | the reply language must match the language the merchant wrote in (judge found EN messages answered in FR/DE: F22, F23, F25, F26) | 17 Nov |
+| S8 launch | NO-GO for live rollout, GO to prepare a controlled pilot; ask = approve Stage 1 (`08_launch_memo.md`) | 26 Nov |
 
 ## 11. Known limits and next steps
 - All data is synthetic, and the 50 v0 cases are development data. The first real performance number must come from `eval_set_v1` (held out, labelled by people).

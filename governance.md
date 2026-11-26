@@ -125,3 +125,6 @@ The engine filters public fixtures by assigned merchant, requires a unique refer
 - **Release approval:** a PR merges only with green CI (tests, JS/Python parity, 50-case regression, zero attack misses); deployment runs only after CI on `main`, then a production smoke test. The PM approves template, rule or judge-model changes with the eval re-run attached.
 - **Trace keeper:** Vercel runtime logs in production, `metrics/events.jsonl` locally (git-ignored); no third-party analytics, no ticket, draft or note text. Engineering owns access and deletion; Legal and the DPO answer merchants or regulators. **Retention: 30 days**, pending DPO approval.
 - **Incidents:** harmful incidents get a written report within 24 h and the DPO is informed if data is involved.
+
+## Session 8 — launch decision (26 November 2026)
+- **Decision at v1.0:** NO-GO for live rollout, GO to prepare a controlled pilot ([launch memo](08_launch_memo.md)); each stage opens only when its gate is signed — Product and Engineering (Stage 0), Engineering and the DPO (Stage 1), the Head of Payment Operations (Stages 2–3) — and no real merchant sees FlowAssist before the Stage 1 sign-off.

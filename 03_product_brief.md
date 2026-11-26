@@ -1,7 +1,7 @@
-# 03 — Product brief · FlowAssist · v2
+# 03 — Product brief · FlowAssist · v2 (final, v1.0)
 
 **P2 · PayFlow AI Product Team · 3 November 2026**
-**Status:** v2 design complete; desk-based revision plus three conversations and a prototype test on 9 November (D06–D10); desirability not validated. [Original v1](research/brief_v1.md). [Process, scoring and model tables](docs/03_design_details.md) form the supporting annex.
+**Status at v1.0 (26 November 2026):** final. v2 design complete; desk-based revision plus three conversations and a prototype test on 9 November (D06–D10); desirability not validated. [Original v1](research/brief_v1.md). [Process, scoring and model tables](docs/03_design_details.md) form the supporting annex.
 
 ## 1. Problem, user, do-nothing
 Karim, Tier-1 payment Ops specialist, investigates disconnected records before replying. P2 provides 800 merchants, 12,000 tickets/month and 40% investigation time; S1 assumes 18-minute handling time, including 7.2 minutes investigation. Do nothing: manual tools/macros and 4% annual efficiency gain (€57,600), versus a €125,000 alternative project. No actual internal logs or time study are available here.
@@ -23,10 +23,12 @@ Synthetic only. 50 development cases (regression after the S4 fixes), 200 held-o
 Rules for permissions, money, freshness and audit; pretrained structured extraction because no labelled training corpus exists; hybrid retrieval/drafting because a standalone pretrained model has no current ledger facts; exact checks plus model critique because an LLM judge cannot enforce identity. [Component choices and lower-rung alternatives](docs/03_design_details.md#5-model--smallest-rung-per-component); test rule templates first in S4.
 
 ## 6. Where it lives
-Zendesk sidebar: verified merchant, source timestamps, editable cited draft, all-source inspection, explicit review and timestamped specialist handover. Manual mode disables draft insertion; compliance routes to its specialist. Targets: retrieval p95 ≤2s, complete draft ≤10s; timeout suppresses drafting. Logs restricted to assigned agent and authorized Ops/security reviewers. [Clickable prototype](prototype/index.html) with a FastAPI server that enforces every recorded action (v0.6); no live bank or Zendesk connection. Full design: [spec.md](spec.md) v3.
+Zendesk sidebar: verified merchant, source timestamps, editable cited draft, all-source inspection, explicit review and timestamped specialist handover. Manual mode disables draft insertion; compliance routes to its specialist. Targets: retrieval p95 ≤2s, complete draft ≤10s; timeout suppresses drafting. Logs restricted to assigned agent and authorized Ops/security reviewers. [Clickable prototype](prototype/index.html) with a FastAPI server that enforces every recorded action (server v0.6, interface v0.9); no live bank or Zendesk connection. Full design: [spec.md](spec.md) v3.
 
 ## 7. Success criterion
 > By 8 November 2026, on a frozen 200-case synthetic tracing benchmark with eligibility labelled before execution and paired human timing, FlowAssist saves at least 41.2% of total active handling time on eligible cases versus manual handling, including review and fallback time, with QA ≥92%, grounding-check precision ≥98%, and zero wrong-transaction disclosures, cross-tenant exposures, unauthorized sends or monetary actions.
+
+**Status at v1.0:** not yet met. The 8 November date passed without a measured result: the 200 held-out cases are still being labelled, and paired timing on real tickets is the A/B of [06_07](06_07_experiments_operations.md). The 41.2% threshold is unchanged and is the ship line of that A/B.
 
 S3 supplied 20 seeds; the current S4 development set contains 50 cases and does not establish measured business success. [Denominator and grading](evals/README.md). A tracing-only pass does not validate S2's dispute/compliance value or authorize production.
 
